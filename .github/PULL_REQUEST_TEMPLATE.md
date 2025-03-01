@@ -6,9 +6,6 @@
 - [ ] I've tested the browser responsiveness
 
 ## Changes made
-- Implementação do componente X
-- Ajustes na responsividade da página Y
-- Correção de bug no fluxo de login
 
 ## Best practices
 - [ ] The code follows the project's best practices
