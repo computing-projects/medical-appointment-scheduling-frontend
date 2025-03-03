@@ -1,0 +1,12 @@
+<header class="header">
+    <img class="logo" src="../../../../assets/images/logo-projeto.png" alt="logo">
+    <div class="nav-list">
+      <a class="nav-item" routerLink="/">Início</a>
+      <a class="nav-item" routerLink="/">Sobre</a>
+      <a class="nav-item" routerLink="/">Contato</a>
+      <button class="login-btn" mat-button (click)="toggleLogin()">
+        {{ isLoggedIn ? 'Sair' : 'Entrar' }}
+      </button>
+    </div>
+  </header>
+  
