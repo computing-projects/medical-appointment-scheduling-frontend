@@ -10,36 +10,20 @@
 
   .logo {
     align-items: center;
-    width: 250px; //alterar dps para fuicar responsivo
+    width: 240px;
   }
 
-  .nav-list {
-    display: flex;
-    align-items: center;
-    -moz-column-gap: 30px;
-    column-gap: 30px;
-    .nav-item {
-      margin: 0 15px;
-      text-decoration: none;
-      color: $black;
-      list-style: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .login-btn {
+  .btn-outline {
+    font-size: 18px;
     font-weight: 600;
     padding: 15px;
     border: 2px solid $cosmic-cobalt;
     border-radius: 20px;
-    transition: background-color 0.7s ease, color 0.7s ease; // Adicionei a transição aqui
+    transition: background-color 0.7s ease, color 0.7s ease;
   
     .mdc-button__label {
       color: $cosmic-cobalt;
-      transition: color 0.7s ease; // Adicionei a transição no texto também
+      transition: color 0.7s ease;
     }
   
     &:hover {

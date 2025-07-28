@@ -1,9 +1,7 @@
 <header class="header">
     <img class="logo" src="../../../../assets/images/logo-projeto.png" alt="logo">
-    <div class="nav-list">
-      <button class="login-btn" mat-button (click)="toggleLogin()">
-        {{ isLoggedIn ? 'Sair' : 'Entrar' }}
-      </button>
-    </div>
+    <button class="btn-outline" mat-button (click)="toggleLogin()">
+      {{ isLoggedIn ? 'Sair' : 'Entrar' }}
+    </button>
   </header>
   

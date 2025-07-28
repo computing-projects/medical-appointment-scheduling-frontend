@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 
 @Component({
-  selector: 'ac-header',
+  selector: 'med-header',
   standalone: true,
   imports: [MatButtonModule],
   templateUrl: './home-header.component.html',
