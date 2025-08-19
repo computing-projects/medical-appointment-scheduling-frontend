@@ -1,0 +1,47 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.med-footer {
+    & > .content {
+        background-color: $cosmic-cobalt;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        padding: 56px;
+        min-height: 400px;
+        color: $ghost-white;
+        
+        & > .logo {
+            height: 100px;
+        }
+        
+        & > .items {
+            display: grid;
+            align-items: flex-start;
+            grid-template-columns: 1fr 1fr;
+            & > .helpful-links > .link-items *, & > .contact > .contact-items * {
+                padding-bottom: 16px;
+            }
+            & > .helpful-links, & > .contact {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                & > .title {
+                    font-size: 28px;
+                }
+            }
+            & > .helpful-links > .link-items > .link:hover,
+            & > .contact > .contact-items > .link:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    & > .footer-bottom {
+        background-color: $paua-blue;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $ghost-white;
+    }
+
+}
