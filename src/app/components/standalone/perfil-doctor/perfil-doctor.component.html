@@ -1,0 +1,100 @@
+<!-- src/app/components/standalone/perfil-doctor/perfil-doctor.component.html -->
+<div class="perfil-doctor-container">
+  <div class="perfil-doctor-header-nav">
+    <button class="perfil-doctor-nav-button"
+            (click)="showDoctorTab('informacoes')"
+            [class.active]="selectedDoctorTab === 'informacoes'">Informações</button>
+    <button class="perfil-doctor-nav-button"
+            (click)="showDoctorTab('agenda')"
+            [class.active]="selectedDoctorTab === 'agenda'">Agenda</button>
+  </div>
+
+  <div class="perfil-doctor-content">
+    <!-- Informações Tab Content -->
+    <div *ngIf="selectedDoctorTab === 'informacoes'" class="informacoes-tab">
+      <!-- Top Section: Doctor Photo, Name, and Key Info -->
+      <div class="doctor-profile-summary">
+        <img [src]="doctorProfile.photo" alt="Doctor Photo" class="doctor-photo-large">
+        <div class="doctor-summary-details">
+          <h2>Dr(a). {{ doctorProfile.name }} {{ doctorProfile.lastName }}</h2>
+          <p class="specialty">{{ doctorProfile.specialty }}</p>
+          
+          <div class="rating">
+            <span *ngFor="let _ of getStarsArray(doctorProfile.review)" class="star filled">★</span>
+            <span *ngFor="let _ of getStarsArray(5 - doctorProfile.review)" class="star empty">★</span>
+            <span>({{ doctorProfile.review }}/5.0)</span>
+          </div>
+          <p><strong>Contato:</strong> {{ doctorProfile.contact }}</p>
+          <p><strong>Idade:</strong> {{ doctorProfile.age }} anos</p>
+          <p><strong>CRM:</strong> {{ doctorProfile.crm }}</p>
+          <p><strong>Horário Disponível Hoje:</strong> {{ doctorProfile.availableHoursToday }}</p>
+          <p><strong>Planos Aceitos:</strong> {{ doctorProfile.acceptedPlans.join(', ') }}</p>
+        </div>
+      </div>
+
+      <!-- Middle Section: Consultas Marcadas para Hoje -->
+      <div class="section-card today-appointments-section">
+        <h3>Consultas Marcadas para Hoje:</h3>
+        <div *ngIf="todayAppointments.length > 0; else noAppointmentsToday" class="appointments-card-grid">
+          <div *ngFor="let appt of todayAppointments" class="appointment-card">
+            <div class="card-header-appt">
+              <span class="appt-date">{{ appt.date }}</span>
+              <span class="appt-time">{{ appt.time }}</span>
+              <span class="appt-status" [ngClass]="{
+                'status-confirmada': appt.status === 'Confirmada',
+                'status-aguardando': appt.status === 'Aguardando',
+                'status-cancelada': appt.status === 'Cancelada'
+              }">{{ appt.status }}</span>
+            </div>
+            <div class="card-body-appt">
+              <p><strong>Especialidade:</strong> {{ appt.especialidade }}</p>
+              <p><strong>Cliente:</strong> {{ appt.clientName }}</p>
+              <p><strong>Tipo:</strong> {{ appt.appointmentType }}</p>
+            </div>
+            <div class="card-footer-appt">
+              <button class="details-button-appt" (click)="openPatientAppointmentDetailsModal(appt.id)">Ver Detalhes</button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noAppointmentsToday><p class="info-message">Nenhuma consulta marcada para hoje.</p></ng-template>
+      </div>
+
+      <!-- Bottom Section: Histórico do Mês Atual -->
+      <div class="section-card monthly-history-section">
+        <h3>Histórico do Mês Atual:</h3>
+        <div class="monthly-stats-grid">
+          <div class="stat-item">
+            <span>Consultas Realizadas:</span>
+            <strong>{{ currentMonthStats.consultas }}</strong>
+          </div>
+          <div class="stat-item">
+            <span>Exames Solicitados:</span>
+            <strong>{{ currentMonthStats.exames }}</strong>
+          </div>
+          <div class="stat-item">
+            <span>Cirurgias Realizadas:</span>
+            <strong>{{ currentMonthStats.cirurgias }}</strong>
+          </div>
+          <div class="stat-item">
+            <span>Procedimentos:</span>
+            <strong>{{ currentMonthStats.procedimentos }}</strong>
+          </div>
+          <div class="stat-item">
+            <span>Agendamentos Cancelados/Faltados:</span>
+            <strong>{{ currentMonthStats.agendamentosCanceladosOuFaltados }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedDoctorTab === 'agenda'" class="agenda-tab">
+      <med-perfil-doctor-calendar></med-perfil-doctor-calendar> <!-- New calendar component here -->
+    </div>
+  </div>
+</div>
+
+<med-perfil-patient-modal
+  *ngIf="isPatientModalOpen"
+  [appointment]="selectedPatientDetails"
+  (closeModal)="closePatientDetailsModal()">
+</med-perfil-patient-modal>

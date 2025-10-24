@@ -1,0 +1,312 @@
+@import '../../../../assets/style/color-palette.scss';
+.perfil-doctor-container {
+  padding: 20px;
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba($nero-black, 0.08);
+  margin: 20px;
+}
+
+.perfil-doctor-header-nav {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px solid $grey-whisper;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.perfil-doctor-nav-button {
+  background-color: transparent;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.1rem;
+  color: $nero-black;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  position: relative;
+}
+
+.perfil-doctor-nav-button:hover {
+  color: $neon-blue;
+}
+
+.perfil-doctor-nav-button.active {
+  color: $neon-blue;
+  font-weight: bold;
+}
+
+.perfil-doctor-nav-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: $neon-blue;
+}
+
+.perfil-doctor-content {
+  padding-top: 20px;
+}
+
+/* --- Informações Tab Specific Styling --- */
+.informacoes-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.doctor-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: $ghost-white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba($nero-black, 0.03);
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.doctor-photo-large {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $periwinkle-blue;
+  box-shadow: 0 4px 15px rgba($nero-black, 0.1);
+  flex-shrink: 0;
+}
+
+.doctor-summary-details {
+  flex-grow: 1;
+}
+
+.doctor-summary-details h2 {
+  font-size: 2.2rem;
+  color: $cosmic-cobalt;
+  margin-bottom: 8px;
+}
+
+.doctor-summary-details .specialty {
+  font-size: 1.3rem;
+  color: $paua-blue;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.doctor-summary-details .rating {
+  font-size: 1.2rem;
+  color: $yellow-kournikova;
+  margin-bottom: 15px;
+}
+.doctor-summary-details .rating span {
+  color: $paua-blue; /* For empty stars */
+}
+.doctor-summary-details .rating .star.filled {
+  color: $yellow-kournikova; /* Filled stars */
+}
+
+
+.doctor-summary-details p {
+  font-size: 1rem;
+  color: $nero-black;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.doctor-summary-details p strong {
+  color: $paua-blue;
+}
+
+.section-card {
+  background-color: $ghost-white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba($nero-black, 0.03);
+  border: 1px solid $grey-whisper;
+}
+
+.section-card h3 {
+  font-size: 1.6rem;
+  color: $paua-blue;
+  border-bottom: 2px solid $periwinkle-blue;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.today-appointments-section {
+  .appointments-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .appointment-card {
+    background-color: $white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba($nero-black, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  .card-header-appt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: $periwinkle-blue;
+    color: $paua-blue;
+    font-weight: bold;
+  }
+
+  .appt-date, .appt-time {
+    font-size: 1.1rem;
+  }
+
+  .appt-status {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: $white;
+  }
+  .status-confirmada { background-color: $green-fruit-salad; }
+  .status-aguardando { background-color: $yellow-kournikova; color: $nero-black; } // Special case for pending text color
+  .status-cancelada { background-color: $red-alizarin; }
+
+  .card-body-appt {
+    padding: 15px;
+    flex-grow: 1;
+  }
+
+  .card-body-appt p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: $nero-black;
+  }
+
+  .card-body-appt p strong {
+    color: $cosmic-cobalt;
+  }
+
+  .card-footer-appt {
+    padding: 15px;
+    border-top: 1px solid $grey-whisper;
+    text-align: right;
+  }
+
+  .details-button-appt {
+    background-color: $neon-blue;
+    color: $white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($neon-blue, 10%);
+    }
+  }
+}
+
+.monthly-history-section {
+  .monthly-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+  }
+
+  .stat-item {
+    background-color: $white;
+    border: 1px solid $periwinkle-blue;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 80px;
+  }
+
+  .stat-item span {
+    font-size: 0.9rem;
+    color: $paua-blue;
+    margin-bottom: 5px;
+  }
+
+  .stat-item strong {
+    font-size: 1.8rem;
+    color: $neon-blue;
+    font-weight: 700;
+  }
+}
+
+.info-message {
+  font-style: italic;
+  color: $grey-whisper;
+  padding: 10px;
+  background-color: $white;
+  border-left: 4px solid $yellow-kournikova;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Agenda Tab Styling (kept generic, PerfilDoctorAgendaComponent manages its own styling) */
+.agenda-tab {
+  // Any wrapper styles for the agenda tab container can go here
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .perfil-doctor-container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .doctor-profile-summary {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .doctor-photo-large {
+    width: 120px;
+    height: 120px;
+  }
+
+  .doctor-summary-details h2 {
+    font-size: 1.8rem;
+  }
+  .doctor-summary-details .specialty {
+    font-size: 1.1rem;
+  }
+  .doctor-summary-details p {
+    font-size: 0.9rem;
+  }
+
+  .section-card {
+    padding: 15px;
+  }
+  .section-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .today-appointments-section .appointments-card-grid,
+  .monthly-history-section .monthly-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
