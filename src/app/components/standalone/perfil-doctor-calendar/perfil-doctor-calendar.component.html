@@ -1,0 +1,50 @@
+<!-- src/app/components/standalone/doctor-agenda-calendar/doctor-agenda-calendar.component.html -->
+<div class="doctor-agenda-calendar-container">
+  <div class="calendar-header">
+    <button class="doctor-calendar-nav-button" (click)="changeMonth(-1)">&#x2190;</button> <!-- Left arrow -->
+    <h2 class="month-year-display">{{ currentMonthYear }}</h2>
+    <button class="doctor-calendar-nav-button" (click)="changeMonth(1)">&#x2192;</button> <!-- Right arrow -->
+    <button class="create-appointment-button" (click)="createNewAppointment()">+ Criar Agendamento</button>
+  </div>
+
+  <div class="calendar-grid-wrapper">
+    <div class="day-names-grid">
+      <span *ngFor="let dayName of shortDayNames" class="day-name">{{ dayName }}</span>
+    </div>
+    <div class="calendar-days-grid">
+      <div *ngFor="let day of daysInMonth"
+           class="calendar-day"
+           [ngClass]="{
+             'empty-day': !day.date,
+             'has-appointments': day.hasAppointments,
+             'selected-day': day.date && selectedDate && day.date.toDateString() === selectedDate.toDateString(),
+             'current-day': isToday(day.date)
+           }"
+           (click)="selectDay(day.date)">
+        <span *ngIf="day.date" class="day-number">{{ day.date.getDate() }}</span>
+        <div *ngIf="day.hasAppointments && day.date" class="appointment-indicator"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedDate" class="selected-day-appointments">
+    <h3>Agendamentos para {{ selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' }) }}:</h3>
+    <div *ngIf="selectedDayAppointments.length > 0; else noAppointments" class="appointment-list">
+      <div *ngFor="let appt of selectedDayAppointments" class="appointment-item" (click)="openAppointmentDetails(appt.id)">
+        <span class="appointment-time">{{ appt.time }}</span>
+        <span class="appointment-client">{{ appt.client }}</span>
+        <span class="appointment-type">{{ appt.type }}</span>
+        <span class="appointment-status" [ngClass]="{
+          'status-confirmada': appt.status === 'Confirmada',
+          'status-pendente': appt.status === 'Pendente',
+          'status-cancelada': appt.status === 'Cancelada',
+          'status-realizada': appt.status === 'Realizada'
+        }">{{ appt.status }}</span>
+      </div>
+    </div>
+    <ng-template #noAppointments><p class="info-message">Nenhum agendamento para este dia.</p></ng-template>
+  </div>
+  <div *ngIf="!selectedDate" class="no-day-selected-message">
+    <p class="info-message">Selecione um dia no calendário para ver os agendamentos.</p>
+  </div>
+</div>
