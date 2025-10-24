@@ -1,0 +1,184 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.ficha-medica-container {
+  padding: 20px;
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba($nero-black, 0.08);
+  margin: 20px 0; // Margin top/bottom, 0 left/right to fill space
+}
+
+.ficha-title {
+  font-size: 2.2rem;
+  color: $cosmic-cobalt;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.ficha-description {
+  font-size: 1rem;
+  color: $grey-whisper;
+  text-align: center;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+.medical-section-card {
+  background-color: $ghost-white; // Light background for cards
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba($nero-black, 0.03); // Subtle shadow
+  border: 1px solid $grey-whisper; // Light border
+}
+
+.section-title {
+  font-size: 1.6rem;
+  color: $paua-blue; // A darker blue for section titles
+  border-bottom: 2px solid $periwinkle-blue; // Underline for titles
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.lifestyle-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item label {
+  font-weight: bold;
+  color: $cosmic-cobalt;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.detail-item span {
+  font-size: 1rem;
+  color: $nero-black;
+  background-color: $white; // Background for the value to make it stand out
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid $grey-whisper;
+}
+
+.detail-list {
+  margin-bottom: 20px;
+}
+
+.detail-list label {
+  font-weight: bold;
+  color: $cosmic-cobalt;
+  display: block; // Make label a block for better spacing
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.detail-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-list li {
+  background-color: $white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: $nero-black;
+  border-left: 4px solid $periwinkle-blue; // A subtle blue line
+}
+
+.info-message {
+  font-style: italic;
+  color: $grey-whisper;
+  padding: 10px;
+  background-color: $white;
+  border-left: 4px solid $yellow-kournikova; // Yellow hint for info messages
+  border-radius: 6px;
+}
+
+.medication-item,
+.history-item,
+.family-history-item,
+.vaccine-item {
+  background-color: $white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid $periwinkle-blue;
+  box-shadow: 0 1px 4px rgba($nero-black, 0.02);
+}
+
+.medication-item p,
+.history-item p,
+.family-history-item p,
+.vaccine-item p {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: $nero-black;
+}
+
+.medication-item small,
+.history-item small,
+.vaccine-item small {
+  display: block;
+  font-size: 0.85rem;
+  color: $grey-whisper;
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .ficha-title {
+    font-size: 1.8rem;
+  }
+
+  .ficha-description {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .medical-section-card {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr; // Single column on small screens
+  }
+
+  .lifestyle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item span,
+  .detail-list li,
+  .info-message,
+  .medication-item,
+  .history-item,
+  .family-history-item,
+  .vaccine-item {
+    font-size: 0.9rem;
+  }
+}
