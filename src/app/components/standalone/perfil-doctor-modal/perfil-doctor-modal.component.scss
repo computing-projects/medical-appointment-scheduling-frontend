@@ -1,0 +1,243 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($nero-black, 0.6); // Semi-transparent dark overlay
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; // Ensure modal is on top of other content
+  backdrop-filter: blur(3px); // Optional: adds a slight blur to background
+}
+
+.modal-content {
+  background-color: $white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px; // Max width for larger screens
+  max-height: 90vh; // Prevent modal from overflowing tall screens
+  overflow-y: auto; // Enable scrolling within the modal if content is long
+  box-shadow: 0 10px 30px rgba($nero-black, 0.2);
+  position: relative;
+  padding: 30px; // Padding inside the modal
+  animation: fadeInScale 0.3s ease-out forwards; // Animation for opening
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $grey-whisper;
+  position: relative; // For the close button
+}
+
+.title-and-status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.modal-title {
+  font-size: 2rem;
+  color: $cosmic-cobalt;
+  margin: 0;
+  font-weight: 700;
+}
+
+.appointment-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: $white; // Default white text for status
+  text-transform: capitalize;
+}
+
+.status-realizada { background-color: $green-fruit-salad; }
+.status-agendada { background-color: $neon-blue; }
+.status-cancelada { background-color: $red-alizarin; }
+.status-pendente { background-color: $yellow-kournikova; color: $nero-black; } // Special case for pending text color
+.status-aguardando { background-color: $blue; }
+
+.appointment-type {
+  font-size: 1.1rem;
+  color: $nero-black;
+  margin-bottom: 10px;
+}
+
+.appointment-link {
+  color: $neon-blue;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.appointment-link:hover {
+  text-decoration: underline;
+  color: darken($neon-blue, 10%);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: $grey-whisper;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: $red-alizarin;
+}
+
+.modal-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed $grey-whisper;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    color: $paua-blue;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+}
+
+.doctor-info-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap; // Allow items to wrap on smaller screens
+}
+
+.doctor-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid $periwinkle-blue;
+  box-shadow: 0 2px 10px rgba($nero-black, 0.1);
+  flex-shrink: 0; // Prevent photo from shrinking
+}
+
+.doctor-details {
+  flex-grow: 1; // Allows details to take up remaining space
+}
+
+.doctor-details h3 {
+  font-size: 1.6rem;
+  color: $cosmic-cobalt;
+  margin-bottom: 10px;
+}
+
+.doctor-details p {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: $nero-black;
+}
+
+.doctor-details p strong {
+  color: $paua-blue;
+}
+
+.star-rating {
+  color: $yellow-kournikova; // Yellow for stars
+  font-size: 1.4rem;
+  margin-top: 10px;
+}
+
+.star.empty {
+  color: $grey-whisper; // Lighter color for empty stars
+}
+
+.motivo-box {
+  background-color: $ghost-white;
+  border: 1px solid $grey-whisper;
+  border-radius: 8px;
+  padding: 15px;
+  font-style: italic;
+  color: $nero-black;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-list li {
+  background-color: $ghost-white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: $nero-black;
+  border-left: 5px solid $periwinkle-blue; // A subtle blue indicator
+}
+
+.no-history-message {
+  font-style: italic;
+  color: $grey-whisper;
+  text-align: center;
+  padding: 10px;
+  background-color: $ghost-white;
+  border-radius: 6px;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .modal-title {
+    font-size: 1.6rem;
+  }
+
+  .appointment-status {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+
+  .doctor-info-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .doctor-photo {
+    margin-bottom: 15px;
+  }
+
+  .doctor-details h3 {
+    font-size: 1.4rem;
+  }
+}
