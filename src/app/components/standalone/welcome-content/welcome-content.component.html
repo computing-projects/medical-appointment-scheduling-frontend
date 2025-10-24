@@ -1,0 +1,24 @@
+<div class="welcome-container">
+    <nav class="sidebar">
+        <button class="nav-button" (click)="showView('home')" [class.active]="selectedView === 'home'">Home</button>
+        <button class="nav-button" (click)="showView('agendamento')" [class.active]="selectedView === 'agendamento'">Agendamento</button>
+        <button class="nav-button" (click)="showView('perfil')" [class.active]="selectedView === 'perfil'">Perfil</button>
+        <button class="nav-button" (click)="showView('perfil-medico')" [class.active]="selectedView === 'perfil-medico'">Perfil Med</button>
+    </nav>
+    
+    <section class="welcome-message">
+        <div *ngIf="selectedView === 'home'">
+            <h2>Seja bem vindo, Fulano!</h2>
+            <p>Clique na aba “Agendamentos” para consultar a lista de médicos credenciados e agende sua consulta!</p>
+            <p>Para visualizar suas informações pessoais, clique na aba “Perfil”</p>
+            <div>
+                <img src="../../../../assets/images/client-nav/anamnese.png" alt="Anamnese">
+                <img src="../../../../assets/images/client-nav/schedule.png" alt="Agendamento">
+            </div>
+            <p>“Você sabia que caminhar 30 minutos por dia melhora sua imunidade?”</p>
+        </div>
+        <med-scheduling *ngIf="selectedView === 'agendamento'"></med-scheduling>
+        <med-perfil *ngIf="selectedView === 'perfil'"></med-perfil>
+        <med-perfil-doctor *ngIf="selectedView === 'perfil-medico'"></med-perfil-doctor>
+    </section>
+</div>
