@@ -1,0 +1,96 @@
+<!-- src/app/components/standalone/perfil/perfil.component.html -->
+<div class="perfil-container">
+  <div class="perfil-header-nav">
+    <button class="perfil-nav-button"
+            (click)="showPerfilTab('informacoes')"
+            [class.active]="selectedPerfilTab === 'informacoes'">Informações</button>
+    <button class="perfil-nav-button"
+            (click)="showPerfilTab('consultas')"
+            [class.active]="selectedPerfilTab === 'consultas'">Consultas</button>
+    <button class="perfil-nav-button"
+            (click)="showPerfilTab('fichaMedica')"
+            [class.active]="selectedPerfilTab === 'fichaMedica'">Ficha Médica</button>
+  </div>
+
+  <div class="perfil-content">
+    <!-- Informações Tab Content -->
+    <div *ngIf="selectedPerfilTab === 'informacoes'" class="informacoes-tab">
+      <div class="profile-photo-section">
+        <img [src]="userProfile.photo" alt="Profile Photo" class="profile-photo">
+      </div>
+
+      <div class="profile-details-grid">
+        <div class="detail-item">
+          <label>Nome:</label>
+          <span>{{ userProfile.name }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Contato:</label>
+          <span>{{ userProfile.contact }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Idade:</label>
+          <span>{{ userProfile.age }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Estado:</label>
+          <span>{{ userProfile.state }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Planos de Saúde:</label>
+          <span>{{ userProfile.healthPlans.join(', ') }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Email:</label>
+          <span>{{ userProfile.email }}</span>
+        </div>
+        <div class="detail-item">
+          <label>CPF:</label>
+          <span>{{ userProfile.cpf }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Cidade:</label>
+          <span>{{ userProfile.city }}</span>
+        </div>
+        <div class="detail-item">
+          <label>CEP:</label>
+          <span>{{ userProfile.cep }}</span>
+        </div>
+      </div>
+
+      <div class="summary-stats">
+        <h3>Resumo de Atividades</h3>
+        <div class="stat-item">
+          <span>Consultas:</span>
+          <strong>{{ userProfile.consultas }}</strong>
+        </div>
+        <div class="stat-item">
+          <span>Exames:</span>
+          <strong>{{ userProfile.exames }}</strong>
+        </div>
+        <div class="stat-item">
+          <span>Cirurgias:</span>
+          <strong>{{ userProfile.cirurgias }}</strong>
+        </div>
+        <div class="stat-item">
+          <span>Procedimentos:</span>
+          <strong>{{ userProfile.procedimentos }}</strong>
+        </div>
+        <div class="stat-item">
+          <span>Agendamentos Cancelados/Faltados:</span>
+          <strong>{{ userProfile.agendamentosCanceladosOuFaltados }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultas Tab Content (will be developed later) -->
+    <div *ngIf="selectedPerfilTab === 'consultas'">
+      <med-perfil-appointment></med-perfil-appointment> <!-- Render the new ConsultasComponent here -->
+    </div>
+
+    <!-- Ficha Médica Tab Content (will be developed later) -->
+    <div *ngIf="selectedPerfilTab === 'fichaMedica'">
+      <med-perfil-anamnese></med-perfil-anamnese> <!-- Render the new FichaMedicaComponent here -->
+    </div>
+  </div>
+</div>
