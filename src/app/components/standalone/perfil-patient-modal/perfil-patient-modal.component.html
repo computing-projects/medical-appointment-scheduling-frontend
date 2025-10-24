@@ -1,0 +1,72 @@
+<div class="modal-overlay" (click)="closeModal.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Top Bar: Title, Status, Type, Link, Close Button -->
+    <div class="modal-header">
+      <div class="title-and-status">
+        <h2 class="modal-title">Detalhes da Consulta</h2>
+        <span class="appointment-status" [ngClass]="{
+          'status-realizada': appointment?.appointmentStatus === 'Realizada',
+          'status-agendada': appointment?.appointmentStatus === 'Agendada',
+          'status-cancelada': appointment?.appointmentStatus === 'Cancelada',
+          'status-pendente': appointment?.appointmentStatus === 'Pendente',
+          'status-aguardando': appointment?.appointmentStatus === 'Aguardando'
+        }">
+          {{ appointment?.appointmentStatus }}
+        </span>
+      </div>
+      <p class="appointment-type">Tipo: {{ appointment?.appointmentType }}</p>
+      <a *ngIf="appointment?.appointmentLink" [href]="appointment?.appointmentLink" target="_blank" class="appointment-link">Link da Consulta Online</a>
+      <button class="close-button" (click)="closeModal.emit()">×</button>
+    </div>
+
+    <!-- Patient and Appointment Info -->
+    <div class="modal-section patient-info-section">
+      <h3>Informações do Paciente:</h3>
+      <div class="patient-details-grid">
+        <div class="detail-item">
+          <label>Nome:</label>
+          <span>{{ appointment?.patientName }}</span>
+        </div>
+        <div class="detail-item" *ngIf="appointment?.patientContact">
+          <label>Contato:</label>
+          <span>{{ appointment?.patientContact }}</span>
+        </div>
+        <div class="detail-item" *ngIf="appointment?.patientAge">
+          <label>Idade:</label>
+          <span>{{ appointment?.patientAge }} anos</span>
+        </div>
+      </div>
+      <h3 class="appointment-details-title">Detalhes do Agendamento:</h3>
+      <div class="appointment-details-grid">
+        <div class="detail-item">
+          <label>Data e Horário:</label>
+          <span>{{ appointment?.dataHora }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Especialidade:</label>
+          <span>{{ appointment?.especialidade }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reason for Appointment -->
+    <div class="modal-section motivo-section">
+      <h3>Motivo da Consulta:</h3>
+      <div class="motivo-box">
+        <p>{{ appointment?.reason }}</p>
+      </div>
+    </div>
+
+    <!-- Patient's Appointment History (if applicable, with this patient for this service) -->
+    <div class="modal-section history-section">
+      <h3>Histórico de Consultas (Paciente):</h3>
+      <ul class="history-list" *ngIf="appointment?.patientAppointmentHistory; else noHistory">
+        <li *ngFor="let item of appointment?.patientAppointmentHistory">
+          {{ item?.date }} - {{ item?.type }}
+          <span *ngIf="item?.details">({{ item?.details }})</span>
+        </li>
+      </ul>
+      <ng-template #noHistory><p class="no-history-message">Nenhum histórico de consultas para este paciente/serviço.</p></ng-template>
+    </div>
+  </div>
+</div>
