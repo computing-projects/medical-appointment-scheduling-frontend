@@ -1,0 +1,198 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="header-content">
+        <div class="header-icon">🔔</div>
+        <div class="header-text">
+          <h2>Lista de Espera</h2>
+          <p>Encontre o horário mais cedo disponível</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="closeModal()" aria-label="Fechar">
+        <span>✕</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      
+      <!-- Doctor Info Summary -->
+      <div class="doctor-summary">
+        <img [src]="doctor.photo" [alt]="doctor.name" class="doctor-photo" />
+        <div class="doctor-info">
+          <strong class="doctor-name">{{ doctor.name }}</strong>
+          <span class="doctor-specialty">{{ doctor.specialty }}</span>
+          <span class="appointment-type-badge">{{ appointmentTypeLabel }}</span>
+        </div>
+      </div>
+
+      <!-- Next Available Slot Highlight -->
+      <div class="next-available-highlight" *ngIf="getNextAvailableSlot() as nextSlot">
+        <div class="highlight-header">
+          <span class="highlight-icon">⚡</span>
+          <strong>Próximo Horário Disponível</strong>
+        </div>
+        <div class="highlight-content">
+          <div class="highlight-date">
+            <span class="date-day">{{ nextSlot.dayOfWeek }}</span>
+            <span class="date-number">{{ nextSlot.date }}</span>
+          </div>
+          <div class="highlight-time">
+            <span class="time-label">Horário</span>
+            <span class="time-value">{{ nextSlot.time }}</span>
+          </div>
+          <button class="highlight-btn" (click)="onSelectSlot(nextSlot)">
+            Agendar Agora
+          </button>
+        </div>
+      </div>
+
+      <!-- Preference Selection -->
+      <div class="preference-section">
+        <div class="section-header">
+          <span class="section-icon">⏰</span>
+          <h3>Preferência de Horário</h3>
+        </div>
+        
+        <div class="preference-options">
+          <label class="preference-option" [class.selected]="selectedPreference === 'earliest'">
+            <input 
+              type="radio" 
+              name="preference" 
+              value="earliest" 
+              [(ngModel)]="selectedPreference" />
+            <div class="option-content">
+              <span class="option-icon">🚀</span>
+              <span class="option-text">Mais Cedo Possível</span>
+            </div>
+          </label>
+          
+          <label class="preference-option" [class.selected]="selectedPreference === 'morning'">
+            <input 
+              type="radio" 
+              name="preference" 
+              value="morning" 
+              [(ngModel)]="selectedPreference" />
+            <div class="option-content">
+              <span class="option-icon">🌅</span>
+              <span class="option-text">Manhã (8h-12h)</span>
+            </div>
+          </label>
+          
+          <label class="preference-option" [class.selected]="selectedPreference === 'afternoon'">
+            <input 
+              type="radio" 
+              name="preference" 
+              value="afternoon" 
+              [(ngModel)]="selectedPreference" />
+            <div class="option-content">
+              <span class="option-icon">☀️</span>
+              <span class="option-text">Tarde (13h-17h)</span>
+            </div>
+          </label>
+          
+          <label class="preference-option" [class.selected]="selectedPreference === 'evening'">
+            <input 
+              type="radio" 
+              name="preference" 
+              value="evening" 
+              [(ngModel)]="selectedPreference" />
+            <div class="option-content">
+              <span class="option-icon">🌙</span>
+              <span class="option-text">Noite (17h-21h)</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Available Slots List -->
+      <div class="slots-section">
+        <div class="section-header">
+          <span class="section-icon">📅</span>
+          <h3>Horários Disponíveis</h3>
+        </div>
+        
+        <div class="slots-list">
+          <div class="slot-card" *ngFor="let slot of getEarliestSlots()" (click)="onSelectSlot(slot)">
+            <div class="slot-date">
+              <span class="slot-day">{{ slot.dayOfWeek }}</span>
+              <span class="slot-date-num">{{ slot.date }}</span>
+            </div>
+            <div class="slot-time">{{ slot.time }}</div>
+            <div class="slot-action">
+              <button class="slot-btn">Selecionar</button>
+            </div>
+          </div>
+          
+          <div class="no-slots" *ngIf="getEarliestSlots().length === 0">
+            <span class="no-slots-icon">😔</span>
+            <p>Não há horários disponíveis no momento</p>
+            <small>Entre na lista de espera para ser notificado</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waitlist Notification -->
+      <div class="waitlist-section">
+        <div class="section-header">
+          <span class="section-icon">🔔</span>
+          <h3>Receber Notificações</h3>
+        </div>
+        
+        <div class="waitlist-info">
+          <p class="info-text">
+            <strong>Não encontrou o horário ideal?</strong><br/>
+            Entre na lista de espera e seja notificado quando houver cancelamentos ou novos horários disponíveis.
+          </p>
+        </div>
+        
+        <div class="notification-toggle">
+          <label class="toggle-container">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="notifyOnCancellation" />
+            <span class="toggle-switch"></span>
+            <span class="toggle-label">Notificar sobre cancelamentos</span>
+          </label>
+        </div>
+        
+        <div class="contact-fields" *ngIf="notifyOnCancellation">
+          <div class="field-group">
+            <label class="field-label">Email</label>
+            <input 
+              type="email" 
+              class="field-input" 
+              [(ngModel)]="emailForNotification"
+              placeholder="seu@email.com" />
+          </div>
+          
+          <div class="field-group">
+            <label class="field-label">Telefone (opcional)</label>
+            <input 
+              type="tel" 
+              class="field-input" 
+              [(ngModel)]="phoneForNotification"
+              placeholder="(11) 99999-9999" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="closeModal()">
+        Cancelar
+      </button>
+      <button 
+        class="waitlist-btn" 
+        (click)="joinWaitlist()"
+        *ngIf="notifyOnCancellation">
+        <span class="btn-icon">🔔</span>
+        Entrar na Lista de Espera
+      </button>
+    </div>
+
+  </div>
+</div>
