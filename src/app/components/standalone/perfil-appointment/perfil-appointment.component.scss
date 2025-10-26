@@ -1,224 +1,480 @@
 @import '../../../../assets/style/color-palette.scss';
 
-.consultas-wrapper {
-  padding: 20px;
-  background-color: $white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba($nero-black, 0.05);
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.5s ease;
 }
 
-.consultas-top-bar {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Toolbar
+.appointments-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid $grey-whisper;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    gap: 15px;
-  }
+  gap: 20px;
+  padding: 20px;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
 }
 
-.search-filter-section {
+.toolbar-left {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-width: 300px;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
   display: flex;
   gap: 10px;
+}
 
-  @media screen and (max-width: 768px) {
+// Search Box
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+  
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+  }
+  
+  .search-input {
     width: 100%;
-    flex-direction: column;
+    padding: 12px 40px 12px 44px;
+    border: 2px solid $grey-whisper;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $neon-blue;
+      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+    }
+    
+    &::placeholder {
+      color: #999;
+    }
+  }
+  
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: $grey-whisper;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: #dc3545;
+      color: $white;
+    }
   }
 }
 
-.search-input,
-.filter-select {
-  padding: 10px 15px;
-  border: 1px solid $grey-whisper;
-  border-radius: 5px;
+// Filter Group
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: $ghost-white;
+  border-radius: 8px;
+  border: 2px solid $grey-whisper;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $neon-blue;
+  }
+  
+  .filter-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .filter-select {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $paua-blue;
+    cursor: pointer;
+    outline: none;
+    min-width: 180px;
+    
+    option {
+      background: $white;
+    }
+  }
+}
+
+// View Toggle Buttons
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid $grey-whisper;
+  background: $white;
+  border-radius: 8px;
   font-size: 1rem;
-  width: 250px; // Fixed width for inputs
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
-}
-
-.view-toggle-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.toggle-button {
-  background-color: $ghost-white; // Light background
-  color: $nero-black;
-  border: 1px solid $grey-whisper;
-  padding: 10px 20px;
-  border-radius: 5px;
+  font-weight: 600;
+  color: #666;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
+  
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+  
+  &:hover {
+    background: rgba($neon-blue, 0.05);
+    border-color: $neon-blue;
+    color: $neon-blue;
+  }
+  
+  &.active {
+    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    border-color: $neon-blue;
+    color: $white;
+    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+  }
 }
 
-.toggle-button:hover {
-  background-color: $periwinkle-blue; // Lighter blue on hover
-  color: $paua-blue; // Darker blue text
+// Appointments Section
+.appointments-section {
+  animation: slideIn 0.4s ease;
 }
 
-.toggle-button.active {
-  background-color: $neon-blue; // Active button blue
-  color: $white;
-  border-color: $neon-blue;
-  font-weight: bold;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.consultas-content {
-  padding-top: 10px;
-}
-
-h3 {
-  font-size: 1.6rem;
-  color: $cosmic-cobalt;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $periwinkle-blue;
+  
+  .section-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .title-icon {
+      font-size: 1.7rem;
+    }
+  }
+  
+  .results-count {
+    padding: 6px 14px;
+    background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $neon-blue;
+  }
 }
 
-.consultas-card-grid {
+// Appointments Grid
+.appointments-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Responsive card grid
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 20px;
 }
 
-.consultas-card {
-  background-color: $ghost-white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba($nero-black, 0.05);
+// Appointment Card
+.appointment-card {
+  position: relative;
+  background: $white;
+  border-radius: 12px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: $neon-blue;
+  }
+  
+  &.completed {
+    .card-badge {
+      background: linear-gradient(135deg, #28a745, #218838);
+    }
+  }
+  
+  &.scheduled {
+    .card-badge {
+      background: linear-gradient(135deg, $neon-blue, $blue-gem);
+      
+      &.pending {
+        background: linear-gradient(135deg, #ffc107, #e0a800);
+      }
+    }
+  }
+  
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: $white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    
+    .badge-icon {
+      font-size: 1rem;
+    }
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    border-bottom: 2px solid $periwinkle-blue;
+    
+    .doctor-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid $white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      flex-shrink: 0;
+    }
+    
+    .doctor-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      
+      .doctor-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $paua-blue;
+      }
+      
+      .doctor-specialty {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $neon-blue;
+      }
+    }
+  }
+  
+  .card-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .info-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: $ghost-white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .info-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      
+      .info-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .info-value {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $paua-blue;
+      }
+    }
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 2px solid $grey-whisper;
+    background: $ghost-white;
+  }
 }
 
-.consultas-card:hover {
-  transform: translateY(-5px);
-}
-
-.card-header {
+// Buttons
+.btn-details,
+.btn-cancel {
   display: flex;
   align-items: center;
-  padding: 15px;
-  background-color: $white;
-  border-bottom: 1px solid $grey-whisper;
-  gap: 15px;
-}
-
-.doctor-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid $periwinkle-blue;
-}
-
-.especialidade-tag {
-  background-color: $periwinkle-blue; // A light blue tag
-  color: $paua-blue; // Dark blue text
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.card-body {
-  padding: 15px;
-  flex-grow: 1; // Allows body to take up available space
-}
-
-.card-body p {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  color: $nero-black;
-}
-
-.card-body p strong {
-  color: $cosmic-cobalt; // Deep blue for strong labels
-}
-
-.card-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 15px;
-  border-top: 1px solid $grey-whisper;
-  background-color: $white;
-}
-
-.details-button,
-.cancel-button {
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-
-.details-button {
-  background-color: $neon-blue;
-  color: $white;
-  border: none;
-}
-
-.details-button:hover {
-  background-color: darken($neon-blue, 10%);
-}
-
-.cancel-button {
-  background-color: $red-alizarin; // Red for cancel button
-  color: $white;
-  border: none;
-}
-
-.cancel-button:hover {
-  background-color: darken($red-alizarin, 10%);
-}
-
-.status-tag {
-  padding: 4px 8px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-left: auto; // Push to the right
-}
-
-.status-confirmada {
-  background-color: $green-fruit-salad;
-  color: $white;
-}
-
-.status-pendente {
-  background-color: $yellow-kournikova;
-  color: $nero-black;
-}
-
-// Responsive adjustments for smaller screens
-@media screen and (max-width: 600px) {
-  .consultas-card-grid {
-    grid-template-columns: 1fr; // Single column on very small screens
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  .btn-icon {
+    font-size: 1rem;
   }
+}
 
-  .consultas-top-bar {
+.btn-details {
+  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  color: $white;
+  box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+  }
+}
+
+.btn-cancel {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: $white;
+  box-shadow: 0 4px 12px rgba(#dc3545, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(#dc3545, 0.4);
+  }
+}
+
+// Empty State
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  
+  .empty-text {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $paua-blue;
+  }
+  
+  .empty-subtext {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+}
+
+// Responsive
+@media (max-width: 1024px) {
+  .appointments-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .appointments-toolbar {
     flex-direction: column;
     align-items: stretch;
   }
-
-  .search-filter-section,
-  .view-toggle-buttons {
-    flex-direction: column;
+  
+  .toolbar-left,
+  .toolbar-right {
     width: 100%;
   }
-
-  .search-input,
-  .filter-select,
-  .toggle-button {
-    width: 100%;
+  
+  .toolbar-right {
+    justify-content: stretch;
+    
+    .view-toggle-btn {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+  
+  .appointments-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-box {
+    min-width: 100%;
   }
 }

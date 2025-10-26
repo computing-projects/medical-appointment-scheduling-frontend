@@ -1,72 +1,172 @@
-<div class="consultas-wrapper">
-  <div class="consultas-top-bar">
-    <div class="search-filter-section">
-      <input type="text"
-             placeholder="Buscar por profissional/especialidade..."
-             [(ngModel)]="searchQuery"
-             class="search-input">
-      <select [(ngModel)]="filterEspecialidade" class="filter-select">
-        <option value="">Todas as Especialidades</option>
-        <option *ngFor="let specialty of specialtyOptions" [value]="specialty">{{ specialty }}</option>
-      </select>
+<div class="appointments-container">
+  <!-- Top Section with Search & Filters -->
+  <div class="appointments-toolbar">
+    <div class="toolbar-left">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text"
+          placeholder="Buscar por médico ou especialidade..."
+          [(ngModel)]="searchQuery"
+          class="search-input">
+        <button class="clear-btn" *ngIf="searchQuery" (click)="searchQuery = ''">×</button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-icon">🏥</span>
+        <select [(ngModel)]="filterEspecialidade" class="filter-select">
+          <option value="">Todas as Especialidades</option>
+          <option *ngFor="let specialty of specialtyOptions" [value]="specialty">{{ specialty }}</option>
+        </select>
+      </div>
     </div>
 
-    <div class="view-toggle-buttons">
-      <button class="toggle-button"
-              (click)="showConsultasView('realizadas')"
-              [class.active]="selectedConsultasView === 'realizadas'">Realizadas</button>
-      <button class="toggle-button"
-              (click)="showConsultasView('agendadas')"
-              [class.active]="selectedConsultasView === 'agendadas'">Agendadas</button>
+    <div class="toolbar-right">
+      <button 
+        class="view-toggle-btn"
+        [class.active]="selectedConsultasView === 'realizadas'"
+        (click)="showConsultasView('realizadas')">
+        <span class="btn-icon">✓</span>
+        <span class="btn-text">Realizadas</span>
+      </button>
+      <button 
+        class="view-toggle-btn"
+        [class.active]="selectedConsultasView === 'agendadas'"
+        (click)="showConsultasView('agendadas')">
+        <span class="btn-icon">📅</span>
+        <span class="btn-text">Agendadas</span>
+      </button>
     </div>
   </div>
 
-  <div class="consultas-content">
-    <!-- Consultas Realizadas View -->
-    <div *ngIf="selectedConsultasView === 'realizadas'" class="realizadas-view">
-      <h3>Consultas Realizadas:</h3>
-      <div class="consultas-card-grid">
-        <div *ngFor="let consulta of filteredRealizadasConsultas" class="consultas-card">
-          <div class="card-header">
-            <img [src]="consulta.doctorPhoto" alt="Doctor Photo" class="doctor-photo">
-            <span class="especialidade-tag">{{ consulta.especialidade }}</span>
+  <!-- Consultas Realizadas View -->
+  <div *ngIf="selectedConsultasView === 'realizadas'" class="appointments-section">
+    <div class="section-header">
+      <h3 class="section-title">
+        <span class="title-icon">✓</span>
+        Consultas Realizadas
+      </h3>
+      <span class="results-count">{{ filteredRealizadasConsultas.length }} consulta(s)</span>
+    </div>
+
+    <div class="appointments-grid" *ngIf="filteredRealizadasConsultas.length > 0; else noRealizadas">
+      <div class="appointment-card completed" *ngFor="let consulta of filteredRealizadasConsultas">
+        <div class="card-badge">
+          <span class="badge-icon">✓</span>
+          <span class="badge-text">Realizada</span>
+        </div>
+
+        <div class="card-header">
+          <img [src]="consulta.doctorPhoto" alt="Doctor Photo" class="doctor-avatar">
+          <div class="doctor-info">
+            <h4 class="doctor-name">{{ consulta.profissional }}</h4>
+            <span class="doctor-specialty">{{ consulta.especialidade }}</span>
           </div>
-          <div class="card-body">
-            <p><strong>Profissional:</strong> {{ consulta.profissional }}</p>
-            <p><strong>Tipo:</strong> {{ consulta.tipo }}</p>
-            <p><strong>Data e Horário:</strong> {{ consulta.dataHora }}</p>
+        </div>
+
+        <div class="card-body">
+          <div class="info-row">
+            <span class="info-icon">📅</span>
+            <div class="info-content">
+              <span class="info-label">Data e Horário</span>
+              <span class="info-value">{{ consulta.dataHora }}</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <button class="details-button" (click)="openDoctorDetailsModal(consulta.id, 'realizada')">Ver Detalhes</button>
+
+          <div class="info-row">
+            <span class="info-icon">{{ consulta.tipo === 'Presencial' ? '🏥' : '💻' }}</span>
+            <div class="info-content">
+              <span class="info-label">Tipo de Consulta</span>
+              <span class="info-value">{{ consulta.tipo }}</span>
+            </div>
           </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-details" (click)="openDoctorDetailsModal(consulta.id, 'realizada')">
+            <span class="btn-icon">👁️</span>
+            <span class="btn-text">Ver Detalhes</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Consultas Agendadas View -->
-    <div *ngIf="selectedConsultasView === 'agendadas'" class="agendadas-view">
-      <h3>Status das Consultas Agendadas:</h3>
-      <div class="consultas-card-grid">
-        <div *ngFor="let consulta of filteredAgendadasConsultas" class="consultas-card">
-          <div class="card-header">
-            <span class="especialidade-tag">{{ consulta.especialidade }}</span>
-            <span class="status-tag" [ngClass]="{'status-confirmada': consulta.status === 'Confirmada', 'status-pendente': consulta.status === 'Pendente'}">{{ consulta.status }}</span>
+    <ng-template #noRealizadas>
+      <div class="empty-state">
+        <div class="empty-icon">🩺</div>
+        <p class="empty-text">Nenhuma consulta realizada encontrada</p>
+        <p class="empty-subtext">Tente ajustar os filtros de busca</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Consultas Agendadas View -->
+  <div *ngIf="selectedConsultasView === 'agendadas'" class="appointments-section">
+    <div class="section-header">
+      <h3 class="section-title">
+        <span class="title-icon">📅</span>
+        Consultas Agendadas
+      </h3>
+      <span class="results-count">{{ filteredAgendadasConsultas.length }} consulta(s)</span>
+    </div>
+
+    <div class="appointments-grid" *ngIf="filteredAgendadasConsultas.length > 0; else noAgendadas">
+      <div class="appointment-card scheduled" *ngFor="let consulta of filteredAgendadasConsultas">
+        <div class="card-badge" [class.confirmed]="consulta.status === 'Confirmada'" [class.pending]="consulta.status === 'Pendente'">
+          <span class="badge-icon">{{ consulta.status === 'Confirmada' ? '✓' : '⏳' }}</span>
+          <span class="badge-text">{{ consulta.status }}</span>
+        </div>
+
+        <div class="card-header">
+          <img [src]="consulta.doctorPhoto" alt="Doctor Photo" class="doctor-avatar">
+          <div class="doctor-info">
+            <h4 class="doctor-name">{{ consulta.doutor }}</h4>
+            <span class="doctor-specialty">{{ consulta.especialidade }}</span>
           </div>
-          <div class="card-body">
-            <p><strong>Data e Horário:</strong> {{ consulta.dataHora }}</p>
-            <p><strong>Doutor:</strong> {{ consulta.doutor }}</p>
-            <p><strong>Tipo:</strong> {{ consulta.tipo }}</p>
+        </div>
+
+        <div class="card-body">
+          <div class="info-row">
+            <span class="info-icon">📅</span>
+            <div class="info-content">
+              <span class="info-label">Data e Horário</span>
+              <span class="info-value">{{ consulta.dataHora }}</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <button class="cancel-button" (click)="cancelAppointment(consulta.id)">Cancelar Consulta</button>
-            <button class="details-button" (click)="openDoctorDetailsModal(consulta.id, 'agendada')">Ver Detalhes</button>
+
+          <div class="info-row">
+            <span class="info-icon">{{ consulta.tipo === 'Presencial' ? '🏥' : '💻' }}</span>
+            <div class="info-content">
+              <span class="info-label">Tipo de Consulta</span>
+              <span class="info-value">{{ consulta.tipo }}</span>
+            </div>
           </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-cancel" (click)="cancelAppointment(consulta.id)">
+            <span class="btn-icon">❌</span>
+            <span class="btn-text">Cancelar</span>
+          </button>
+          <button class="btn-details" (click)="openDoctorDetailsModal(consulta.id, 'agendada')">
+            <span class="btn-icon">👁️</span>
+            <span class="btn-text">Ver Detalhes</span>
+          </button>
         </div>
       </div>
     </div>
+
+    <ng-template #noAgendadas>
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <p class="empty-text">Nenhuma consulta agendada encontrada</p>
+        <p class="empty-subtext">Você pode agendar uma nova consulta na aba "Agendamento"</p>
+      </div>
+    </ng-template>
   </div>
 </div>
 
+<!-- Doctor Details Modal -->
 <med-perfil-doctor-modal
   *ngIf="isDoctorModalOpen"
   [appointment]="selectedDoctorDetails"
