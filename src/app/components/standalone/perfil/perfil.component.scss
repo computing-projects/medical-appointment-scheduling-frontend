@@ -1,153 +1,519 @@
-/* src/app/components/standalone/perfil/perfil.component.scss */
 @import '../../../../assets/style/color-palette.scss';
 
 .perfil-container {
-  padding: 20px;
-  background-color: $white; // White background for the main profile area
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba($nero-black, 0.08); // A more pronounced shadow
-  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $ghost-white;
+  overflow: hidden;
 }
 
+// Banner Section with Gradient
+.perfil-banner {
+  position: relative;
+  margin: -20px -20px 0 -20px;
+  height: 200px;
+  overflow: hidden;
+  
+  .banner-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, $neon-blue 0%, $blue-gem 50%, $paua-blue 100%);
+    opacity: 0.95;
+  }
+}
+
+.profile-header-content {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 0 32px;
+  height: 100%;
+  padding-bottom: 20px;
+}
+
+.profile-photo-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  
+  .profile-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid $white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .photo-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid $white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    
+    .badge-icon {
+      color: $white;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  }
+}
+
+.profile-header-info {
+  flex: 1;
+  padding-bottom: 8px;
+  
+  .profile-name {
+    margin: 0 0 4px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile-subtitle {
+    margin: 0 0 12px 0;
+    font-size: 1rem;
+    color: rgba($white, 0.9);
+    font-weight: 500;
+  }
+  
+  .profile-quick-info {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .info-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba($white, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: $white;
+    font-weight: 500;
+    border: 1px solid rgba($white, 0.3);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba($white, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .chip-icon {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Tab Navigation
 .perfil-header-nav {
   display: flex;
-  justify-content: flex-start; // Align buttons to the start
-  border-bottom: 1px solid $grey-whisper; // A light border at the bottom
-  margin-bottom: 20px;
-  gap: 10px; // Space between buttons
+  gap: 8px;
+  padding: 0 24px;
+  background: $white;
+  border-bottom: 2px solid $grey-whisper;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .perfil-nav-button {
-  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: transparent;
   border: none;
-  padding: 10px 15px;
-  font-size: 1.1rem;
-  color: $nero-black; // Dark text
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
   cursor: pointer;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
-  position: relative; // For the active indicator
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 8px 8px 0 0;
+  
+  .nav-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-text {
+    font-weight: 600;
+  }
+  
+  &:hover {
+    background: rgba($neon-blue, 0.05);
+    color: $neon-blue;
+    
+    .nav-icon {
+      transform: scale(1.1);
+    }
+  }
+  
+  &.active {
+    color: $neon-blue;
+    background: rgba($neon-blue, 0.08);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: $neon-blue;
+      border-radius: 3px 3px 0 0;
+    }
+  }
 }
 
-.perfil-nav-button:hover {
-  color: $neon-blue; // Blue on hover
-}
-
-.perfil-nav-button.active {
-  color: $neon-blue;
-  font-weight: bold;
-}
-
-.perfil-nav-button.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; // Align with the border
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: $neon-blue; // A blue underline for the active tab
-}
-
-
+// Content Section
 .perfil-content {
-  padding-top: 20px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $grey-whisper;
+    border-radius: 10px;
+    
+    &:hover {
+      background: $periwinkle-blue;
+    }
+  }
 }
 
 .informacoes-tab {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 24px;
+  animation: fadeIn 0.5s ease;
 }
 
-.profile-photo-section {
-  text-align: center;
-  margin-bottom: 20px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%; // Circular photo
-  object-fit: cover;
-  border: 3px solid $neon-blue; // Blue border around the photo
-  box-shadow: 0 2px 10px rgba($nero-black, 0.1);
+// Info Cards
+.info-card {
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+  
+  .card-header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    border-bottom: 2px solid $periwinkle-blue;
+  }
+  
+  .card-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .title-icon {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .card-content {
+    padding: 24px;
+  }
 }
 
+// Profile Details Grid
 .profile-details-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); // Responsive grid
-  gap: 20px;
-  background-color: $ghost-white; // Light background for the details grid
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: inset 0 1px 5px rgba($nero-black, 0.02); // Subtle inner shadow
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
 }
 
 .detail-item {
   display: flex;
-  flex-direction: column;
-}
-
-.detail-item label {
-  font-weight: bold;
-  color: $cosmic-cobalt; // Deep blue for labels
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-}
-
-.detail-item span {
-  font-size: 1rem;
-  color: $nero-black; // Dark text for values
-}
-
-.summary-stats {
-  background-color: $periwinkle-blue; // A soft blue background for stats
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba($nero-black, 0.05);
-}
-
-.summary-stats h3 {
-  color: $paua-blue; // A dark blue for the summary heading
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px dashed rgba($paua-blue, 0.3); // Dashed border for separation
-}
-
-.stat-item:last-child {
-  border-bottom: none;
-}
-
-.stat-item span {
-  font-size: 1.1rem;
-  color: $paua-blue;
-}
-
-.stat-item strong {
-  font-size: 1.2rem;
-  color: $paua-blue;
-}
-
-// Responsive adjustments
-@media screen and (max-width: 768px) {
-  .perfil-container {
-    margin: 10px;
-    padding: 15px;
+  gap: 14px;
+  padding: 16px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 1px solid $grey-whisper;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba($periwinkle-blue, 0.3);
+    border-color: $periwinkle-blue;
+    transform: translateX(4px);
   }
+  
+  .detail-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  
+  .detail-content {
+    flex: 1;
+    min-width: 0;
+    
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    span {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $paua-blue;
+      word-break: break-word;
+    }
+  }
+}
 
-  .perfil-header-nav {
-    flex-wrap: wrap; // Allow buttons to wrap
+// Health Plans
+.health-plans-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.plan-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
+  border: 2px solid $neon-blue;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $paua-blue;
+  transition: all 0.3s ease;
+  
+  .plan-icon {
+    font-size: 1rem;
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  &:hover {
+    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+    
+    .plan-icon {
+      color: $white;
+    }
+  }
+}
+
+// Activity Summary Section
+.summary-section {
+  .section-title {
+    margin: 0 0 20px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid $periwinkle-blue;
+    
+    .title-icon {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.summary-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: $neon-blue;
+  }
+  
+  .stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    
+    .stat-icon {
+      font-size: 2rem;
+    }
+    
+    &.consultas {
+      background: linear-gradient(135deg, rgba(#2196f3, 0.15), rgba(#1976d2, 0.15));
+    }
+    
+    &.exames {
+      background: linear-gradient(135deg, rgba(#9c27b0, 0.15), rgba(#7b1fa2, 0.15));
+    }
+    
+    &.cirurgias {
+      background: linear-gradient(135deg, rgba(#f44336, 0.15), rgba(#d32f2f, 0.15));
+    }
+    
+    &.procedimentos {
+      background: linear-gradient(135deg, rgba(#4caf50, 0.15), rgba(#388e3c, 0.15));
+    }
+    
+    &.cancelados {
+      background: linear-gradient(135deg, rgba(#ff9800, 0.15), rgba(#f57c00, 0.15));
+    }
   }
+  
+  .stat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .stat-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $paua-blue;
+      line-height: 1;
+    }
+  }
+}
 
+.tab-wrapper {
+  animation: fadeIn 0.5s ease;
+}
+
+// Responsive
+@media (max-width: 1024px) {
+  .summary-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-banner {
+    height: 180px;
+  }
+  
+  .profile-header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .profile-header-info {
+    .profile-quick-info {
+      justify-content: center;
+    }
+  }
+  
+  .perfil-header-nav {
+    padding: 0 12px;
+    overflow-x: auto;
+    
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+  }
+  
+  .perfil-nav-button {
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .perfil-content {
+    padding: 16px;
+  }
+  
   .profile-details-grid {
-    grid-template-columns: 1fr; // Single column on small screens
+    grid-template-columns: 1fr;
+  }
+  
+  .summary-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .health-plans-list {
+    justify-content: center;
   }
 }
