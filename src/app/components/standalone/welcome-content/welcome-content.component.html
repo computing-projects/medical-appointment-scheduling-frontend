@@ -4,21 +4,17 @@
         <button class="nav-button" (click)="showView('agendamento')" [class.active]="selectedView === 'agendamento'">Agendamento</button>
         <button class="nav-button" (click)="showView('perfil')" [class.active]="selectedView === 'perfil'">Perfil</button>
         <button class="nav-button" (click)="showView('perfil-medico')" [class.active]="selectedView === 'perfil-medico'">Perfil Med</button>
+        <button class="nav-button" (click)="showView('gerenciar-medicos')" [class.active]="selectedView === 'gerenciar-medicos'">Gerenciar Médicos</button>
     </nav>
     
     <section class="welcome-message">
-        <div *ngIf="selectedView === 'home'">
-            <h2>Seja bem vindo, Fulano!</h2>
-            <p>Clique na aba “Agendamentos” para consultar a lista de médicos credenciados e agende sua consulta!</p>
-            <p>Para visualizar suas informações pessoais, clique na aba “Perfil”</p>
-            <div>
-                <img src="../../../../assets/images/client-nav/anamnese.png" alt="Anamnese">
-                <img src="../../../../assets/images/client-nav/schedule.png" alt="Agendamento">
-            </div>
-            <p>“Você sabia que caminhar 30 minutos por dia melhora sua imunidade?”</p>
-        </div>
+        <med-home-dashboard 
+            *ngIf="selectedView === 'home'" 
+            (navigateToView)="onNavigateToView($event)">
+        </med-home-dashboard>
         <med-scheduling *ngIf="selectedView === 'agendamento'"></med-scheduling>
         <med-perfil *ngIf="selectedView === 'perfil'"></med-perfil>
         <med-perfil-doctor *ngIf="selectedView === 'perfil-medico'"></med-perfil-doctor>
+        <med-manager-doctors *ngIf="selectedView === 'gerenciar-medicos'"></med-manager-doctors>
     </section>
 </div>

@@ -1,31 +1,19 @@
 @import '../../../../assets/style/color-palette.scss';
+@import '../../../../assets/style/mixins.scss';
 
-// Styling for the host element of the component.
-// The `med-welcome-content` class is applied via @HostBinding in your .ts file.
 :host.med-welcome-content {
-  display: flex;
-  align-items: center;
+  @include flex-center;
   width: 100%;
-  min-height: 60vh; // Ensure it takes up a good portion of the screen
-  background-color: $grey-whisper; // Using a light grey from your palette
-  padding: 20px; // Padding around the whole welcome area
-  // Uncomment and adjust if you want a background image for the entire welcome content area
-  /*
-  background-image: url('../../../../assets/images/hero-bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  */
+  min-height: 60vh;
+  background-color: $grey-whisper;
+  padding: 20px;
 }
 
-// Styling for the inner content container (the two-column layout)
 .welcome-container {
+  @include card(0, 8px);
   display: flex;
-  flex: 1; /* Allows the inner container to expand */
-  background-color: $white; // White background for the inner content block
-  box-shadow: 0 2px 10px rgba($nero-black, 0.05); // Using a dark grey from your palette for shadow
-  border-radius: 8px;
-  width: 100%; // Ensure it takes full width of its parent
+  flex: 1;
+  width: 100%;
 }
 
 .sidebar {
@@ -33,59 +21,75 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background-color: $ghost-white; // A very light background for the sidebar
+  background-color: $ghost-white;
   padding: 20px;
-  border-right: 1px solid $grey-whisper; // Using a light grey for the border
+  border-right: 1px solid $grey-whisper;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba($nero-black, 0.03); // Lighter shadow for the sidebar
+  box-shadow: 0 2px 5px rgba($nero-black, 0.03);
 }
 
 .nav-button {
-  background-color: $white; // Using a vibrant blue from your palette for buttons
-  color: $neon-blue; // White text for buttons
-  border: none;
-  padding: 15px 20px;
+  @include button($white, $neon-blue, 15px 20px);
   text-align: left;
-  cursor: pointer;
   font-size: 1.1rem;
   font-weight: 500;
   width: 100%;
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.nav-button:hover {
-  background-color: darken($white, 10%); // Darken the blue on hover
-  transform: translateY(-2px);
+  
+  &:hover {
+    background: linear-gradient(135deg, darken($white, 5%) 0%, darken($white, 10%) 100%);
+  }
+  
+  &.active {
+    @include gradient-bg($neon-blue, darken($neon-blue, 10%));
+    color: $white;
+  }
 }
 
 .welcome-message {
   flex: 1;
-  padding: 30px 10px 10px 10px;
-  // background-color is inherited from .welcome-container
+  padding: 30px 20px;
   border-radius: 5px;
   margin-left: 20px;
+  overflow-y: auto;
+  @include custom-scrollbar();
 }
 
-.welcome-message h2 {
-  font-size: 36px;
-  color: $cosmic-cobalt; // Using a deep blue from your palette for the heading
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
-
-.welcome-message p {
-  font-size: 18px;
-  line-height: 1.7;
-  color: $nero-black; // Using a dark grey from your palette for paragraph text
-  margin-bottom: 15px;
-}
-
-@media screen and (min-width: 769px) {
-  .welcome-message h2 {
-    font-size: 44px;
+@include tablet {
+  .sidebar {
+    width: 200px;
+    padding: 15px;
   }
-  .welcome-message p {
-    font-size: 20px;
+
+  .nav-button {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+}
+
+@include mobile {
+  :host.med-welcome-content {
+    padding: 10px;
+  }
+
+  .welcome-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+    border-right: none;
+    border-bottom: 1px solid $grey-whisper;
+  }
+
+  .nav-button {
+    min-width: 120px;
+  }
+
+  .welcome-message {
+    margin-left: 0;
+    padding: 15px 10px;
   }
 }

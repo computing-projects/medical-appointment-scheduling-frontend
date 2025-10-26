@@ -1,26 +1,38 @@
-import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
-
+import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HomeDashboardComponent } from '../home-dashboard/home-dashboard.component';
 import { SchedulingComponent } from '../scheduling/scheduling.component';
 import { PerfilComponent } from '../perfil/perfil.component';
 import { PerfilDoctorComponent } from '../perfil-doctor/perfil-doctor.component';
+import { ManagerDoctorsComponent } from '../manager-doctors/manager-doctors.component';
+
+type ViewType = 'home' | 'agendamento' | 'perfil' | 'perfil-medico' | 'gerenciar-medicos';
 
 @Component({
   selector: 'med-welcome-content',
   standalone: true,
-  imports: [CommonModule, SchedulingComponent, PerfilComponent, PerfilDoctorComponent],
+  imports: [
+    CommonModule,
+    HomeDashboardComponent,
+    SchedulingComponent,
+    PerfilComponent,
+    PerfilDoctorComponent,
+    ManagerDoctorsComponent
+  ],
   templateUrl: './welcome-content.component.html',
   styleUrl: './welcome-content.component.scss',
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WelcomeContentComponent {
-  @HostBinding('class.med-welcome-content') isActive = true;
+  @HostBinding('class.med-welcome-content') readonly hostClass = true;
 
-  // Property to hold the currently selected view
-  selectedView: 'home' | 'agendamento' | 'perfil' | 'perfil-medico' = 'home';
+  selectedView: ViewType = 'home';
 
-  // Method to change the selected view
-  showView(view: 'home' | 'agendamento' | 'perfil' | 'perfil-medico') {
+  showView(view: ViewType): void {
     this.selectedView = view;
+  }
+
+  onNavigateToView(view: string): void {
+    this.showView(view as ViewType);
   }
 }
