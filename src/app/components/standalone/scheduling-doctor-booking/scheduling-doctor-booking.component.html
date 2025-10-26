@@ -1,0 +1,115 @@
+<div class="booking-container">
+  <!-- Header with Doctor Info -->
+  <div class="booking-header">
+    <div class="header-left">
+      <div class="doctor-info">
+        <strong>{{ doctor.name }}</strong>
+        <span class="specialty">{{ doctor.specialty }}</span>
+      </div>
+      <div class="plans-info">
+        <small>Planos aceitos: {{ doctor.acceptedPlans.join(', ') }}</small>
+      </div>
+    </div>
+    <button class="waitlist-trigger-btn" (click)="openWaitlistModal()" title="Lista de Espera">
+      <span class="btn-icon">🔔</span>
+      <span class="btn-text">Lista de Espera</span>
+    </button>
+  </div>
+
+  <!-- Appointment Type Toggle -->
+  <div class="type-toggle">
+    <button 
+      class="toggle-btn"
+      [class.active]="appointmentType === 'local'"
+      (click)="setAppointmentType('local')">
+      📍 Presencial
+    </button>
+    <button 
+      class="toggle-btn"
+      [class.active]="appointmentType === 'remote'"
+      (click)="setAppointmentType('remote')">
+      💻 Online
+    </button>
+  </div>
+
+  <!-- Week Calendar View -->
+  <div class="calendar-view">
+    <div class="week-header">
+      <div class="week-label">Próximos 7 dias</div>
+      <div class="legend">
+        <span class="legend-item"><span class="dot available"></span> Disponível</span>
+        <span class="legend-item"><span class="dot occupied"></span> Ocupado</span>
+      </div>
+    </div>
+    
+    <!-- Instruction when no slot selected -->
+    <div class="selection-instruction" *ngIf="!selectedSlot">
+      <span class="instruction-icon">👆</span>
+      <p>Clique em um horário disponível para agendar sua consulta</p>
+    </div>
+
+    <div class="week-grid">
+      <div 
+        class="day-column" 
+        *ngFor="let day of weekSchedule"
+        [class.today]="day.dayName === 'Hoje'">
+        
+        <!-- Day Header -->
+        <div class="day-header">
+          <div class="day-name">{{ day.dayName }}</div>
+          <div class="day-number">{{ day.dayNumber }}</div>
+          <div class="available-count">{{ getAvailableCount(day) }} vagas</div>
+        </div>
+
+        <!-- Time Slots -->
+        <div class="slots-container">
+          <button
+            *ngFor="let slot of day.slots"
+            class="time-slot"
+            [class.available]="slot.available"
+            [class.occupied]="!slot.available"
+            [class.selected]="selectedSlot?.day === day && selectedSlot?.slot === slot"
+            [disabled]="!slot.available"
+            (click)="selectSlot(day, slot)">
+            {{ slot.time }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Slot Info & Confirm Button -->
+  <div class="booking-footer" *ngIf="selectedSlot">
+    <div class="selection-summary">
+      <div class="summary-icon">📅</div>
+      <div class="summary-details">
+        <div class="summary-label">Agendamento selecionado:</div>
+        <div class="summary-text">
+          <strong>{{ selectedSlot.day.dateString }}</strong> às 
+          <strong>{{ selectedSlot.slot.time }}</strong>
+          <span class="type-badge">{{ appointmentType === 'local' ? 'Presencial' : 'Online' }}</span>
+        </div>
+      </div>
+    </div>
+    <button class="confirm-btn" (click)="confirmBooking()">
+      Confirmar Agendamento
+    </button>
+  </div>
+
+  <!-- Appointment Confirmation Modal -->
+  <med-scheduling-doctor-appointment-modal
+    [isOpen]="isModalOpen"
+    [appointmentDetails]="modalAppointmentDetails"
+    (close)="closeModal()"
+    (confirm)="onAppointmentConfirmed($event)">
+  </med-scheduling-doctor-appointment-modal>
+
+  <!-- Waitlist Modal -->
+  <med-scheduling-doctor-waitlist-modal
+    [isOpen]="isWaitlistModalOpen"
+    [doctor]="doctor"
+    [appointmentType]="appointmentType"
+    (close)="closeWaitlistModal()"
+    (selectSlot)="onWaitlistSlotSelected($event)">
+  </med-scheduling-doctor-waitlist-modal>
+</div>
