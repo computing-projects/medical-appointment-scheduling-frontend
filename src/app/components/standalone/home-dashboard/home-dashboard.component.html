@@ -1,0 +1,91 @@
+<div class="home-content">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">Olá, {{userName}}! 👋</h1>
+        <p class="hero-subtitle">Bem-vindo ao seu portal de saúde. Gerencie suas consultas, perfil e muito mais em um só lugar.</p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+        <div class="stat-card stat-appointments">
+            <div class="stat-icon">📅</div>
+            <div class="stat-content">
+                <span class="stat-value">{{upcomingAppointments}}</span>
+                <span class="stat-label">Consultas Agendadas</span>
+            </div>
+        </div>
+        <div class="stat-card stat-history">
+            <div class="stat-icon">📋</div>
+            <div class="stat-content">
+                <span class="stat-value">{{totalConsultations}}</span>
+                <span class="stat-label">Consultas Realizadas</span>
+            </div>
+        </div>
+        <div class="stat-card stat-pending">
+            <div class="stat-icon">⏰</div>
+            <div class="stat-content">
+                <span class="stat-value">{{pendingTasks}}</span>
+                <span class="stat-label">Ações Pendentes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions-section">
+        <h2 class="section-title">Ações Rápidas</h2>
+        <div class="action-cards">
+            <div class="action-card" (click)="navigateTo('agendamento')">
+                <div class="action-icon-wrapper schedule">
+                    <img src="../../../../assets/images/client-nav/schedule.png" alt="Agendar Consulta">
+                </div>
+                <h3>Agendar Consulta</h3>
+                <p>Encontre médicos e agende sua consulta rapidamente</p>
+                <button class="action-btn" (click)="$event.stopPropagation(); navigateTo('agendamento')">Agendar Agora →</button>
+            </div>
+            <div class="action-card" (click)="navigateTo('perfil')">
+                <div class="action-icon-wrapper profile">
+                    <img src="../../../../assets/images/client-nav/anamnese.png" alt="Ver Perfil">
+                </div>
+                <h3>Meu Perfil</h3>
+                <p>Visualize e edite suas informações pessoais e médicas</p>
+                <button class="action-btn" (click)="$event.stopPropagation(); navigateTo('perfil')">Ver Perfil →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Tips -->
+    <div class="health-tips-section">
+        <div class="tip-card">
+            <div class="tip-icon">💡</div>
+            <div class="tip-content">
+                <h3>Dica de Saúde do Dia</h3>
+                <p>Você sabia que caminhar 30 minutos por dia melhora sua imunidade e reduz o risco de doenças cardiovasculares?</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Appointment (if any) -->
+    <div class="next-appointment-section" *ngIf="hasUpcomingAppointment">
+        <h2 class="section-title">Próxima Consulta</h2>
+        <div class="appointment-highlight">
+            <div class="appointment-date">
+                <div class="date-day">{{nextAppointment.day}}</div>
+                <div class="date-month">{{nextAppointment.month}}</div>
+            </div>
+            <div class="appointment-details">
+                <h3>{{nextAppointment.doctorName}} - {{nextAppointment.specialty}}</h3>
+                <p class="appointment-time">⏰ {{nextAppointment.time}}</p>
+                <p class="appointment-type">📍 {{nextAppointment.type}} - {{nextAppointment.location}}</p>
+            </div>
+            <button class="view-details-btn" (click)="viewAppointmentDetails()">Ver Detalhes</button>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor Appointment Details Modal -->
+<med-perfil-doctor-modal
+    *ngIf="isModalOpen"
+    [appointment]="selectedAppointment"
+    (closeModal)="closeAppointmentModal()">
+</med-perfil-doctor-modal>
+
