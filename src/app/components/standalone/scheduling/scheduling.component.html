@@ -1,6 +1,31 @@
-<!-- src/app/components/standalone/agendamento/agendamento.component.html -->
-<div>
-  <h2>Gerenciar Agendamentos</h2>
-  <p>Aqui você verá uma lista dos seus próximos e passados agendamentos.</p>
-  <!-- Add forms, tables, calendar components for scheduling here -->
+<div class="scheduling-container">
+  <div class="doctor-list-section">
+    <med-scheduling-doctor-search-list
+      (showDoctorInfo)="onShowDoctorInfo($event)"
+      (showDoctorAgenda)="onShowDoctorAgenda($event)">
+    </med-scheduling-doctor-search-list>
+  </div>
+
+  <!-- Right side only appears when a detail is active -->
+  <div class="doctor-detail-section" *ngIf="activeDetailView && selectedDoctor">
+    <div *ngIf="activeDetailView === 'info'" class="detail-content-wrapper">
+      <div class="detail-header">
+        <h3>Informações do Doutor</h3>
+        <button class="close-detail-button" (click)="onCloseDetailView()">×</button>
+      </div>
+      <div class="info-wrapper">
+        <med-scheduling-doctor-info-modal [doctor]="selectedDoctor"></med-scheduling-doctor-info-modal>
+      </div>
+    </div>
+
+    <div *ngIf="activeDetailView === 'agenda'" class="detail-content-wrapper">
+      <div class="detail-header">
+        <h3>Agenda de {{ selectedDoctor.name }}</h3>
+        <button class="close-detail-button" (click)="onCloseDetailView()">×</button>
+      </div>
+      <div class="booking-wrapper">
+        <med-scheduling-doctor-booking [doctor]="selectedDoctor"></med-scheduling-doctor-booking>
+      </div>
+    </div>
+  </div>
 </div>
