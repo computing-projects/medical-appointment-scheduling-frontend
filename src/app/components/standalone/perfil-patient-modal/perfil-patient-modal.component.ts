@@ -27,4 +27,20 @@ export class PerfilPatientModalComponent {
   @Input() appointment: PatientDetails | null = null;
   @Output() closeModal = new EventEmitter<void>();
 
+  getStatusIcon(status: string | undefined): string {
+    switch (status) {
+      case 'Realizada':
+        return '✓';
+      case 'Agendada':
+        return '📅';
+      case 'Cancelada':
+        return '❌';
+      case 'Pendente':
+        return '⏳';
+      case 'Aguardando':
+        return '⏰';
+      default:
+        return '📋';
+    }
+  }
 }
