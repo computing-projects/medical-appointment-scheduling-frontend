@@ -1,0 +1,23 @@
+<div class="manager-doctors-container">
+  <!-- Top Bar with Tabs -->
+  <div class="tab-bar">
+    <button 
+      class="tab-button"
+      [class.active]="selectedTab === 'cadastrar'"
+      (click)="selectTab('cadastrar')">
+      Cadastrar Médicos
+    </button>
+    <button 
+      class="tab-button"
+      [class.active]="selectedTab === 'editar'"
+      (click)="selectTab('editar')">
+      Editar Médicos
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <med-manager-doctor-register *ngIf="selectedTab === 'cadastrar'"></med-manager-doctor-register>
+    <med-manager-doctor-edit *ngIf="selectedTab === 'editar'"></med-manager-doctor-edit>
+  </div>
+</div>
