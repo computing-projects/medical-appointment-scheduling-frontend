@@ -32,7 +32,24 @@ export class PerfilDoctorModalComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   getStarsArray(rating: number): number[] {
-    return Array(rating).fill(0);
+    return Array(Math.floor(rating)).fill(0);
+  }
+
+  getStatusIcon(status: string | undefined): string {
+    switch (status) {
+      case 'Realizada':
+        return '✓';
+      case 'Agendada':
+        return '📅';
+      case 'Cancelada':
+        return '❌';
+      case 'Pendente':
+        return '⏳';
+      case 'Aguardando':
+        return '⏰';
+      default:
+        return '📋';
+    }
   }
 }
 

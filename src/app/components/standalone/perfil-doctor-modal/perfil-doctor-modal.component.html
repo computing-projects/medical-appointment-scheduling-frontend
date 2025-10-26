@@ -1,57 +1,147 @@
 <div class="modal-overlay" (click)="closeModal.emit()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <!-- Top Bar -->
+    <!-- Close Button -->
+    <button class="close-button" (click)="closeModal.emit()">
+      <span class="close-icon">×</span>
+    </button>
+
+    <!-- Modal Header with Gradient -->
     <div class="modal-header">
-      <div class="title-and-status">
-        <h2 class="modal-title">Consulta</h2>
-        <span class="appointment-status" [ngClass]="{
-          'status-realizada': appointment?.appointmentStatus === 'Realizada',
-          'status-agendada': appointment?.appointmentStatus === 'Agendada',
-          'status-cancelada': appointment?.appointmentStatus === 'Cancelada',
-          'status-pendente': appointment?.appointmentStatus === 'Pendente',
-          'status-aguardando': appointment?.appointmentStatus === 'Aguardando'
-        }">
-          {{ appointment?.appointmentStatus }}
-        </span>
+      <div class="header-gradient"></div>
+      <div class="header-content">
+        <div class="header-top">
+          <h2 class="modal-title">
+            <span class="title-icon">📋</span>
+            Detalhes da Consulta
+          </h2>
+          <span class="appointment-status" [ngClass]="{
+            'status-realizada': appointment?.appointmentStatus === 'Realizada',
+            'status-agendada': appointment?.appointmentStatus === 'Agendada',
+            'status-cancelada': appointment?.appointmentStatus === 'Cancelada',
+            'status-pendente': appointment?.appointmentStatus === 'Pendente',
+            'status-aguardando': appointment?.appointmentStatus === 'Aguardando'
+          }">
+            <span class="status-icon">{{ getStatusIcon(appointment?.appointmentStatus) }}</span>
+            {{ appointment?.appointmentStatus }}
+          </span>
+        </div>
+
+        <div class="appointment-info-chips">
+          <span class="info-chip">
+            <span class="chip-icon">{{ appointment?.appointmentType === 'Presencial' ? '🏥' : '💻' }}</span>
+            {{ appointment?.appointmentType }}
+          </span>
+          <span class="info-chip" *ngIf="appointment?.dataHora">
+            <span class="chip-icon">📅</span>
+            {{ appointment?.dataHora }}
+          </span>
+        </div>
+
+        <a *ngIf="appointment?.appointmentLink" 
+           [href]="appointment?.appointmentLink" 
+           target="_blank" 
+           class="online-link">
+          <span class="link-icon">🔗</span>
+          <span class="link-text">Acessar Consulta Online</span>
+          <span class="link-arrow">→</span>
+        </a>
       </div>
-      <p class="appointment-type">Tipo: {{ appointment?.appointmentType }}</p>
-      <a *ngIf="appointment?.appointmentLink" [href]="appointment?.appointmentLink" target="_blank" class="appointment-link">Link da Consulta Online</a>
-      <button class="close-button" (click)="closeModal.emit()">×</button>
     </div>
 
-    <!-- Middle-Top: Doctor Info -->
-    <div class="modal-section doctor-info-section">
-      <img [src]="appointment?.doctorPhoto" alt="Doctor Photo" class="doctor-photo">
-      <div class="doctor-details">
-        <h3>Dr(a). {{ appointment?.doctorName }} {{ appointment?.doctorLastName }}</h3>
-        <p><strong>Especialidade:</strong> {{ appointment?.doctorEspecialty }}</p>
-        <p><strong>CRM:</strong> {{ appointment?.doctorCRM }}</p>
-        <p><strong>Contato:</strong> {{ appointment?.doctorContact }}</p>
-        <p><strong>Idade:</strong> {{ appointment?.doctorAge }}</p>
-        <div class="star-rating">
-          <span *ngFor="let _ of getStarsArray(appointment?.doctorReview || 0)" class="star filled">★</span>
-          <span *ngFor="let _ of getStarsArray(5 - (appointment?.doctorReview || 0))" class="star empty">★</span>
+    <!-- Doctor Information Card -->
+    <div class="doctor-card">
+      <div class="doctor-card-header">
+        <img [src]="appointment?.doctorPhoto" alt="Doctor Photo" class="doctor-avatar">
+        <div class="doctor-badge">
+          <span class="badge-icon">✓</span>
+        </div>
+      </div>
+
+      <div class="doctor-card-body">
+        <h3 class="doctor-name">Dr(a). {{ appointment?.doctorName }} {{ appointment?.doctorLastName }}</h3>
+        <p class="doctor-specialty">{{ appointment?.doctorEspecialty }}</p>
+
+        <div class="doctor-rating">
+          <div class="stars">
+            <span *ngFor="let _ of getStarsArray(appointment?.doctorReview || 0)" class="star filled">★</span>
+            <span *ngFor="let _ of getStarsArray(5 - (appointment?.doctorReview || 0))" class="star empty">★</span>
+          </div>
+          <span class="rating-text">{{ appointment?.doctorReview }}/5</span>
+        </div>
+
+        <div class="doctor-details-grid">
+          <div class="detail-item">
+            <span class="detail-icon">🆔</span>
+            <div class="detail-content">
+              <span class="detail-label">CRM</span>
+              <span class="detail-value">{{ appointment?.doctorCRM }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-icon">📞</span>
+            <div class="detail-content">
+              <span class="detail-label">Contato</span>
+              <span class="detail-value">{{ appointment?.doctorContact }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-icon">🎂</span>
+            <div class="detail-content">
+              <span class="detail-label">Idade</span>
+              <span class="detail-value">{{ appointment?.doctorAge }} anos</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Middle-Bottom: Motivo da Consulta -->
-    <div class="modal-section motivo-section">
-      <h3>Motivo da Consulta:</h3>
-      <div class="motivo-box">
-        <p>{{ appointment?.reason }}</p>
+    <!-- Appointment Reason Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <h3 class="section-title">
+          <span class="section-icon">💬</span>
+          Motivo da Consulta
+        </h3>
+      </div>
+      <div class="section-body">
+        <div class="reason-box">
+          <p class="reason-text">{{ appointment?.reason }}</p>
+        </div>
       </div>
     </div>
 
-    <!-- Bottom: Histórico de Consultas -->
-    <div class="modal-section history-section">
-      <h3>Histórico de Consultas com este Doutor:</h3>
-      <ul class="history-list" *ngIf="appointment?.history; else noHistory">
-        <li *ngFor="let item of appointment?.history">
-          {{ item?.date }} - {{ item?.type }}
-        </li>
-      </ul>
-      <ng-template #noHistory><p class="no-history-message">Nenhum histórico de consultas com este doutor.</p></ng-template>
+    <!-- Consultation History Section -->
+    <div class="section-card">
+      <div class="section-header">
+        <h3 class="section-title">
+          <span class="section-icon">📜</span>
+          Histórico com este Médico
+        </h3>
+        <span class="history-count" *ngIf="appointment && appointment.history && appointment.history.length > 0">
+          {{ appointment.history.length }} consulta(s)
+        </span>
+      </div>
+      <div class="section-body">
+        <div class="history-timeline" *ngIf="appointment && appointment.history && appointment.history.length > 0; else noHistory">
+          <div class="timeline-item" *ngFor="let item of appointment?.history; let i = index">
+            <div class="timeline-marker">
+              <span class="marker-number">{{ i + 1 }}</span>
+            </div>
+            <div class="timeline-content">
+              <span class="timeline-type">{{ item?.type }}</span>
+              <span class="timeline-date">{{ item?.date }}</span>
+            </div>
+          </div>
+        </div>
+        <ng-template #noHistory>
+          <div class="empty-history">
+            <span class="empty-icon">🩺</span>
+            <p class="empty-text">Primeira consulta com este médico</p>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
