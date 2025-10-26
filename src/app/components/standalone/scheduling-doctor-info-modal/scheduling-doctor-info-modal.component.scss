@@ -1,0 +1,470 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.doctor-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0;
+  background: $white;
+  border-radius: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $grey-whisper;
+    border-radius: 10px;
+    
+    &:hover {
+      background: $periwinkle-blue;
+    }
+  }
+}
+
+// Header Section with Banner
+.info-header {
+  position: relative;
+  margin: -20px -20px 0 -20px;
+  
+  .header-banner {
+    height: 120px;
+    background: linear-gradient(135deg, $neon-blue, $blue-gem, $paua-blue);
+    position: relative;
+    overflow: hidden;
+    
+    .banner-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba($neon-blue, 0.8) 0%, 
+        rgba($blue-gem, 0.6) 50%, 
+        rgba($paua-blue, 0.8) 100%);
+      opacity: 0.9;
+    }
+  }
+}
+
+.doctor-profile {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 0 24px 20px 24px;
+  margin-top: -60px;
+  position: relative;
+}
+
+.profile-photo-container {
+  position: relative;
+  flex-shrink: 0;
+  
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    object-fit: cover;
+    border: 5px solid $white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .verified-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid $white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    
+    span {
+      color: $white;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+}
+
+.profile-info {
+  flex: 1;
+  padding-top: 40px;
+  
+  .doctor-name {
+    margin: 0 0 4px 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: $paua-blue;
+    line-height: 1.2;
+  }
+  
+  .doctor-specialty {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $neon-blue;
+  }
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  .stars {
+    display: flex;
+    gap: 2px;
+    
+    .star {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+      
+      &.filled {
+        color: #ffd700;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+  
+  .rating-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $paua-blue;
+    margin-left: 4px;
+  }
+  
+  .rating-count {
+    font-size: 0.85rem;
+    color: #666;
+  }
+}
+
+// Quick Stats Cards
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 0 24px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+  border: 2px solid $periwinkle-blue;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($neon-blue, 0.15);
+    border-color: $neon-blue;
+  }
+  
+  .stat-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  
+  .stat-content {
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $neon-blue;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 500;
+    }
+  }
+}
+
+// Info Sections
+.info-section {
+  padding: 0 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $grey-whisper;
+  
+  .section-icon {
+    font-size: 1.5rem;
+  }
+  
+  .section-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $paua-blue;
+  }
+}
+
+.about-text {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.about-extended {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+// Professional Info Grid
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 1px solid $grey-whisper;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba($periwinkle-blue, 0.3);
+    border-color: $periwinkle-blue;
+  }
+  
+  .info-item-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .info-item-content {
+    flex: 1;
+    min-width: 0;
+    
+    .info-item-label {
+      font-size: 0.75rem;
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    .info-item-value {
+      font-size: 0.95rem;
+      color: $paua-blue;
+      font-weight: 600;
+    }
+  }
+}
+
+// Health Plans
+.plans-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.plan-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: $white;
+  border: 2px solid #4caf50;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2e7d32;
+  transition: all 0.3s ease;
+  
+  .plan-icon {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  &:hover {
+    background: #4caf50;
+    color: $white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+  }
+  
+  &.add-more {
+    border-color: $grey-whisper;
+    color: #666;
+    border-style: dashed;
+    
+    &:hover {
+      background: $ghost-white;
+      border-color: $neon-blue;
+      color: $neon-blue;
+      border-style: solid;
+    }
+  }
+}
+
+// Specializations
+.specializations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.specialization-chip {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  color: $white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba($neon-blue, 0.3);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($neon-blue, 0.4);
+  }
+}
+
+// Services List
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: $ghost-white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #333;
+  transition: all 0.2s ease;
+  
+  .service-icon {
+    color: #4caf50;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .service-text {
+    font-weight: 500;
+  }
+  
+  &:hover {
+    background: rgba(#4caf50, 0.1);
+    transform: translateX(4px);
+  }
+}
+
+// Clinic Addresses
+.addresses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.address-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba($neon-blue, 0.03), rgba($blue-gem, 0.03));
+  border: 2px solid $periwinkle-blue;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $neon-blue;
+    box-shadow: 0 4px 12px rgba($neon-blue, 0.1);
+    transform: translateX(4px);
+  }
+  
+  .address-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  
+  .address-content {
+    flex: 1;
+    
+    .address-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: $paua-blue;
+      margin-bottom: 4px;
+    }
+    
+    .address-text {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    
+    .address-hours {
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 500;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .quick-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .doctor-profile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .profile-info {
+    padding-top: 0;
+  }
+  
+  .rating-section {
+    justify-content: center;
+  }
+}
