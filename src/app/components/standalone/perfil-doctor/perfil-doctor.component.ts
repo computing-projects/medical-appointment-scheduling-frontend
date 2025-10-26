@@ -1,17 +1,19 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule, NgClass } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { PerfilPatientModalComponent, PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
 import { PerfilDoctorCalendarComponent } from '../perfil-doctor-calendar/perfil-doctor-calendar.component';
+import { StatusUtils } from '../../../shared/utils/status.utils';
+import { RatingUtils } from '../../../shared/utils/rating.utils';
 
 @Component({
   selector: 'med-perfil-doctor',
   standalone: true,
-  imports: [CommonModule, NgClass, PerfilPatientModalComponent, PerfilDoctorCalendarComponent],
+  imports: [CommonModule, PerfilPatientModalComponent, PerfilDoctorCalendarComponent],
   templateUrl: './perfil-doctor.component.html',
   styleUrl: './perfil-doctor.component.scss',
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilDoctorComponent implements OnInit {
+export class PerfilDoctorComponent {
   selectedDoctorTab: 'informacoes' | 'agenda' = 'informacoes';
 
   // Placeholder for doctor's profile data
@@ -73,28 +75,25 @@ export class PerfilDoctorComponent implements OnInit {
     agendamentosCanceladosOuFaltados: 5
   };
 
-  isPatientModalOpen: boolean = false;
-  selectedPatientDetails: PatientDetails | null = null; // Renamed to match modal component
+  isPatientModalOpen = false;
+  selectedPatientDetails: PatientDetails | null = null;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  showDoctorTab(tab: 'informacoes' | 'agenda') {
+  showDoctorTab(tab: 'informacoes' | 'agenda'): void {
     this.selectedDoctorTab = tab;
   }
 
   getStarsArray(rating: number): number[] {
-    return Array(Math.floor(rating)).fill(0);
+    return RatingUtils.getStarsArray(rating);
   }
 
-  openPatientAppointmentDetailsModal(appointmentId: number) {
-    // Find the full appointment details from todayAppointments
+  getStatusIcon(status: string): string {
+    return StatusUtils.getStatusIcon(status);
+  }
+
+  openPatientAppointmentDetailsModal(appointmentId: number): void {
     const appointment = this.todayAppointments.find(a => a.id === appointmentId);
 
     if (appointment) {
-      // Map the appointment data to the AppointmentDetails interface
       this.selectedPatientDetails = {
         id: appointment.id,
         patientName: appointment.clientName,
@@ -109,13 +108,11 @@ export class PerfilDoctorComponent implements OnInit {
         patientAppointmentHistory: appointment.patientAppointmentHistory
       };
       this.isPatientModalOpen = true;
-    } else {
-      console.error('Consulta para paciente não encontrada para o ID:', appointmentId);
     }
   }
 
-  closePatientDetailsModal() {
+  closePatientDetailsModal(): void {
     this.isPatientModalOpen = false;
-    this.selectedPatientDetails = null; // Clear data when closing
+    this.selectedPatientDetails = null;
   }
 }
