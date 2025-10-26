@@ -1,0 +1,162 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="header-content">
+        <div class="header-icon">✅</div>
+        <div class="header-text">
+          <h2>Confirmar Agendamento</h2>
+          <p>Revise os dados e confirme sua consulta</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="closeModal()" [disabled]="isSubmitting">
+        <span>✕</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      
+      <!-- Appointment Summary Card -->
+      <div class="summary-card">
+        <div class="summary-header">
+          <span class="summary-icon">📋</span>
+          <h3>Detalhes da Consulta</h3>
+        </div>
+        
+        <div class="summary-grid">
+          <!-- Doctor Info -->
+          <div class="summary-item doctor-info-item">
+            <div class="item-label">Profissional</div>
+            <div class="item-value doctor-value">
+              <img [src]="appointmentDetails.doctor.photo" alt="Foto do doutor" class="doctor-photo" />
+              <div class="doctor-details">
+                <strong>{{ appointmentDetails.doctor.name }}</strong>
+                <span class="doctor-specialty">{{ appointmentDetails.doctor.specialty }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date & Time -->
+          <div class="summary-item">
+            <div class="item-label">📅 Data e Horário</div>
+            <div class="item-value">
+              <strong>{{ appointmentDetails.date }}</strong> às <strong>{{ appointmentDetails.time }}</strong>
+            </div>
+          </div>
+
+          <!-- Type -->
+          <div class="summary-item">
+            <div class="item-label">📍 Tipo de Consulta</div>
+            <div class="item-value">
+              <span class="type-badge" [class.local]="appointmentDetails.type === 'local'" [class.remote]="appointmentDetails.type === 'remote'">
+                {{ appointmentTypeLabel }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patient Info Card -->
+      <div class="patient-card">
+        <div class="patient-header">
+          <span class="patient-icon">👤</span>
+          <h3>Seus Dados</h3>
+        </div>
+        
+        <div class="patient-grid">
+          <div class="patient-item">
+            <span class="patient-label">Nome:</span>
+            <span class="patient-value">{{ userData.name }}</span>
+          </div>
+          <div class="patient-item">
+            <span class="patient-label">CPF:</span>
+            <span class="patient-value">{{ userData.cpf }}</span>
+          </div>
+          <div class="patient-item">
+            <span class="patient-label">Telefone:</span>
+            <span class="patient-value">{{ userData.phone }}</span>
+          </div>
+          <div class="patient-item">
+            <span class="patient-label">Email:</span>
+            <span class="patient-value">{{ userData.email }}</span>
+          </div>
+          <div class="patient-item">
+            <span class="patient-label">Plano de Saúde:</span>
+            <span class="patient-value">{{ userData.healthPlan }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointment Reason -->
+      <div class="reason-section">
+        <label for="appointmentReason" class="reason-label">
+          <span class="label-icon">📝</span>
+          <span class="label-text">Motivo da Consulta</span>
+          <span class="required">*</span>
+        </label>
+        <textarea
+          id="appointmentReason"
+          [(ngModel)]="appointmentReason"
+          class="reason-textarea"
+          placeholder="Descreva brevemente o motivo da consulta para agilizar o atendimento. Exemplo: Dor no peito, consulta de rotina, acompanhamento de tratamento..."
+          rows="5"
+          maxlength="500"
+          [disabled]="isSubmitting"></textarea>
+        <div class="char-counter">
+          {{ appointmentReason.length }} / 500 caracteres
+        </div>
+      </div>
+
+      <!-- Important Reminder -->
+      <div class="reminder-section">
+        <div class="reminder-box">
+          <div class="reminder-header">
+            <span class="reminder-icon">⚠️</span>
+            <strong>Importante - Leia com atenção</strong>
+          </div>
+          <p class="reminder-text">
+            Não se esqueça de levar um acompanhante (caso seja criança ou idoso),
+            exames anteriores e documentos pessoais.
+          </p>
+        </div>
+        
+        <label class="checkbox-container">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="confirmedReminder"
+            [disabled]="isSubmitting"
+            class="reminder-checkbox" />
+          <span class="checkbox-label">
+            Li e concordo em seguir as instruções acima
+          </span>
+          <span class="checkmark"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button 
+        class="cancel-btn" 
+        (click)="closeModal()"
+        [disabled]="isSubmitting">
+        Cancelar
+      </button>
+      <button 
+        class="confirm-btn" 
+        (click)="confirmAppointment()"
+        [disabled]="!isFormValid || isSubmitting"
+        [class.loading]="isSubmitting">
+        <span *ngIf="!isSubmitting">✓ Confirmar Agendamento</span>
+        <span *ngIf="isSubmitting" class="loading-text">
+          <span class="spinner"></span>
+          Confirmando...
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>
