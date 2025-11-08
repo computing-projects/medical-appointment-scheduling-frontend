@@ -12,10 +12,11 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { take } from 'rxjs';
 import { LoginUser } from '../../models/api-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'med-login-modal',
@@ -26,7 +27,6 @@ import { LoginUser } from '../../models/api-models';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginModalComponent implements AfterViewInit {
-
   @HostBinding('class.med-modal') isActive = true;
 
   @Input() modalOpen: boolean = false;
@@ -48,9 +48,7 @@ export class LoginModalComponent implements AfterViewInit {
   private firstFocusable?: HTMLElement;
   private lastFocusable?: HTMLElement;
 
-  constructor(
-    private authService: AuthenticationService
-  ) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngAfterViewInit() {
     queueMicrotask(() => {
@@ -86,23 +84,41 @@ export class LoginModalComponent implements AfterViewInit {
 
     const loginUser: LoginUser = {
       email: this.email,
-      password: this.password
+      password: this.password,
     };
 
-    this.authService.signin(loginUser)
+    this.authService
+      .signin(loginUser)
       .pipe(take(1))
       .subscribe({
-        next: (response) => {
+        next: response => {
           this.isLoading = false;
           this.authService.setCurrentUser(response);
+          if (response) {
+            switch (localStorage.getItem('role')) {
+              case 'client':
+                console.log('oooii');
+                this.router.navigate(['/cliente/home']);
+                break;
+              case 'doctor':
+                this.router.navigate(['/doutor/home']);
+                break;
+              case 'admin':
+                this.router.navigate(['/admin/home']);
+                break;
+              default:
+                this.router.navigate(['/']);
+            }
+          }
           this.close.emit();
-          console.log('Login realizado com sucesso:', response);
+          this.email = '';
+          this.password = '';
         },
-        error: (err) => {
+        error: err => {
           this.isLoading = false;
           this.errorMessage = err.error?.message || 'Erro ao fazer login. Verifique suas credenciais.';
           console.error('Erro no login:', err);
-        }
+        },
       });
   }
 

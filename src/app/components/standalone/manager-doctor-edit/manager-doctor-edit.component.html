@@ -1,0 +1,251 @@
+<div class="edit-container">
+  <div class="edit-header">
+    <h2 class="edit-title">👨‍⚕️ Gerenciar Médicos da Clínica</h2>
+    <p class="edit-subtitle">Visualize, edite ou remova médicos cadastrados</p>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Buscar por nome, especialidade ou CRM...">
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Status:</label>
+      <select 
+        class="filter-select"
+        [(ngModel)]="filterStatus"
+        (ngModelChange)="onStatusFilterChange()">
+        <option value="all">Todos</option>
+        <option value="active">Ativos</option>
+        <option value="inactive">Inativos</option>
+      </select>
+    </div>
+
+    <div class="results-count">
+      {{ filteredDoctors.length }} médico(s) encontrado(s)
+    </div>
+  </div>
+
+  <!-- Doctors Table -->
+  <div class="table-container">
+    <table class="doctors-table">
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>Nome</th>
+          <th>Especialidade</th>
+          <th>CRM</th>
+          <th>Contato</th>
+          <th>Pacientes</th>
+          <th>Avaliação</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doctor of filteredDoctors" class="doctor-row">
+          <td>
+            <img [src]="doctor.photo" [alt]="doctor.name" class="doctor-photo">
+          </td>
+          <td class="doctor-name">{{ doctor.name }}</td>
+          <td>{{ doctor.specialty }}</td>
+          <td class="crm">{{ doctor.crm }}</td>
+          <td class="contact">
+            <div>{{ doctor.email }}</div>
+            <div class="phone">{{ doctor.phone }}</div>
+          </td>
+          <td class="centered">{{ doctor.patientsCount }}</td>
+          <td class="rating">
+            <div class="stars">
+              <span class="star filled" *ngFor="let star of getStarArray(doctor.rating)">★</span>
+              <span class="star" *ngFor="let star of getEmptyStarArray(doctor.rating)">★</span>
+            </div>
+            <span class="rating-value">{{ doctor.rating }}</span>
+          </td>
+          <td>
+            <button 
+              class="status-badge"
+              [class.active]="doctor.status === 'active'"
+              [class.inactive]="doctor.status === 'inactive'"
+              (click)="toggleStatus(doctor)">
+              {{ doctor.status === 'active' ? 'Ativo' : 'Inativo' }}
+            </button>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button 
+                class="action-btn view"
+                (click)="viewDoctor(doctor)"
+                title="Visualizar">
+                👁️
+              </button>
+              <button 
+                class="action-btn edit"
+                (click)="editDoctor(doctor)"
+                title="Editar">
+                ✏️
+              </button>
+              <button 
+                class="action-btn delete"
+                (click)="confirmDelete(doctor)"
+                title="Excluir">
+                🗑️
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredDoctors.length === 0">
+      <div class="empty-icon">🔍</div>
+      <p class="empty-text">Nenhum médico encontrado</p>
+      <p class="empty-subtext">Tente ajustar os filtros de busca</p>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal-overlay" *ngIf="showViewModal" (click)="closeViewModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Informações do Médico</h3>
+      <button class="close-btn" (click)="closeViewModal()">×</button>
+    </div>
+    
+    <div class="modal-body" *ngIf="selectedDoctor">
+      <div class="doctor-info-card">
+        <img [src]="selectedDoctor.photo" [alt]="selectedDoctor.name" class="doctor-photo-large">
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Nome:</span>
+            <span class="info-value">{{ selectedDoctor.name }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Especialidade:</span>
+            <span class="info-value">{{ selectedDoctor.specialty }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">CRM:</span>
+            <span class="info-value">{{ selectedDoctor.crm }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ selectedDoctor.email }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Telefone:</span>
+            <span class="info-value">{{ selectedDoctor.phone }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Total de Pacientes:</span>
+            <span class="info-value">{{ selectedDoctor.patientsCount }}</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Avaliação:</span>
+            <span class="info-value">{{ selectedDoctor.rating }} / 5.0</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-label">Status:</span>
+            <span class="info-value" [class.status-active]="selectedDoctor.status === 'active'">
+              {{ selectedDoctor.status === 'active' ? 'Ativo' : 'Inativo' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Editar Médico</h3>
+      <button class="close-btn" (click)="closeEditModal()">×</button>
+    </div>
+    
+    <div class="modal-body" *ngIf="selectedDoctor">
+      <form class="edit-form">
+        <div class="form-group">
+          <label class="form-label">Nome:</label>
+          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.name" name="name">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Especialidade:</label>
+          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.specialty" name="specialty">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">CRM:</label>
+          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.crm" name="crm">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email:</label>
+          <input type="email" class="form-input" [(ngModel)]="selectedDoctor.email" name="email">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Telefone:</label>
+          <input type="tel" class="form-input" [(ngModel)]="selectedDoctor.phone" name="phone">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Status:</label>
+          <select class="form-input" [(ngModel)]="selectedDoctor.status" name="status">
+            <option value="active">Ativo</option>
+            <option value="inactive">Inativo</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeEditModal()">Cancelar</button>
+      <button class="btn-primary" (click)="saveEdit()">Salvar Alterações</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="closeDeleteConfirm()">
+  <div class="modal-content small" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Confirmar Exclusão</h3>
+      <button class="close-btn" (click)="closeDeleteConfirm()">×</button>
+    </div>
+    
+    <div class="modal-body" *ngIf="selectedDoctor">
+      <div class="delete-warning">
+        <div class="warning-icon">⚠️</div>
+        <p class="warning-text">
+          Tem certeza que deseja excluir o médico <strong>{{ selectedDoctor.name }}</strong>?
+        </p>
+        <p class="warning-subtext">Esta ação não pode ser desfeita.</p>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeDeleteConfirm()">Cancelar</button>
+      <button class="btn-danger" (click)="deleteDoctor()">Confirmar Exclusão</button>
+    </div>
+  </div>
+</div>

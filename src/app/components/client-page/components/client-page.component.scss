@@ -1,0 +1,66 @@
+@import '../../../../assets/style/color-palette.scss';
+@import '../../../../assets/style/mixins.scss';
+
+:host.med-client-page {
+  @include flex-center;
+  width: 100%;
+  min-height: 60vh;
+  background-color: $grey-whisper;
+  padding: 20px;
+}
+
+.welcome-container {
+  @include card(0, 8px);
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.welcome-message {
+  flex: 1;
+  padding: 30px 20px;
+  border-radius: 5px;
+  margin-left: 20px;
+  overflow-y: auto;
+  @include custom-scrollbar();
+}
+
+@include tablet {
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+  }
+
+  .nav-button {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+}
+
+@include mobile {
+  :host.med-welcome-content {
+    padding: 10px;
+  }
+
+  .welcome-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+    border-right: none;
+    border-bottom: 1px solid $grey-whisper;
+  }
+
+  .nav-button {
+    min-width: 120px;
+  }
+
+  .welcome-message {
+    margin-left: 0;
+    padding: 15px 10px;
+  }
+}

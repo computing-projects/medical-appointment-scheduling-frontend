@@ -1,0 +1,328 @@
+<div class="anamnese-container">
+  <!-- Header -->
+  <div class="anamnese-header">
+    <h2 class="anamnese-title">📋 Minha Ficha Médica</h2>
+    <p class="anamnese-description">Mantenha seu histórico médico atualizado para um acompanhamento completo da sua saúde</p>
+  </div>
+
+  <!-- Basic Health Information -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">🩺</span>
+        Informações Básicas de Saúde
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="stats-grid">
+        <div class="stat-box blood">
+          <div class="stat-icon-wrapper">
+            <span class="stat-icon">🩸</span>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Tipo Sanguíneo</span>
+            <span class="stat-value">{{ medicalHistory.basicInfo.bloodType }}</span>
+          </div>
+        </div>
+
+        <div class="stat-box weight">
+          <div class="stat-icon-wrapper">
+            <span class="stat-icon">⚖️</span>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Peso</span>
+            <span class="stat-value">{{ medicalHistory.basicInfo.weight }}</span>
+          </div>
+        </div>
+
+        <div class="stat-box height">
+          <div class="stat-icon-wrapper">
+            <span class="stat-icon">📏</span>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Altura</span>
+            <span class="stat-value">{{ medicalHistory.basicInfo.height }}</span>
+          </div>
+        </div>
+
+        <div class="stat-box imc">
+          <div class="stat-icon-wrapper">
+            <span class="stat-icon">📊</span>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">IMC</span>
+            <span class="stat-value">{{ medicalHistory.basicInfo.imc }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h4 class="section-subtitle">
+          <span class="subtitle-icon">🏥</span>
+          Doenças Crônicas
+        </h4>
+        <div class="badge-list" *ngIf="medicalHistory.basicInfo.chronicDiseases.length > 0; else noChronicDiseases">
+          <span class="info-badge danger" *ngFor="let disease of medicalHistory.basicInfo.chronicDiseases">
+            <span class="badge-icon">⚠️</span>
+            {{ disease }}
+          </span>
+        </div>
+        <ng-template #noChronicDiseases>
+          <p class="empty-state">✓ Nenhuma doença crônica registrada</p>
+        </ng-template>
+      </div>
+
+      <div class="info-section">
+        <h4 class="section-subtitle">
+          <span class="subtitle-icon">🏥</span>
+          Internações Anteriores
+        </h4>
+        <div class="timeline-list" *ngIf="medicalHistory.basicInfo.hospitalizations.length > 0; else noHospitalizations">
+          <div class="timeline-item" *ngFor="let hosp of medicalHistory.basicInfo.hospitalizations">
+            <span class="timeline-date">{{ hosp.date }}</span>
+            <span class="timeline-content">{{ hosp.reason }}</span>
+          </div>
+        </div>
+        <ng-template #noHospitalizations>
+          <p class="empty-state">✓ Nenhuma internação registrada</p>
+        </ng-template>
+      </div>
+
+      <div class="info-section">
+        <h4 class="section-subtitle">
+          <span class="subtitle-icon">💊</span>
+          Tratamentos Atuais
+        </h4>
+        <div class="treatment-list" *ngIf="medicalHistory.basicInfo.currentTreatments.length > 0; else noCurrentTreatments">
+          <div class="treatment-item" *ngFor="let treatment of medicalHistory.basicInfo.currentTreatments">
+            <span class="treatment-icon">💊</span>
+            <span class="treatment-text">{{ treatment }}</span>
+          </div>
+        </div>
+        <ng-template #noCurrentTreatments>
+          <p class="empty-state">✓ Nenhum tratamento atual</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Allergies Section -->
+  <div class="info-card">
+    <div class="card-header alert">
+      <h3 class="card-title">
+        <span class="title-icon">⚠️</span>
+        Alergias
+      </h3>
+    </div>
+    <div class="card-content">
+      <div *ngIf="medicalHistory.allergies.noKnownAllergies; else hasAllergies">
+        <p class="success-message">✓ Não há alergias conhecidas</p>
+      </div>
+      <ng-template #hasAllergies>
+        <div class="allergies-grid">
+          <div class="allergy-category">
+            <h4 class="category-title">
+              <span class="category-icon">💊</span>
+              Medicamentos
+            </h4>
+            <div class="badge-list" *ngIf="medicalHistory.allergies.medications.length > 0; else noMedAllergies">
+              <span class="info-badge danger" *ngFor="let allergy of medicalHistory.allergies.medications">
+                {{ allergy }}
+              </span>
+            </div>
+            <ng-template #noMedAllergies>
+              <p class="empty-state-small">Nenhuma</p>
+            </ng-template>
+          </div>
+
+          <div class="allergy-category">
+            <h4 class="category-title">
+              <span class="category-icon">🍎</span>
+              Alimentos
+            </h4>
+            <div class="badge-list" *ngIf="medicalHistory.allergies.food.length > 0; else noFoodAllergies">
+              <span class="info-badge warning" *ngFor="let allergy of medicalHistory.allergies.food">
+                {{ allergy }}
+              </span>
+            </div>
+            <ng-template #noFoodAllergies>
+              <p class="empty-state-small">Nenhuma</p>
+            </ng-template>
+          </div>
+
+          <div class="allergy-category">
+            <h4 class="category-title">
+              <span class="category-icon">🌸</span>
+              Outras
+            </h4>
+            <div class="badge-list" *ngIf="medicalHistory.allergies.others.length > 0; else noOtherAllergies">
+              <span class="info-badge info" *ngFor="let allergy of medicalHistory.allergies.others">
+                {{ allergy }}
+              </span>
+            </div>
+            <ng-template #noOtherAllergies>
+              <p class="empty-state-small">Nenhuma</p>
+            </ng-template>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Current Medications -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">💊</span>
+        Medicamentos em Uso
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="medications-grid" *ngIf="medicalHistory.medications.length > 0; else noMedications">
+        <div class="medication-card" *ngFor="let med of medicalHistory.medications">
+          <div class="medication-header">
+            <span class="medication-icon">💊</span>
+            <span class="medication-name">{{ med.name }}</span>
+          </div>
+          <div class="medication-body">
+            <div class="medication-detail">
+              <span class="detail-label">Dosagem:</span>
+              <span class="detail-value">{{ med.dosage }}</span>
+            </div>
+            <div class="medication-detail">
+              <span class="detail-label">Frequência:</span>
+              <span class="detail-value">{{ med.frequency }}</span>
+            </div>
+            <div class="medication-reason">
+              <span class="reason-icon">📌</span>
+              {{ med.reason }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noMedications>
+        <p class="empty-state">✓ Nenhum medicamento prescrito</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Medical History -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">📜</span>
+        Histórico Médico
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="history-timeline" *ngIf="medicalHistory.pastIllnessesSurgeries.length > 0; else noPastHistory">
+        <div class="history-item" *ngFor="let item of medicalHistory.pastIllnessesSurgeries">
+          <div class="history-marker" [class.surgery]="item.type === 'Cirurgia'">
+            <span class="marker-icon">{{ item.type === 'Cirurgia' ? '⚕️' : '🏥' }}</span>
+          </div>
+          <div class="history-content">
+            <span class="history-type">{{ item.type }}</span>
+            <span class="history-name">{{ item.name }}</span>
+            <span class="history-date">{{ item.date }}</span>
+          </div>
+        </div>
+      </div>
+      <ng-template #noPastHistory>
+        <p class="empty-state">✓ Nenhum histórico registrado</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Family History -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">👨‍👩‍👧‍👦</span>
+        Histórico Familiar
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="family-grid" *ngIf="medicalHistory.familyHistory.length > 0; else noFamilyHistory">
+        <div class="family-item" *ngFor="let member of medicalHistory.familyHistory">
+          <div class="family-icon">👤</div>
+          <div class="family-details">
+            <span class="family-relationship">{{ member.relationship }}</span>
+            <span class="family-condition">{{ member.condition }}</span>
+          </div>
+        </div>
+      </div>
+      <ng-template #noFamilyHistory>
+        <p class="empty-state">✓ Nenhum histórico familiar registrado</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Lifestyle -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">🏃</span>
+        Estilo de Vida
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="lifestyle-grid">
+        <div class="lifestyle-item">
+          <span class="lifestyle-icon">🚭</span>
+          <div class="lifestyle-info">
+            <span class="lifestyle-label">Fumante</span>
+            <span class="lifestyle-value">{{ medicalHistory.lifestyle.smoker }}</span>
+          </div>
+        </div>
+
+        <div class="lifestyle-item">
+          <span class="lifestyle-icon">🍷</span>
+          <div class="lifestyle-info">
+            <span class="lifestyle-label">Álcool</span>
+            <span class="lifestyle-value">{{ medicalHistory.lifestyle.alcohol }}</span>
+          </div>
+        </div>
+
+        <div class="lifestyle-item">
+          <span class="lifestyle-icon">🏃‍♂️</span>
+          <div class="lifestyle-info">
+            <span class="lifestyle-label">Atividade Física</span>
+            <span class="lifestyle-value">{{ medicalHistory.lifestyle.physicalActivity }}</span>
+          </div>
+        </div>
+
+        <div class="lifestyle-item">
+          <span class="lifestyle-icon">🥗</span>
+          <div class="lifestyle-info">
+            <span class="lifestyle-label">Dieta</span>
+            <span class="lifestyle-value">{{ medicalHistory.lifestyle.diet }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vaccinations -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3 class="card-title">
+        <span class="title-icon">💉</span>
+        Histórico de Vacinação
+      </h3>
+    </div>
+    <div class="card-content">
+      <div class="vaccine-grid" *ngIf="medicalHistory.vaccinations.length > 0; else noVaccinations">
+        <div class="vaccine-item" *ngFor="let vaccine of medicalHistory.vaccinations">
+          <span class="vaccine-icon">💉</span>
+          <div class="vaccine-info">
+            <span class="vaccine-name">{{ vaccine.name }}</span>
+            <span class="vaccine-date">{{ vaccine.date }}</span>
+          </div>
+        </div>
+      </div>
+      <ng-template #noVaccinations>
+        <p class="empty-state">⚠️ Nenhum registro de vacinação</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

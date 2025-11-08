@@ -1,0 +1,268 @@
+<div class="perfil-doctor-container">
+  <!-- Header Section with Gradient Banner -->
+  <div class="perfil-banner">
+    <div class="banner-gradient"></div>
+    <div class="profile-header-content">
+      <div class="profile-photo-wrapper">
+        <img [src]="doctorProfile.photo" alt="Doctor Photo" class="profile-photo">
+        <div class="photo-badge">
+          <span class="badge-icon">✓</span>
+        </div>
+      </div>
+      <div class="profile-header-info">
+        <h1 class="profile-name">Dr(a). {{ doctorProfile.name }} {{ doctorProfile.lastName }}</h1>
+        <p class="profile-subtitle">{{ doctorProfile.specialty }}</p>
+        <div class="profile-rating">
+          <div class="stars">
+            <span *ngFor="let _ of getStarsArray(doctorProfile.review)" class="star filled">★</span>
+            <span *ngFor="let _ of getStarsArray(5 - doctorProfile.review)" class="star empty">★</span>
+          </div>
+          <span class="rating-text">{{ doctorProfile.review }}/5.0</span>
+        </div>
+        <div class="profile-quick-info">
+          <span class="info-chip">
+            <span class="chip-icon">🆔</span>
+            {{ doctorProfile.crm }}
+          </span>
+          <span class="info-chip">
+            <span class="chip-icon">📞</span>
+            {{ doctorProfile.contact }}
+          </span>
+          <span class="info-chip">
+            <span class="chip-icon">🎂</span>
+            {{ doctorProfile.age }} anos
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="perfil-header-nav">
+    <button class="perfil-nav-button"
+            (click)="showDoctorTab('informacoes')"
+            [class.active]="selectedDoctorTab === 'informacoes'">
+      <span class="nav-icon">👤</span>
+      <span class="nav-text">Informações</span>
+    </button>
+    <button class="perfil-nav-button"
+            (click)="showDoctorTab('agenda')"
+            [class.active]="selectedDoctorTab === 'agenda'">
+      <span class="nav-icon">📅</span>
+      <span class="nav-text">Agenda</span>
+    </button>
+  </div>
+
+  <div class="perfil-content">
+    <!-- Informações Tab Content -->
+    <div *ngIf="selectedDoctorTab === 'informacoes'" class="informacoes-tab">
+      
+      <!-- Doctor Info Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="title-icon">🩺</span>
+            Informações Profissionais
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="doctor-bio">
+            <p class="bio-text">{{ doctorProfile.bio }}</p>
+          </div>
+          
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-icon">📧</span>
+              <div class="info-details">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ doctorProfile.email }}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <span class="info-icon">🏙️</span>
+              <div class="info-details">
+                <span class="info-label">Cidade</span>
+                <span class="info-value">{{ doctorProfile.city }}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <span class="info-icon">📮</span>
+              <div class="info-details">
+                <span class="info-label">CEP</span>
+                <span class="info-value">{{ doctorProfile.cep }}</span>
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <span class="info-icon">📍</span>
+              <div class="info-details">
+                <span class="info-label">Endereço</span>
+                <span class="info-value">{{ doctorProfile.address }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Availability & Plans Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="title-icon">🕐</span>
+            Disponibilidade e Planos
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="availability-section">
+            <span class="availability-label">Horário Disponível Hoje:</span>
+            <span class="availability-value">{{ doctorProfile.availableHoursToday }}</span>
+          </div>
+          
+          <div class="plans-section">
+            <h4 class="plans-title">Planos de Saúde Aceitos:</h4>
+            <div class="plans-list">
+              <span class="plan-badge" *ngFor="let plan of doctorProfile.acceptedPlans">
+                <span class="plan-icon">✓</span>
+                {{ plan }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Appointments -->
+      <div class="appointments-section">
+        <div class="section-header">
+          <h3 class="section-title">
+            <span class="title-icon">📋</span>
+            Consultas de Hoje
+          </h3>
+          <span class="appointments-count" *ngIf="todayAppointments.length > 0">
+            {{ todayAppointments.length }} consulta(s)
+          </span>
+        </div>
+
+        <div class="appointments-grid" *ngIf="todayAppointments.length > 0; else noAppointments">
+          <div class="appointment-card" *ngFor="let appt of todayAppointments">
+            <div class="card-badge" [ngClass]="{
+              'badge-confirmada': appt.status === 'Confirmada',
+              'badge-aguardando': appt.status === 'Aguardando',
+              'badge-cancelada': appt.status === 'Cancelada'
+            }">
+              <span class="badge-icon">{{ getStatusIcon(appt.status) }}</span>
+              <span class="badge-text">{{ appt.status }}</span>
+            </div>
+
+            <div class="card-time">
+              <span class="time-icon">🕐</span>
+              <span class="time-value">{{ appt.time }}</span>
+            </div>
+
+            <div class="card-patient">
+              <span class="patient-icon">👤</span>
+              <span class="patient-name">{{ appt.clientName }}</span>
+            </div>
+
+            <div class="card-details">
+              <div class="detail-row">
+                <span class="detail-icon">{{ appt.appointmentType === 'Presencial' ? '🏥' : '💻' }}</span>
+                <span class="detail-text">{{ appt.appointmentType }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-icon">🩺</span>
+                <span class="detail-text">{{ appt.especialidade }}</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <button class="btn-details" (click)="openPatientAppointmentDetailsModal(appt.id)">
+                <span class="btn-icon">👁️</span>
+                <span class="btn-text">Ver Detalhes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noAppointments>
+          <div class="empty-state">
+            <div class="empty-icon">📅</div>
+            <p class="empty-text">Nenhuma consulta agendada para hoje</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Monthly Statistics -->
+      <div class="stats-section">
+        <h3 class="section-title">
+          <span class="title-icon">📊</span>
+          Estatísticas do Mês
+        </h3>
+        <div class="stats-grid">
+          <div class="stat-card consultas">
+            <div class="stat-icon-wrapper">
+              <span class="stat-icon">🩺</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Consultas</span>
+              <span class="stat-value">{{ currentMonthStats.consultas }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card exames">
+            <div class="stat-icon-wrapper">
+              <span class="stat-icon">🔬</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Exames</span>
+              <span class="stat-value">{{ currentMonthStats.exames }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card cirurgias">
+            <div class="stat-icon-wrapper">
+              <span class="stat-icon">⚕️</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Cirurgias</span>
+              <span class="stat-value">{{ currentMonthStats.cirurgias }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card procedimentos">
+            <div class="stat-icon-wrapper">
+              <span class="stat-icon">💉</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Procedimentos</span>
+              <span class="stat-value">{{ currentMonthStats.procedimentos }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card cancelados">
+            <div class="stat-icon-wrapper">
+              <span class="stat-icon">❌</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Cancelados</span>
+              <span class="stat-value">{{ currentMonthStats.agendamentosCanceladosOuFaltados }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agenda Tab Content -->
+    <div *ngIf="selectedDoctorTab === 'agenda'" class="agenda-tab">
+      <med-perfil-doctor-calendar></med-perfil-doctor-calendar>
+    </div>
+  </div>
+</div>
+
+<!-- Patient Details Modal -->
+<med-perfil-patient-modal
+  *ngIf="isPatientModalOpen"
+  [appointment]="selectedPatientDetails"
+  (closeModal)="closePatientDetailsModal()">
+</med-perfil-patient-modal>

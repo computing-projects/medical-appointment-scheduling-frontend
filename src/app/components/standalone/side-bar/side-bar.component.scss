@@ -1,0 +1,37 @@
+@import '../../../../assets/style/color-palette.scss';
+@import '../../../../assets/style/mixins.scss';
+
+.sidebar {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: $ghost-white;
+  padding: 20px;
+  border-right: 1px solid $grey-whisper;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba($nero-black, 0.03);
+}
+
+.nav-button {
+  @include button($white, $neon-blue, 15px 20px);
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  width: 100%;
+
+  &:hover {
+    background: linear-gradient(135deg, darken($white, 5%) 0%, darken($white, 10%) 100%);
+  }
+
+  &.active {
+    @include gradient-bg($neon-blue, darken($neon-blue, 10%));
+    color: $white;
+  }
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

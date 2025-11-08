@@ -1,0 +1,17 @@
+<header class="app-header">
+  <div class="header-content">
+    <div class="header-left">
+      <button *ngIf="showMenuButton" 
+              class="menu-toggle-button" 
+              (click)="onMenuToggle()"
+              mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      
+      <div class="logo">
+        <img src="assets/images/logo-projeto.png" alt="MedSim" class="logo-image">
+        <span class="logo-text">MedSim</span>
+      </div>
+    </div>
+  </div>
+</header>
