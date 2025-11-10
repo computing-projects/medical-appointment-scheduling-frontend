@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'cliente',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./components/client-page/client-page.module').then(m => m.ClientPageModule),
   },
   // {

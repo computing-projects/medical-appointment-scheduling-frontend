@@ -97,7 +97,6 @@ export class LoginModalComponent implements AfterViewInit {
           if (response) {
             switch (localStorage.getItem('role')) {
               case 'client':
-                console.log('oooii');
                 this.router.navigate(['/cliente/home']);
                 break;
               case 'doctor':

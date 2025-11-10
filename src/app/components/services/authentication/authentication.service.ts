@@ -55,7 +55,6 @@ export class AuthenticationService {
           localStorage.setItem('token', response.token);
           this.apiService.getCurrentUser().subscribe({
             next: (user: Users) => {
-              console.log('user:', user);
               localStorage.setItem('user', JSON.stringify(user));
               localStorage.setItem('role', user.role);
               this.authStateSubject.next({
