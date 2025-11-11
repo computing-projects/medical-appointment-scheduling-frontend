@@ -6,6 +6,7 @@ import { AuthTokenModel } from '../../models/authentication.model';
 import { Injectable } from '@angular/core';
 import { LoginUser, TokenDto } from '../../models/api-models';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -18,8 +19,9 @@ export class AuthenticationService {
     isAuthenticated: false,
   });
   public authState$ = this.authStateSubject.asObservable();
+  private roleUser = '';
 
-  constructor(private http: HttpClient, private apiService: ApiService) {
+  constructor(private http: HttpClient, private apiService: ApiService, private router: Router) {
     // Verificar se há token salvo no localStorage
     const savedToken = localStorage.getItem('token');
     const savedEmail = localStorage.getItem('userEmail');
@@ -57,6 +59,7 @@ export class AuthenticationService {
             next: (user: Users) => {
               localStorage.setItem('user', JSON.stringify(user));
               localStorage.setItem('role', user.role);
+              this.roleUser = user.role;
               this.authStateSubject.next({
                 user,
                 token: response.token,
@@ -88,7 +91,11 @@ export class AuthenticationService {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/']);
   }
 
   setCurrentUser(tokenData: AuthTokenModel): void {
@@ -100,6 +107,12 @@ export class AuthenticationService {
 
   getUser(): Users | null {
     return this.authStateSubject.value.user;
+  }
+
+  getUserRole(): string {
+    let role: any;
+    this.roleUser ? (role = this.roleUser) : (role = localStorage.getItem('role'));
+    return role;
   }
 
   getCurrentUser(): AuthTokenModel | null {

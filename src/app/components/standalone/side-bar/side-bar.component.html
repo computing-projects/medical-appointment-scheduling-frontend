@@ -1,5 +1,5 @@
 <nav class="sidebar">
-  @if (getUserRole()=== 'client') {
+  @if (getUserRole() === 'client') {
   <a
     clrVerticalNavLink
     class="nav-button"
@@ -33,17 +33,19 @@
       Perfil
     </span>
   </a>
-  } @if (getUserRole()=== 'doctor') {
+  } @if (getUserRole() === 'doctor') {
   <button class="nav-button" (click)="showView('perfil-medico')" [class.active]="selectedView === 'perfil-medico'">
-    Perfil Med
+    Perfil Medico
   </button>
-  } @if (getUserRole()=== 'admin') {
+  } @if (getUserRole() === 'admin') {
   <button class="nav-button" (click)="showView('gerenciar-medicos')" [class.active]="selectedView === 'gerenciar-medicos'">
     Gerenciar Médicos
   </button>
   }
   <a clrVerticalNavLink class="nav-button" (click)="logout()">
-    <mat-icon aria-hidden="false" aria-label="home" fontIcon="logout"></mat-icon>
-    Logout
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="logout"></mat-icon>
+      Logout
+    </span>
   </a>
 </nav>

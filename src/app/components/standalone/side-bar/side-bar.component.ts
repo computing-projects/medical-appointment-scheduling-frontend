@@ -31,22 +31,7 @@ export class SideBarComponent {
   }
 
   getUserRole(): any {
-    const user = this.authService.getCurrentUser();
-    if (!user) {
-      this.logout();
-      return '';
-    }
-
-    switch (user.role) {
-      case Roles.CLIENT:
-        return 'client';
-      case Roles.DOCTOR:
-        return 'doctor';
-      case Roles.CLIENT:
-        return 'admin';
-      default:
-        return '';
-    }
+    return this.authService.getUserRole();
   }
 
   logout() {
