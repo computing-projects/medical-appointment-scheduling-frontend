@@ -1,73 +1,62 @@
 @if (modalOpen) {
-  <div
-    class="modal-backdrop"
-    #dialog
-    open
-    (click)="onBackdrop($event)"
-    (keydown)="handleKeyDown($event)">
-    <div class="modal-card" #card>
-      <button class="btn-close" (click)="close.emit()" aria-label="Fechar">×</button>
-  
-      <div tabindex="0" class="sr-guard" (focus)="focusFirst()"></div>
-  
-      <header class="brand">
-        <img src="assets\images\logo-projeto.png" alt="logo">
-      </header>
-  
-      <form (ngSubmit)="submit()" #formEl="ngForm" class="form">
-        <div class="fields">
-          <div class="email-field">
-            <label class="label" for="email">Email:</label>
+<div class="modal-backdrop" #dialog open (click)="onBackdrop($event)" (keydown)="handleKeyDown($event)">
+  <div class="modal-card" #card>
+    <button class="btn-close" (click)="close.emit()" aria-label="Fechar">×</button>
+
+    <div tabindex="0" class="sr-guard" (focus)="focusFirst()"></div>
+
+    <header class="brand">
+      <img src="assets\images\logo-projeto.png" alt="logo" />
+    </header>
+
+    <form (ngSubmit)="submit()" #formEl="ngForm" class="form">
+      <div class="fields">
+        <div class="email-field">
+          <label class="label" for="email">Email:</label>
+          <input id="email" class="input" name="email" [(ngModel)]="email" type="email" required #firstField />
+        </div>
+        <div class="password-field">
+          <label class="label" for="password">Senha:</label>
+          <div class="password-wrap">
             <input
-              id="email"
+              id="password"
               class="input"
-              name="email"
-              [(ngModel)]="email"
-              type="email"
+              name="password"
+              [(ngModel)]="password"
+              [type]="showPassword ? 'text' : 'password'"
               required
-              #firstField />
-          </div>
-          <div class="password-field">
-            <label class="label" for="password">Senha:</label>
-            <div class="password-wrap">
-              <input
-                id="password"
-                class="input"
-                name="password"
-                [(ngModel)]="password"
-                [type]="showPassword ? 'text' : 'password'"
-                required minlength="6" />
-              <button type="button" class="toggle-eye" (click)="showPassword = !showPassword"
-                      [attr.aria-pressed]="showPassword">
-                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="{{ showPassword ? 'visibility_off' : 'visibility' }}"></mat-icon>
-              </button>
-            </div>
+              minlength="6" />
+            <button type="button" class="toggle-eye" (click)="showPassword = !showPassword" [attr.aria-pressed]="showPassword">
+              <mat-icon
+                aria-hidden="false"
+                aria-label=""
+                fontIcon="{{ showPassword ? 'visibility_off' : 'visibility' }}"></mat-icon>
+            </button>
           </div>
         </div>
-  
-        <a class="hint-link" href="#" (click)="forgot.emit(); $event.preventDefault()">Esqueceu a senha?</a>
-
-        @if (errorMessage) {
-          <div class="error-message">
-            {{ errorMessage }}
-          </div>
-        }
-
-        <button class="btn-primary" type="submit" (click)="submit()" [disabled]="formEl.invalid || isLoading">
-          @if (isLoading) {
-            Carregando...
-          } @else {
-            {{ ctaText }}
-          }
-        </button>
-      </form>
-  
-      <div class="foot">
-        Não possui uma conta?
-        <a href="#" (click)="signup.emit(); $event.preventDefault()">Cadastre-se agora!</a>
       </div>
-  
-      <div tabindex="0" class="sr-guard" (focus)="focusLast()"></div>
+
+      <a class="hint-link" href="#" (click)="forgot.emit(); $event.preventDefault()">Esqueceu a senha?</a>
+
+      @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+      }
+
+      <button class="btn-primary" type="submit" (click)="submit()" [disabled]="formEl.invalid || isLoading">
+        @if (isLoading) { Carregando... } @else {
+        {{ ctaText }}
+        }
+      </button>
+    </form>
+
+    <div class="foot">
+      Não possui uma conta?
+      <a href="#" (click)="signup.emit(); $event.preventDefault()">Cadastre-se agora!</a>
     </div>
+
+    <div tabindex="0" class="sr-guard" (focus)="focusLast()"></div>
   </div>
+</div>
 }

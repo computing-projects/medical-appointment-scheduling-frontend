@@ -1,0 +1,127 @@
+@if (modalOpen) {
+<div class="modal-backdrop" (click)="onBackdrop($event)" (keydown)="handleKeyDown($event)" (window:load)="onOpened()">
+  <div class="modal-card-signup" #card>
+    <button class="btn-close" (click)="close.emit()" aria-label="Fechar">×</button>
+
+    <header class="brand">
+      <img src="../../../../assets/images/logo-projeto.png" alt="MedSim" />
+    </header>
+
+    <form #formEl="ngForm" (ngSubmit)="submit(formEl)" class="form">
+      <div class="grid">
+        <!-- Nome -->
+        <div class="field">
+          <label for="name">Nome:</label>
+          <input #firstField id="name" name="name" class="input" type="text" required [(ngModel)]="name" />
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label for="email">Email:</label>
+          <input id="email" name="email" class="input" type="email" required [(ngModel)]="email" />
+        </div>
+
+        <!-- CPF -->
+        <div class="field">
+          <label for="cpf">CPF:</label>
+          <input id="cpf" name="cpf" class="input" type="text" required [(ngModel)]="cpf" />
+        </div>
+
+        <!-- Senha -->
+        <div class="field">
+          <label for="password" class="password-label">
+            Senha:
+            <a
+              mat-raised-button
+              matTooltip="A senha deve ter no mínimo 6 caracteres, incluindo letras maiúsculas, minúsculas e pelo menos 1 caractere especial."
+              matTooltipHideDelay="500"
+              [matTooltipPosition]="'right'"
+              aria-label="A senha deve ter no mínimo 6 caracteres, incluindo letras maiúsculas, minúsculas e pelo menos 1 caractere especial.">
+              <mat-icon aria-hidden="false" aria-label="" fontIcon="info_outlined" class="tooltip"></mat-icon>
+            </a>
+          </label>
+
+          <div class="password-wrap">
+            <input
+              id="password"
+              name="password"
+              class="input"
+              [type]="showPassword ? 'text' : 'password'"
+              required
+              [(ngModel)]="password"
+              minlength="6"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$" />
+
+            <button type="button" class="toggle-eye" (click)="showPassword = !showPassword" [attr.aria-pressed]="showPassword">
+              <mat-icon
+                aria-hidden="false"
+                aria-label=""
+                fontIcon="{{ showPassword ? 'visibility_off' : 'visibility' }}"></mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- CEP -->
+        <div class="field">
+          <label for="cep">CEP:</label>
+          <input id="cep" name="cep" class="input" type="text" required [(ngModel)]="cep" />
+        </div>
+
+        <!-- Cidade -->
+        <div class="field">
+          <label for="city">Cidade:</label>
+          <input id="city" name="city" class="input" type="text" required [(ngModel)]="city" />
+        </div>
+
+        <!-- Estado -->
+        <div class="field">
+          <label for="state">Estado:</label>
+          <input id="state" name="state" class="input" type="text" required [(ngModel)]="state" />
+        </div>
+
+        <!-- Plano de Saúde (select vindo de API) -->
+        <div class="field">
+          <label for="healthPlan">Plano de Saúde:</label>
+          <select id="healthPlan" name="healthPlan" class="input" required [(ngModel)]="healthPlanId">
+            <option value="" disabled selected>Selecione</option>
+            @for (plan of healthPlans; track plan.id) {
+            <option [value]="plan.id">{{ plan.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Data de Nascimento -->
+        <div class="field">
+          <label for="birthDate">Data de Nascimento:</label>
+          <input id="birthDate" name="birthDate" class="input" type="date" required [(ngModel)]="birthDate" />
+        </div>
+
+        <!-- Telefone -->
+        <div class="field">
+          <label for="phone">Telefone:</label>
+          <input id="phone" name="phone" class="input" type="tel" required [(ngModel)]="phone" />
+        </div>
+      </div>
+
+      <!-- Checkbox (vem desmarcado) -->
+      <div class="terms">
+        <input id="terms" name="terms" type="checkbox" [(ngModel)]="acceptTerms" />
+        <label for="terms">
+          Ao se cadastrar você aceita nossos
+          <a href="#" target="_blank">Termos e Condições</a>
+        </label>
+      </div>
+
+      @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+      }
+
+      <button class="btn-primary" type="submit" [disabled]="formEl.invalid || isSubmitting">
+        {{ isSubmitting ? 'Cadastrando...' : 'Cadastrar' }}
+      </button>
+    </form>
+  </div>
+</div>
+}
