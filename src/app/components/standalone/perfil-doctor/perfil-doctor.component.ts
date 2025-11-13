@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PerfilPatientModalComponent, PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
 import { PerfilDoctorCalendarComponent } from '../perfil-doctor-calendar/perfil-doctor-calendar.component';
 import { StatusUtils } from '../../shared/utils/status.utils';
@@ -13,8 +14,37 @@ import { RatingUtils } from '../../shared/utils/rating.utils';
   styleUrl: './perfil-doctor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PerfilDoctorComponent {
+export class PerfilDoctorComponent implements OnInit {
   selectedDoctorTab: 'informacoes' | 'agenda' = 'informacoes';
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.updateTabFromQueryParams();
+    
+    this.route.queryParams.subscribe((params) => {
+      const tabParam = params['tab'];
+      if (tabParam === 'agenda') {
+        this.selectedDoctorTab = 'agenda';
+        this.cdr.markForCheck();
+      } else if (tabParam === 'informacoes') {
+        this.selectedDoctorTab = 'informacoes';
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  private updateTabFromQueryParams(): void {
+    const tabParam = this.route.snapshot.queryParams['tab'];
+    if (tabParam === 'agenda' || tabParam === 'informacoes') {
+      this.selectedDoctorTab = tabParam;
+      this.cdr.markForCheck();
+    }
+  }
 
   // Placeholder for doctor's profile data
   doctorProfile = {
@@ -81,6 +111,7 @@ export class PerfilDoctorComponent {
 
   showDoctorTab(tab: 'informacoes' | 'agenda'): void {
     this.selectedDoctorTab = tab;
+    this.cdr.markForCheck();
   }
 
   getStarsArray(rating: number): number[] {

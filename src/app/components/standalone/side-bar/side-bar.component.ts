@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { ClientPageRoutingModule } from '../../client-page/client-page-routing.module';
 import { ClarityModule } from '@clr/angular';
 import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Roles } from '../../models/user.model';
 
@@ -10,7 +11,7 @@ type ViewType = 'home' | 'agendamento' | 'perfil' | 'perfil-medico' | 'gerenciar
 @Component({
   selector: 'med-side-bar',
   standalone: true,
-  imports: [ClientPageRoutingModule, ClarityModule, MatIcon],
+  imports: [ClientPageRoutingModule, ClarityModule, MatIcon, RouterModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

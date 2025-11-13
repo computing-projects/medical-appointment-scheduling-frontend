@@ -34,9 +34,28 @@
     </span>
   </a>
   } @if (getUserRole() === 'doctor') {
-  <button class="nav-button" (click)="showView('perfil-medico')" [class.active]="selectedView === 'perfil-medico'">
-    Perfil Medico
-  </button>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'home'"
+    [routerLink]="'/doutor/home'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home_health"></mat-icon>
+      Home
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'perfil-medico'"
+    [routerLink]="'/doutor/perfil'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="perfil" fontIcon="account_circle"></mat-icon>
+      Perfil
+    </span>
+  </a>
   } @if (getUserRole() === 'admin') {
   <button class="nav-button" (click)="showView('gerenciar-medicos')" [class.active]="selectedView === 'gerenciar-medicos'">
     Gerenciar Médicos
