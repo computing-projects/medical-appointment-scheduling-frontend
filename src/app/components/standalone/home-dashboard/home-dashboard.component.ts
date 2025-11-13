@@ -1,17 +1,17 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { PerfilDoctorModalComponent, DoctorDetails } from '../perfil-doctor-modal/perfil-doctor-modal.component';
 
 @Component({
   selector: 'med-home-dashboard',
   standalone: true,
-  imports: [CommonModule, PerfilDoctorModalComponent],
+  imports: [CommonModule, RouterModule, PerfilDoctorModalComponent],
   templateUrl: './home-dashboard.component.html',
   styleUrl: './home-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeDashboardComponent {
-  @Output() navigateToView = new EventEmitter<string>();
 
   // Dashboard data (in a real app, this would come from a service)
   userName = 'Fulano';
@@ -57,10 +57,6 @@ export class HomeDashboardComponent {
       { date: '20/06/2024', type: 'Consulta de Acompanhamento' }
     ]
   };
-
-  navigateTo(view: string): void {
-    this.navigateToView.emit(view);
-  }
 
   viewAppointmentDetails(): void {
     this.selectedAppointment = this.appointmentDetails;

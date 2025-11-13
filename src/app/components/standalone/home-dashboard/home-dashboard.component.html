@@ -27,22 +27,22 @@
   <div class="quick-actions-section">
     <h2 class="section-title">Ações Rápidas</h2>
     <div class="action-cards">
-      <div class="action-card" (click)="navigateTo('agendamento')">
+      <a class="action-card" [routerLink]="'/cliente/agendamento'" routerLinkActive="active">
         <div class="action-icon-wrapper schedule">
           <img src="../../../../assets/images/client-nav/schedule.png" alt="Agendar Consulta" />
         </div>
         <h3>Agendar Consulta</h3>
         <p>Encontre médicos e agende sua consulta rapidamente</p>
-        <button class="action-btn" (click)="$event.stopPropagation(); navigateTo('agendamento')">Agendar Agora →</button>
-      </div>
-      <div class="action-card" (click)="navigateTo('perfil')">
+        <span class="action-btn">Agendar Agora →</span>
+      </a>
+      <a class="action-card" [routerLink]="'/cliente/perfil'" routerLinkActive="active">
         <div class="action-icon-wrapper profile">
           <img src="../../../../assets/images/client-nav/anamnese.png" alt="Ver Perfil" />
         </div>
         <h3>Meu Perfil</h3>
         <p>Visualize e edite suas informações pessoais e médicas</p>
-        <button class="action-btn" (click)="$event.stopPropagation(); navigateTo('perfil')">Ver Perfil →</button>
-      </div>
+        <span class="action-btn">Ver Perfil →</span>
+      </a>
     </div>
   </div>
 

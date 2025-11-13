@@ -114,17 +114,14 @@
   gap: 16px;
   border: 2px solid transparent;
   transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
     border-color: $neon-blue;
 
     .action-icon-wrapper {
       transform: scale(1.1) rotate(5deg);
-    }
-
-    .action-btn {
-      @include gradient-bg($neon-blue, darken($neon-blue, 10%));
-      color: $white;
     }
   }
 
@@ -169,8 +166,12 @@
   @include button($ghost-white, $neon-blue, 12px 24px);
   font-size: 0.95rem;
   margin-top: auto;
+  display: inline-block;
+  pointer-events: none; // Prevent the span from blocking clicks on the parent link
 
-  &:hover {
+  .action-card:hover & {
+    @include gradient-bg($neon-blue, darken($neon-blue, 10%));
+    color: $white;
     transform: translateY(-2px);
   }
 }
