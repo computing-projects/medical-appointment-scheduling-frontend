@@ -4,7 +4,7 @@
     <button class="btn-close" (click)="close.emit()" aria-label="Fechar">×</button>
 
     <header class="brand">
-      <img src="../../../../assets/images/logo-projeto.png" alt="MedSim" />
+      <img src="../../../../assets/images/logo-projeto.png" alt="MedSim logo" />
     </header>
 
     <form #formEl="ngForm" (ngSubmit)="submit(formEl)" class="form">
@@ -103,12 +103,12 @@
         </div>
       </div>
 
-      <!-- Checkbox (vem desmarcado) -->
+      <!-- Checkbox -->
       <div class="terms">
         <input id="terms" name="terms" type="checkbox" [(ngModel)]="acceptTerms" />
-        <label for="terms">
+        <label for="terms" class="terms-and-conditions-label">
           Ao se cadastrar você aceita nossos
-          <a href="#" target="_blank">Termos e Condições</a>
+          <a class="terms-and-conditions-link" href="#" target="_blank">Termos e Condições</a>
         </label>
       </div>
 
@@ -117,10 +117,11 @@
         {{ errorMessage }}
       </div>
       }
-
-      <button class="btn-primary" type="submit" [disabled]="formEl.invalid || isSubmitting">
-        {{ isSubmitting ? 'Cadastrando...' : 'Cadastrar' }}
-      </button>
+      <div class="signup-btn-section">
+        <button class="btn-primary signup-btn" type="submit" [disabled]="formEl.invalid || isSubmitting">
+          {{ isSubmitting ? 'Cadastrando...' : 'Cadastrar' }}
+        </button>
+      </div>
     </form>
   </div>
 </div>

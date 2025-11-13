@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 interface HealthPlan {
   id: number | string;
@@ -56,6 +58,8 @@ export class SignupModalComponent implements AfterViewInit {
   errorMessage = '';
 
   healthPlans: HealthPlan[] = [];
+
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngAfterViewInit(): void {
     if (this.modalOpen && this.firstField) {
@@ -109,27 +113,29 @@ export class SignupModalComponent implements AfterViewInit {
   submit(form: NgForm) {
     this.errorMessage = '';
 
-    if (form.invalid || !this.acceptTerms) {
-      this.errorMessage = !this.acceptTerms
-        ? 'Você precisa aceitar os Termos e Condições para se cadastrar.'
-        : 'Verifique os campos obrigatórios.';
+    if (form.invalid) {
+      this.errorMessage = 'Verifique os campos preenchidos e tente novamente.';
       return;
     }
 
     this.isSubmitting = true;
 
     const payload = {
+      id: 0,
       name: this.name,
       email: this.email,
+      passwordHash: this.password,
+      phone: this.phone,
+      role: 'client',
       cpf: this.cpf,
       cep: this.cep,
       state: this.state,
       city: this.city,
+      profilePhotoUrl: '',
+      // tem que ver
       birthDate: this.birthDate,
-      phone: this.phone,
-      password: this.password,
       healthPlanId: this.healthPlanId,
-      acceptTerms: this.acceptTerms,
+      // acceptTerms: this.acceptTerms,
     };
 
     // Aqui você integra com sua API de signup

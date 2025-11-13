@@ -24,6 +24,10 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/Auth/DirectLogin`, credentials);
   }
 
+  signup(credentials: { email: string; password: string }):  Observable<any> {
+    return this.http.post(`${this.baseUrl}/Auth/Register`, credentials, { headers: this.getHeaders() });
+  }
+
   // Doctor endpoints
   getDoctors(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Doctors`, { headers: this.getHeaders() });

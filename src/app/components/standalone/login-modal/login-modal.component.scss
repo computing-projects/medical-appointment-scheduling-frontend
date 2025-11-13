@@ -22,6 +22,16 @@
   padding: 28px 22px 26px;
   position: relative;
 }
+
+.signup-btn-section {
+  display: flex;
+  justify-content: center;
+}
+
+.signup-btn {
+  max-width: 200px;
+}
+
 /* Close */
 .btn-close {
   position: absolute;

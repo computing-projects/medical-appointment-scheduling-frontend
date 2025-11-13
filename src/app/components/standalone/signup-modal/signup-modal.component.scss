@@ -38,6 +38,20 @@
   border-color: $grey-whisper;
 }
 
+.signup-btn-section {
+  display: flex;
+  justify-content: center;
+}
+
+.signup-btn {
+  max-width: 200px;
+}
+
+.terms-and-conditions-link {
+  color: $cosmic-cobalt;
+  font-weight: 600;
+}
+
 /* CTA */
 .btn-primary {
   margin: 18px 0 6px;
@@ -94,6 +108,10 @@
   font-size: 11px;
   margin-left: 6px;
   cursor: pointer;
+}
+
+.terms-and-conditions-label {
+  font-size: 14px;
 }
 
 .terms {

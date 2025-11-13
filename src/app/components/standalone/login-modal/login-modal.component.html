@@ -6,7 +6,7 @@
     <div tabindex="0" class="sr-guard" (focus)="focusFirst()"></div>
 
     <header class="brand">
-      <img src="assets\images\logo-projeto.png" alt="logo" />
+      <img src="assets\images\logo-projeto.png" alt="MedSim logo" />
     </header>
 
     <form (ngSubmit)="submit()" #formEl="ngForm" class="form">
@@ -43,12 +43,15 @@
         {{ errorMessage }}
       </div>
       }
-
-      <button class="btn-primary" type="submit" (click)="submit()" [disabled]="formEl.invalid || isLoading">
-        @if (isLoading) { Carregando... } @else {
-        {{ ctaText }}
-        }
-      </button>
+      <div class="signup-btn-section">
+        <button class="btn-primary signup-btn" type="submit" (click)="submit()" [disabled]="formEl.invalid || isLoading">
+          @if (isLoading) { 
+            Carregando... 
+          } @else {
+            {{ ctaText }}
+          }
+        </button>
+      </div>
     </form>
 
     <div class="foot">
