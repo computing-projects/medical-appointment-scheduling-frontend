@@ -17,11 +17,14 @@
 /* Card */
 .modal-card-signup {
   min-width: 640px;
+  max-height: 640px;
   background: $ghost-white;
   border-radius: 22px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   padding: 28px 22px 26px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
@@ -71,10 +74,22 @@
   cursor: default;
 }
 
+.modal-content {
+  overflow-y: auto;
+  flex: 1;
+  padding: 16px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 40px;
+  gap: 14px 32px;
+}
+
+.grid input,
+.grid select {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field label {

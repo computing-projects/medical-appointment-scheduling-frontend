@@ -1,4 +1,4 @@
-import { AuthState, Users } from '../../models/user.model';
+import { AuthState, Clients, Users } from '../../models/user.model';
 import { environment } from '../../../../environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -84,6 +84,12 @@ export class AuthenticationService {
   signup(user: Users): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/Users/Register`, user)
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
+  }
+
+  clientRegister(client: Clients): Observable<any> {
+    return this.http
+      .post(`${this.apiUrl}/Clients/Create`, client)
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 

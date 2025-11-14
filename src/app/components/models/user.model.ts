@@ -16,6 +16,9 @@ export interface Users {
   address: string;
   cep: string;
   deletedAt: string;
+  profilePhotoUrl?: string;
+  city?: string;
+  state?: string;
 }
 
 export interface Clients {
@@ -23,7 +26,7 @@ export interface Clients {
   userId: number;
   rg: string;
   cpf: string;
-  phone: string;
+  phone?: string;
   birthDate: string;
 }
 
@@ -45,4 +48,18 @@ export interface AuthState {
   user: Users | null;
   token: string | null;
   isAuthenticated: boolean;
+}
+
+export interface Clinics {
+  id: number;
+  name: string;
+  address: string;
+  cnpj: string;
+  email: string;
+  phone: string;
+  website?: string;
+  cep: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 }

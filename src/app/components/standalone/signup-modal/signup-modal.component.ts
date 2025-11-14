@@ -15,6 +15,9 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { Clients, Users } from '../../models/user.model';
+import { take } from 'rxjs';
+import { ApiService } from '../../services/api.service';
 
 interface HealthPlan {
   id: number | string;
@@ -42,9 +45,11 @@ export class SignupModalComponent implements AfterViewInit {
   name = '';
   email = '';
   cpf = '';
+  rg = '';
   cep = '';
   state = '';
   city = '';
+  address = '';
   birthDate = '';
   phone = '';
   password = '';
@@ -59,7 +64,7 @@ export class SignupModalComponent implements AfterViewInit {
 
   healthPlans: HealthPlan[] = [];
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router, private apiService: ApiService) {}
 
   ngAfterViewInit(): void {
     if (this.modalOpen && this.firstField) {
@@ -109,9 +114,9 @@ export class SignupModalComponent implements AfterViewInit {
     this.showPasswordInfo = !this.showPasswordInfo;
   }
 
-  // Tratamento do submit fica TODO aqui
   submit(form: NgForm) {
     this.errorMessage = '';
+    console.log(form);
 
     if (form.invalid) {
       this.errorMessage = 'Verifique os campos preenchidos e tente novamente.';
@@ -119,40 +124,85 @@ export class SignupModalComponent implements AfterViewInit {
     }
 
     this.isSubmitting = true;
+    const currentDate = new Date().toISOString();
 
-    const payload = {
+    const user: Users = {
       id: 0,
       name: this.name,
       email: this.email,
       passwordHash: this.password,
       phone: this.phone,
       role: 'client',
-      cpf: this.cpf,
       cep: this.cep,
       state: this.state,
       city: this.city,
+      address: this.address,
       profilePhotoUrl: '',
-      // tem que ver
-      birthDate: this.birthDate,
-      healthPlanId: this.healthPlanId,
-      // acceptTerms: this.acceptTerms,
+      createdAt: currentDate,
+      updatedAt: currentDate,
+      deletedAt: currentDate,
     };
 
-    // Aqui você integra com sua API de signup
-    // Exemplo genérico com Promise para ilustrar:
-    fakeSignupRequest(payload)
-      .then(() => {
-        this.isSubmitting = false;
-        this.close.emit();
-      })
-      .catch(() => {
-        this.isSubmitting = false;
-        this.errorMessage = 'Erro ao realizar cadastro. Tente novamente.';
-      });
-
-    function fakeSignupRequest(data: any): Promise<void> {
-      console.log('signup payload', data);
-      return new Promise(resolve => setTimeout(resolve, 1000));
+    const client: Clients = {
+      id: 0,
+      userId: user.id,
+      rg: this.rg,
+      cpf: this.cpf,
+      phone: this.phone,
+      birthDate: this.birthDate
     }
+
+    const credentialsUser = {
+      email: this.email,
+      password: this.password
+    }
+
+    // healthPlanId: this.healthPlanId,
+    
+    this.authService.signup(user)
+      .pipe(take(1))
+      .subscribe({
+        next: response => {
+          this.isSubmitting = false;
+          this.authService.clientRegister(client)
+          .pipe(take(1))
+          .subscribe({
+            next: response => {
+              this.isSubmitting = false;
+              this.apiService.signup(credentialsUser).subscribe({
+                next: (response) => {
+                  localStorage.setItem('token', response.token);
+                  this.apiService.getCurrentUser().subscribe({
+                    next: (user: Users) => {
+                      localStorage.setItem('user', JSON.stringify(user));
+                      localStorage.setItem('role', user.role);
+                    },
+                    error: err => {
+                      this.isSubmitting = false;
+                      this.errorMessage = err.error?.message || 'Erro ao cadastrar. Tente novamente mais tarde.';
+                      console.error('Erro:', err);
+                    },
+                  });
+                },
+                error: err => {
+                  this.isSubmitting = false;
+                  this.errorMessage = err.error?.message || 'Erro ao cadastrar. Tente novamente mais tarde.';
+                  console.error('Erro:', err);
+                },
+              });
+            },
+            error: err => {
+              this.isSubmitting = false;
+              this.errorMessage = err.error?.message || 'Erro ao cadastrar. Verifique se os campos estão corretos.';
+              console.error('Erro no cadatro do cliente:', err);
+            },
+          });
+        },
+        error: err => {
+          this.isSubmitting = false;
+          this.errorMessage = err.error?.message || 'Erro ao cadastrar. Verifique se os campos estão corretos.';
+          console.error('Erro no cadastro do usuário:', err);
+        },
+      });
   }
 }
