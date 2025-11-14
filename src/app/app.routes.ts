@@ -19,20 +19,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./components/doctor-page/doctor-page.module').then(m => m.DoctorPageModule),
   },
-  // {
-  //   path: 'admin',
-  //   component: PatientLayoutComponent,
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     {
-  //       path: 'home',
-  //       component: PatientHomeComponent,
-  //     },
-  //     {
-  //       path: '',
-  //       redirectTo: 'home',
-  //       pathMatch: 'full',
-  //     },
-  //   ],
-  // },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./components/admin-page/admin-page.module').then(m => m.AdminPageModule),
+  },
 ];

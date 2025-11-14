@@ -57,9 +57,28 @@
     </span>
   </a>
   } @if (getUserRole() === 'admin') {
-  <button class="nav-button" (click)="showView('gerenciar-medicos')" [class.active]="selectedView === 'gerenciar-medicos'">
-    Gerenciar Médicos
-  </button>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'home'"
+    [routerLink]="'/admin/home'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home_health"></mat-icon>
+      Home
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'gerenciar-medicos'"
+    [routerLink]="'/admin/gerenciar-medicos'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="gerenciar-medicos" fontIcon="manage_accounts"></mat-icon>
+      Gerenciar Médicos
+    </span>
+  </a>
   }
   <a clrVerticalNavLink class="nav-button" (click)="logout()">
     <span class="nav-content">
