@@ -1,0 +1,19 @@
+@if (emailModalOpen) {
+  <div class="modal-backdrop" (click)="onBackdrop($event)" (keydown)="handleKeyDown($event)">
+    <div class="modal-card-email-sent" #card>
+      <button class="btn-close" (click)="close.emit()" aria-label="Fechar">×</button>
+
+      <header class="brand">
+        <img src="../../../../assets/images/logo-projeto.png" alt="MedSim logo" />
+      </header>
+      <div class="modal-content-email-sent">
+        <h1 class="title-email-sent">Cadastro concluido com sucesso!</h1>
+        <div class="text-email-sent">
+          <p>Por favor, verifique a caixa de entrada ou lixo eletrônico para confirmar seu cadastro.</p>
+          <p>Após a confirmação, por favor, tente realizar o login com seu email e senha.</p>
+        </div>
+        <img src="../../../../assets/images/email-sent-success.svg" alt="Cadastro realizado com sucesso">
+      </div>
+    </div>
+  </div>
+}

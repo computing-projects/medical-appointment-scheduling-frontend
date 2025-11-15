@@ -5,7 +5,7 @@ export enum Roles {
 }
 
 export interface Users {
-  // id: number;
+  id?: number;
   name: string;
   email: string;
   passwordHash: string;
@@ -23,7 +23,7 @@ export interface Users {
 
 export interface Clients {
   // id: number;
-  // userId: number;
+  userId: number | undefined;
   rg: string;
   cpf: string;
   phone?: string;
