@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PerfilPatientModalComponent, PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
+import { PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
 
 @Component({
   selector: 'med-doctor-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, PerfilPatientModalComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './doctor-dashboard.component.html',
   styleUrl: './doctor-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

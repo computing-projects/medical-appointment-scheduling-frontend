@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PerfilDoctorModalComponent, DoctorDetails } from '../perfil-doctor-modal/perfil-doctor-modal.component';
+import { DoctorDetails } from '../perfil-doctor-modal/perfil-doctor-modal.component';
 
 @Component({
   selector: 'med-home-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, PerfilDoctorModalComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home-dashboard.component.html',
   styleUrl: './home-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

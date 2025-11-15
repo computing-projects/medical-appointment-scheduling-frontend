@@ -44,12 +44,6 @@
       <span class="nav-icon">🩺</span>
       <span class="nav-text">Consultas</span>
     </button>
-    <button class="perfil-nav-button"
-            (click)="showPerfilTab('fichaMedica')"
-            [class.active]="selectedPerfilTab === 'fichaMedica'">
-      <span class="nav-icon">📋</span>
-      <span class="nav-text">Ficha Médica</span>
-    </button>
   </div>
 
   <div class="perfil-content">
@@ -206,11 +200,6 @@
     <!-- Consultas Tab Content -->
     <div *ngIf="selectedPerfilTab === 'consultas'" class="tab-wrapper">
       <med-perfil-appointment></med-perfil-appointment>
-    </div>
-
-    <!-- Ficha Médica Tab Content -->
-    <div *ngIf="selectedPerfilTab === 'fichaMedica'" class="tab-wrapper">
-      <med-perfil-anamnese></med-perfil-anamnese>
     </div>
   </div>
 </div>
