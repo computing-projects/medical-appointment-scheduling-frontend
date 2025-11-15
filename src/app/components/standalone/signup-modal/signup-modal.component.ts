@@ -120,7 +120,6 @@ export class SignupModalComponent implements AfterViewInit {
 
   submit(form: NgForm) {
     this.errorMessage = '';
-    console.log(form);
 
     if (form.invalid) {
       this.errorMessage = 'Verifique os campos preenchidos e tente novamente.';
