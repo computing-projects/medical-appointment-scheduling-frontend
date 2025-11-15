@@ -8,8 +8,8 @@
   <div class="filters-section">
     <div class="search-box">
       <span class="search-icon">🔍</span>
-      <input 
-        type="text" 
+      <input
+        type="text"
         class="search-input"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchChange()"
@@ -18,7 +18,7 @@
 
     <div class="filter-group">
       <label class="filter-label">Status:</label>
-      <select 
+      <select
         class="filter-select"
         [(ngModel)]="filterStatus"
         (ngModelChange)="onStatusFilterChange()">
@@ -55,7 +55,7 @@
             <img [src]="doctor.photo" [alt]="doctor.name" class="doctor-photo">
           </td>
           <td class="doctor-name">{{ doctor.name }}</td>
-          <td>{{ doctor.specialty }}</td>
+          <td class="specialty-table">{{ doctor.specialtys.join(', ') }}</td>
           <td class="crm">{{ doctor.crm }}</td>
           <td class="contact">
             <div>{{ doctor.email }}</div>
@@ -70,7 +70,7 @@
             <span class="rating-value">{{ doctor.rating }}</span>
           </td>
           <td>
-            <button 
+            <button
               class="status-badge"
               [class.active]="doctor.status === 'active'"
               [class.inactive]="doctor.status === 'inactive'"
@@ -80,19 +80,19 @@
           </td>
           <td>
             <div class="action-buttons">
-              <button 
+              <button
                 class="action-btn view"
                 (click)="viewDoctor(doctor)"
                 title="Visualizar">
                 👁️
               </button>
-              <button 
+              <button
                 class="action-btn edit"
                 (click)="editDoctor(doctor)"
                 title="Editar">
                 ✏️
               </button>
-              <button 
+              <button
                 class="action-btn delete"
                 (click)="confirmDelete(doctor)"
                 title="Excluir">
@@ -120,52 +120,72 @@
       <h3 class="modal-title">Informações do Médico</h3>
       <button class="close-btn" (click)="closeViewModal()">×</button>
     </div>
-    
+
     <div class="modal-body" *ngIf="selectedDoctor">
       <div class="doctor-info-card">
         <img [src]="selectedDoctor.photo" [alt]="selectedDoctor.name" class="doctor-photo-large">
-        
+
         <div class="info-grid">
-          <div class="info-item">
-            <span class="info-label">Nome:</span>
-            <span class="info-value">{{ selectedDoctor.name }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Especialidade:</span>
-            <span class="info-value">{{ selectedDoctor.specialty }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">CRM:</span>
-            <span class="info-value">{{ selectedDoctor.crm }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Email:</span>
-            <span class="info-value">{{ selectedDoctor.email }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Telefone:</span>
-            <span class="info-value">{{ selectedDoctor.phone }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Total de Pacientes:</span>
-            <span class="info-value">{{ selectedDoctor.patientsCount }}</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Avaliação:</span>
-            <span class="info-value">{{ selectedDoctor.rating }} / 5.0</span>
-          </div>
-          
-          <div class="info-item">
-            <span class="info-label">Status:</span>
-            <span class="info-value" [class.status-active]="selectedDoctor.status === 'active'">
-              {{ selectedDoctor.status === 'active' ? 'Ativo' : 'Inativo' }}
-            </span>
+          <div class="form-grid">
+            <div class="info-item">
+              <span class="info-label">Nome Completo:</span>
+              <span class="info-value">{{ selectedDoctor.name }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">CPF:</span>
+              <span class="info-value">{{ selectedDoctor.cpf }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">CRM:</span>
+              <span class="info-value">{{ selectedDoctor.crm }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Cidade:</span>
+              <span class="info-value">{{ selectedDoctor.cidade }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Estado:</span>
+              <span class="info-value">{{ selectedDoctor.estado }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">CEP:</span>
+              <span class="info-value">{{ selectedDoctor.cep }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Email:</span>
+              <span class="info-value">{{ selectedDoctor.email }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Planos que atende:</span>
+              <span class="info-value">{{ selectedDoctor.plans.join(', ') }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Especialidades:</span>
+              <span class="info-value">{{ selectedDoctor.specialtys.join(', ') }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Tempo médio de atendimento (em minutos):</span>
+              <span class="info-value">{{ selectedDoctor.avgAppointmentTime }}</span>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">Ativo:</span>
+              <span class="info-value" [class.status-active]="selectedDoctor.status === 'active'">
+                {{ selectedDoctor.status === 'active' ? 'Sim' : 'Não' }}
+              </span>
+            </div>
+
+            <div class="info-item"></div>
+
           </div>
         </div>
       </div>
@@ -180,47 +200,91 @@
       <h3 class="modal-title">Editar Médico</h3>
       <button class="close-btn" (click)="closeEditModal()">×</button>
     </div>
-    
+
     <div class="modal-body" *ngIf="selectedDoctor">
       <form class="edit-form">
-        <div class="form-group">
-          <label class="form-label">Nome:</label>
-          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.name" name="name">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Especialidade:</label>
-          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.specialty" name="specialty">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">CRM:</label>
-          <input type="text" class="form-input" [(ngModel)]="selectedDoctor.crm" name="crm">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Email:</label>
-          <input type="email" class="form-input" [(ngModel)]="selectedDoctor.email" name="email">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Telefone:</label>
-          <input type="tel" class="form-input" [(ngModel)]="selectedDoctor.phone" name="phone">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Status:</label>
-          <select class="form-input" [(ngModel)]="selectedDoctor.status" name="status">
-            <option value="active">Ativo</option>
-            <option value="inactive">Inativo</option>
-          </select>
-        </div>
+        <div class="form-grid">
+          <div class="form-group form-group-triple">
+            <label class="form-label">Nome Completo:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.name" name="name">
+          </div>
+          <div class="form-group form-group-triple">
+            <label class="form-label">CPF:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.cpf" name="cpf">
+          </div>
+          <div class="form-group form-group-triple">
+            <label class="form-label">CRM:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.crm" name="crm">
+          </div>
+
+          <div class="form-group form-group-triple">
+            <label class="form-label">Cidade:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.cidade" name="city">
+          </div>
+          <div class="form-group form-group-triple">
+            <label class="form-label">Estado:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.estado" name="state">
+          </div>
+          <div class="form-group form-group-triple">
+            <label class="form-label">CEP:</label>
+            <input type="text" class="form-input" [(ngModel)]="selectedDoctor.cep" name="cep">
+          </div>
+
+          <div class="form-group form-group-triple">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-input" [(ngModel)]="selectedDoctor.email" name="email">
+          </div>
+          <!-- PLANOS -->
+          <div class="custom-dropdown" (click)="toggleDropdown('plansOpen')" tabindex="0" (focusout)="closeDropdown('plansOpen')">
+            <label class="form-label">Planos que atende:</label>
+            <div class="dropdown-display">
+              {{ selectedDoctor.plans?.length ? selectedDoctor.plans.join(', ') : '' }}
+            </div>
+            <div class="dropdown-list" *ngIf="plansOpen">
+              <div
+                class="dropdown-item"
+                *ngFor="let plan of plans"
+                (click)="toggleSelection(plan, 'plans', $event)"
+                [class.selected]="selectedDoctor.plans.includes(plan)">
+                {{ plan }}
+              </div>
+            </div>
+          </div>
+          <!-- ESPECIALIDADES -->
+          <div class="custom-dropdown" (click)="toggleDropdown('specialtiesOpen')" tabindex="0" (focusout)="closeDropdown('specialtiesOpen')">
+            <label class="form-label">Especialidades:</label>
+            <div class="dropdown-display">
+              {{ selectedDoctor.specialtys?.length ? selectedDoctor.specialtys.join(', ') : '' }}
+            </div>
+            <div class="dropdown-list" *ngIf="specialtiesOpen" style="margin-top:10px;">
+              <div
+                class="dropdown-item"
+                *ngFor="let sp of specialties"
+                (click)="toggleSelection(sp, 'specialtys', $event)"
+                [class.selected]="selectedDoctor.specialtys.includes(sp)">
+                {{ sp }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-triple">
+            <label class="form-label">Tempo médio de atendimento (em minutos):</label>
+            <input type="number" class="form-input" [(ngModel)]="selectedDoctor.avgAppointmentTime" name="avg_service_time">
+          </div>
+          <div class="form-group form-group-triple">
+            <label class="form-label">Ativo:</label>
+            <select class="form-input" [(ngModel)]="selectedDoctor.status" name="active">
+              <option [ngValue]="'active'">Ativo</option>
+              <option [ngValue]="'inactive'">Inativo</option>
+            </select>
+          </div>
+          <div class="form-group form-group-triple"></div> </div>
       </form>
     </div>
-    
+
     <div class="modal-footer">
       <button class="btn-secondary" (click)="closeEditModal()">Cancelar</button>
-      <button class="btn-primary" (click)="saveEdit()">Salvar Alterações</button>
+      <button class="btn-primary" (click)="saveEdit()">Salvar</button>
     </div>
   </div>
 </div>
@@ -229,23 +293,23 @@
 <div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="closeDeleteConfirm()">
   <div class="modal-content small" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h3 class="modal-title">Confirmar Exclusão</h3>
+      <h3 class="modal-title">Deletar Médico</h3>
       <button class="close-btn" (click)="closeDeleteConfirm()">×</button>
     </div>
-    
+
     <div class="modal-body" *ngIf="selectedDoctor">
       <div class="delete-warning">
         <div class="warning-icon">⚠️</div>
         <p class="warning-text">
-          Tem certeza que deseja excluir o médico <strong>{{ selectedDoctor.name }}</strong>?
+          Tem certeza que deseja deletar o(a) médico(a) <strong>{{ selectedDoctor.name }}</strong> de CRM <strong>{{ selectedDoctor.crm}}</strong>?
         </p>
         <p class="warning-subtext">Esta ação não pode ser desfeita.</p>
       </div>
     </div>
-    
+
     <div class="modal-footer">
       <button class="btn-secondary" (click)="closeDeleteConfirm()">Cancelar</button>
-      <button class="btn-danger" (click)="deleteDoctor()">Confirmar Exclusão</button>
+      <button class="btn-danger" (click)="deleteDoctor()">Deletar</button>
     </div>
   </div>
 </div>

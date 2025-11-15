@@ -11,7 +11,7 @@ describe('ManagerDoctorEditComponent', () => {
       imports: [ManagerDoctorEditComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ManagerDoctorEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
