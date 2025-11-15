@@ -50,7 +50,7 @@ export class SignupModalComponent implements AfterViewInit {
   state = '';
   city = '';
   address = '';
-  birthDate = '';
+  birthDate: string | null | undefined;
   phone = '';
   password = '';
   healthPlanId: string | number | '' = '';
@@ -72,8 +72,6 @@ export class SignupModalComponent implements AfterViewInit {
     }
   }
 
-  // Exemplo: aqui você chama sua API real
-  // Ideal: mover para um service injetado.
   loadHealthPlans() {
     // mock enquanto não integra com API
     this.healthPlans = [
@@ -83,7 +81,6 @@ export class SignupModalComponent implements AfterViewInit {
     ];
   }
 
-  // Chamado quando o modal abre (pode ser ajustado no pai)
   onOpened() {
     this.loadHealthPlans();
     queueMicrotask(() => {
@@ -91,7 +88,6 @@ export class SignupModalComponent implements AfterViewInit {
     });
   }
 
-  // Fecha ao clicar fora do card
   onBackdrop(event: MouseEvent) {
     if (!this.card) return;
     if (!this.card.nativeElement.contains(event.target as Node)) {
@@ -114,6 +110,12 @@ export class SignupModalComponent implements AfterViewInit {
     this.showPasswordInfo = !this.showPasswordInfo;
   }
 
+  toUtcDateTimeString(dateStr: string | null | undefined): string | null {
+  if (!dateStr) return null;
+
+  return `${dateStr}T00:00:00Z`;
+}
+
   submit(form: NgForm) {
     this.errorMessage = '';
     console.log(form);
@@ -127,7 +129,7 @@ export class SignupModalComponent implements AfterViewInit {
     const currentDate = new Date().toISOString();
 
     const user: Users = {
-      id: 0,
+      // id: 9,
       name: this.name,
       email: this.email,
       passwordHash: this.password,
@@ -144,12 +146,12 @@ export class SignupModalComponent implements AfterViewInit {
     };
 
     const client: Clients = {
-      id: 0,
-      userId: user.id,
+      // id: 1,
+      // userId: user.id,
       rg: this.rg,
       cpf: this.cpf,
       phone: this.phone,
-      birthDate: this.birthDate
+      birthDate: this.toUtcDateTimeString(this.birthDate)
     }
 
     const credentialsUser = {
