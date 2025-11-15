@@ -58,7 +58,7 @@
   justify-content: space-between;
   padding: 24px 28px;
   border-bottom: 2px solid $grey-whisper;
-  background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
   border-radius: 16px 16px 0 0;
   
   .header-content {
@@ -139,14 +139,14 @@
     border-radius: 10px;
     
     &:hover {
-      background: $neon-blue;
+      background: $cosmic-cobalt;
     }
   }
 }
 
 // Summary Card
 .summary-card {
-  background: linear-gradient(135deg, rgba($neon-blue, 0.03), rgba($blue-gem, 0.03));
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.03), rgba($blue-gem, 0.03));
   border: 2px solid $periwinkle-blue;
   border-radius: 12px;
   padding: 20px;
@@ -190,7 +190,7 @@
       color: $paua-blue;
       
       strong {
-        color: $neon-blue;
+        color: $cosmic-cobalt;
         font-weight: 600;
       }
     }
@@ -206,7 +206,7 @@
           height: 50px;
           border-radius: 50%;
           object-fit: cover;
-          border: 2px solid $neon-blue;
+          border: 2px solid $cosmic-cobalt;
         }
         
         .doctor-details {
@@ -240,7 +240,7 @@
     }
     
     &.remote {
-      background: linear-gradient(135deg, $neon-blue, $blue-gem);
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
       color: $white;
     }
   }
@@ -334,8 +334,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
     
     &:disabled {
@@ -404,7 +404,7 @@
     position: relative;
     
     &:hover {
-      background: rgba($neon-blue, 0.05);
+      background: rgba($cosmic-cobalt, 0.05);
     }
     
     .reminder-checkbox {
@@ -419,8 +419,8 @@
       flex-shrink: 0;
       
       &:checked {
-        background: $neon-blue;
-        border-color: $neon-blue;
+        background: $cosmic-cobalt;
+        border-color: $cosmic-cobalt;
         
         &::after {
           content: '✓';
@@ -489,13 +489,13 @@
   }
   
   .confirm-btn {
-    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
     color: $white;
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
     
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+      box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
     }
     
     &:disabled {

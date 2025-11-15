@@ -5,24 +5,6 @@
     <p class="hero-subtitle">Bem-vindo ao seu portal de saúde. Gerencie suas consultas, perfil e muito mais em um só lugar.</p>
   </div>
 
-  <!-- Quick Stats -->
-  <div class="quick-stats">
-    <div class="stat-card stat-appointments">
-      <div class="stat-icon">📅</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ upcomingAppointments }}</span>
-        <span class="stat-label">Consultas Agendadas</span>
-      </div>
-    </div>
-    <div class="stat-card stat-history">
-      <div class="stat-icon">📋</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ totalConsultations }}</span>
-        <span class="stat-label">Consultas Realizadas</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Quick Actions -->
   <div class="quick-actions-section">
     <h2 class="section-title">Ações Rápidas</h2>
@@ -57,24 +39,5 @@
     </div>
   </div>
 
-  <!-- Next Appointment (if any) -->
-  <div class="next-appointment-section" *ngIf="hasUpcomingAppointment">
-    <h2 class="section-title">Próxima Consulta</h2>
-    <div class="appointment-highlight">
-      <div class="appointment-date">
-        <div class="date-day">{{ nextAppointment.day }}</div>
-        <div class="date-month">{{ nextAppointment.month }}</div>
-      </div>
-      <div class="appointment-details">
-        <h3>{{ nextAppointment.doctorName }} - {{ nextAppointment.specialty }}</h3>
-        <p class="appointment-time">⏰ {{ nextAppointment.time }}</p>
-        <p class="appointment-type">📍 {{ nextAppointment.type }} - {{ nextAppointment.location }}</p>
-      </div>
-      <button class="view-details-btn" (click)="viewAppointmentDetails()">Ver Detalhes</button>
-    </div>
-  </div>
 </div>
 
-<!-- Doctor Appointment Details Modal -->
-<med-perfil-doctor-modal *ngIf="isModalOpen" [appointment]="selectedAppointment" (closeModal)="closeAppointmentModal()">
-</med-perfil-doctor-modal>

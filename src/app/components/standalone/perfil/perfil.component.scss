@@ -21,7 +21,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, $neon-blue 0%, $blue-gem 50%, $paua-blue 100%);
+    background: linear-gradient(135deg, $cosmic-cobalt 0%, $blue-gem 50%, $paua-blue 100%);
     opacity: 0.95;
   }
 }
@@ -163,8 +163,8 @@
   }
   
   &:hover {
-    background: rgba($neon-blue, 0.05);
-    color: $neon-blue;
+    background: rgba($cosmic-cobalt, 0.05);
+    color: $cosmic-cobalt;
     
     .nav-icon {
       transform: scale(1.1);
@@ -172,8 +172,8 @@
   }
   
   &.active {
-    color: $neon-blue;
-    background: rgba($neon-blue, 0.08);
+    color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.08);
     
     &::after {
       content: '';
@@ -182,7 +182,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: $neon-blue;
+      background: $cosmic-cobalt;
       border-radius: 3px 3px 0 0;
     }
   }
@@ -245,7 +245,7 @@
   
   .card-header {
     padding: 20px 24px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
     border-bottom: 2px solid $periwinkle-blue;
   }
   
@@ -332,8 +332,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
-  border: 2px solid $neon-blue;
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
+  border: 2px solid $cosmic-cobalt;
   border-radius: 25px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -347,10 +347,10 @@
   }
   
   &:hover {
-    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
     color: $white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
     
     .plan-icon {
       color: $white;
@@ -397,7 +397,7 @@
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
   }
   
   .stat-icon-wrapper {

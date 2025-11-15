@@ -1,0 +1,19 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: $white;
+  color: $black;
+
+  .logo {
+    align-items: center;
+    width: 240px;
+  }
+  
+  .name {
+    font-weight: 600;
+  }
+}

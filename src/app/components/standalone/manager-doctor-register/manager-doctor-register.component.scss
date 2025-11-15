@@ -124,8 +124,8 @@
   
   &:focus {
     outline: none;
-    border-color: $neon-blue;
-    box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
   }
   
   &::placeholder {
@@ -192,16 +192,16 @@
   }
   
   &:hover {
-    border-color: $neon-blue;
-    background: rgba($neon-blue, 0.05);
+    border-color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.05);
   }
   
   &.selected {
-    background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
-    border-color: $neon-blue;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
+    border-color: $cosmic-cobalt;
     
     .checkbox-text {
-      color: $neon-blue;
+      color: $cosmic-cobalt;
       font-weight: 600;
     }
   }
@@ -232,13 +232,13 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
   color: $white;
-  box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+  box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
   
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
   }
   
   &:active:not(:disabled) {

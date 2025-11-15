@@ -30,14 +30,14 @@
   position: relative;
 
   &:hover {
-    background: rgba($neon-blue, 0.1);
-    color: $neon-blue;
+    background: rgba($cosmic-cobalt, 0.1);
+    color: $cosmic-cobalt;
   }
 
   &.active {
     background: $white;
-    color: $neon-blue;
-    border-bottom: 3px solid $neon-blue;
+    color: $cosmic-cobalt;
+    border-bottom: 3px solid $cosmic-cobalt;
     
     &::after {
       content: '';
@@ -46,7 +46,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: $neon-blue;
+      background: $cosmic-cobalt;
     }
   }
 }

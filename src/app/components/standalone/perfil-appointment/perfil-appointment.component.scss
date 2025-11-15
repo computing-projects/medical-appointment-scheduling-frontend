@@ -69,8 +69,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
     
     &::placeholder {
@@ -115,7 +115,7 @@
   transition: all 0.3s ease;
   
   &:hover {
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
   }
   
   .filter-icon {
@@ -159,16 +159,16 @@
   }
   
   &:hover {
-    background: rgba($neon-blue, 0.05);
-    border-color: $neon-blue;
-    color: $neon-blue;
+    background: rgba($cosmic-cobalt, 0.05);
+    border-color: $cosmic-cobalt;
+    color: $cosmic-cobalt;
   }
   
   &.active {
-    background: linear-gradient(135deg, $neon-blue, $blue-gem);
-    border-color: $neon-blue;
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+    border-color: $cosmic-cobalt;
     color: $white;
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
   }
 }
 
@@ -212,11 +212,11 @@
   
   .results-count {
     padding: 6px 14px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: $neon-blue;
+    color: $cosmic-cobalt;
   }
 }
 
@@ -240,7 +240,7 @@
   &:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
   }
   
   &.completed {
@@ -251,7 +251,7 @@
   
   &.scheduled {
     .card-badge {
-      background: linear-gradient(135deg, $neon-blue, $blue-gem);
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
       
       &.pending {
         background: linear-gradient(135deg, #ffc107, #e0a800);
@@ -284,7 +284,7 @@
     align-items: center;
     gap: 14px;
     padding: 20px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
     border-bottom: 2px solid $periwinkle-blue;
     
     .doctor-avatar {
@@ -313,7 +313,7 @@
       .doctor-specialty {
         font-size: 0.9rem;
         font-weight: 500;
-        color: $neon-blue;
+        color: $cosmic-cobalt;
       }
     }
   }
@@ -394,13 +394,13 @@
 }
 
 .btn-details {
-  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
   color: $white;
-  box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+  box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
   }
 }
 

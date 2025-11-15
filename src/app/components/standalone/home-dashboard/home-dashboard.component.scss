@@ -11,12 +11,12 @@
 
 // Hero Section
 .hero-section {
-  @include gradient-bg($neon-blue, darken($neon-blue, 10%));
+  @include gradient-bg($cosmic-cobalt, darken($cosmic-cobalt, 10%));
   padding: 40px;
   border-radius: 16px;
   color: $white;
   text-align: center;
-  box-shadow: 0 8px 24px rgba($neon-blue, 0.25);
+  box-shadow: 0 8px 24px rgba($cosmic-cobalt, 0.25);
 
   .hero-title {
     font-size: 2.5rem;
@@ -44,14 +44,14 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  border-left: 4px solid $neon-blue;
+  border-left: 4px solid $cosmic-cobalt;
 
   &.stat-appointments {
     border-left-color: $green-fruit-salad;
   }
 
   &.stat-history {
-    border-left-color: $neon-blue;
+    border-left-color: $cosmic-cobalt;
   }
 
   &.stat-pending {
@@ -118,7 +118,7 @@
   color: inherit;
 
   &:hover {
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
 
     .action-icon-wrapper {
       transform: scale(1.1) rotate(5deg);
@@ -163,14 +163,14 @@
 }
 
 .action-btn {
-  @include button($ghost-white, $neon-blue, 12px 24px);
+  @include button($ghost-white, $cosmic-cobalt, 12px 24px);
   font-size: 0.95rem;
   margin-top: auto;
   display: inline-block;
   pointer-events: none; // Prevent the span from blocking clicks on the parent link
 
   .action-card:hover & {
-    @include gradient-bg($neon-blue, darken($neon-blue, 10%));
+    @include gradient-bg($cosmic-cobalt, darken($cosmic-cobalt, 10%));
     color: $white;
     transform: translateY(-2px);
   }
@@ -277,12 +277,12 @@
 }
 
 .view-details-btn {
-  @include button($neon-blue, $white, 10px 20px);
+  @include button($cosmic-cobalt, $white, 10px 20px);
   font-size: 0.9rem;
   white-space: nowrap;
 
   &:hover {
-    @include gradient-bg(darken($neon-blue, 5%), darken($neon-blue, 15%));
+    @include gradient-bg(darken($cosmic-cobalt, 5%), darken($cosmic-cobalt, 15%));
     transform: translateY(-2px);
   }
 

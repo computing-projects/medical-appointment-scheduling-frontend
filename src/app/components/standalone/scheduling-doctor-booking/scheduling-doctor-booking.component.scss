@@ -38,7 +38,7 @@
     }
     
     .specialty {
-      color: $neon-blue;
+      color: $cosmic-cobalt;
       font-size: 0.95rem;
       font-weight: 500;
     }
@@ -107,14 +107,14 @@
     gap: 6px;
     
     &:hover {
-      background: rgba($neon-blue, 0.1);
-      color: $neon-blue;
+      background: rgba($cosmic-cobalt, 0.1);
+      color: $cosmic-cobalt;
     }
     
     &.active {
-      background: $neon-blue;
+      background: $cosmic-cobalt;
       color: $white;
-      box-shadow: 0 2px 8px rgba($neon-blue, 0.3);
+      box-shadow: 0 2px 8px rgba($cosmic-cobalt, 0.3);
     }
   }
 }
@@ -195,7 +195,7 @@
   justify-content: center;
   gap: 10px;
   padding: 16px;
-  background: linear-gradient(135deg, rgba($neon-blue, 0.08), rgba($blue-gem, 0.08));
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.08), rgba($blue-gem, 0.08));
   border: 2px dashed $periwinkle-blue;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -256,11 +256,11 @@
   transition: all 0.3s ease;
   
   &.today {
-    border-color: $neon-blue;
-    box-shadow: 0 0 0 2px rgba($neon-blue, 0.2);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 0 0 2px rgba($cosmic-cobalt, 0.2);
     
     .day-header {
-      background: linear-gradient(135deg, $neon-blue, $blue-gem);
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
       color: $white;
       
       .available-count {
@@ -356,11 +356,11 @@
   }
   
   &.selected {
-    background: $neon-blue;
-    border-color: $neon-blue;
+    background: $cosmic-cobalt;
+    border-color: $cosmic-cobalt;
     color: $white;
     transform: scale(1.08);
-    box-shadow: 0 3px 8px rgba($neon-blue, 0.4);
+    box-shadow: 0 3px 8px rgba($cosmic-cobalt, 0.4);
     font-weight: 600;
   }
 }
@@ -380,7 +380,7 @@
   padding: 16px 32px;
   z-index: 100;
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15), 0 -2px 8px rgba(0, 0, 0, 0.1);
-  border-top: 3px solid $neon-blue;
+  border-top: 3px solid $cosmic-cobalt;
 }
 
 @keyframes slideInUp {
@@ -425,14 +425,14 @@
       flex-wrap: wrap;
       
       strong {
-        color: $neon-blue;
+        color: $cosmic-cobalt;
         font-size: 0.9rem;
       }
       
       .type-badge {
         display: inline-block;
         padding: 2px 6px;
-        background: $neon-blue;
+        background: $cosmic-cobalt;
         color: $white;
         border-radius: 3px;
         font-size: 0.7rem;
@@ -445,7 +445,7 @@
 
 .confirm-btn {
   padding: 10px 20px;
-  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
   color: $white;
   border: none;
   border-radius: 6px;
@@ -453,13 +453,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 3px 8px rgba($neon-blue, 0.3);
+  box-shadow: 0 3px 8px rgba($cosmic-cobalt, 0.3);
   white-space: nowrap;
   flex-shrink: 0;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.4);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.4);
   }
   
   &:active {

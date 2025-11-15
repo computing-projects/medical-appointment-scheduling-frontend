@@ -1,40 +1,8 @@
 <div class="doctor-dashboard-content">
   <!-- Hero Section -->
   <div class="hero-section">
-    <h1 class="hero-title">Olá, {{ doctorName }}! 👨‍⚕️</h1>
+    <h1 class="hero-title">Olá, {{ doctorName }}!</h1>
     <p class="hero-subtitle">Bem-vindo ao seu painel médico. Gerencie seus pacientes, consultas e agenda em um só lugar.</p>
-  </div>
-
-  <!-- Quick Stats -->
-  <div class="quick-stats">
-    <div class="stat-card stat-today">
-      <div class="stat-icon">📅</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ todayAppointments }}</span>
-        <span class="stat-label">Consultas Hoje</span>
-      </div>
-    </div>
-    <div class="stat-card stat-pending">
-      <div class="stat-icon">⏳</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ pendingAppointments }}</span>
-        <span class="stat-label">Pendentes</span>
-      </div>
-    </div>
-    <div class="stat-card stat-patients">
-      <div class="stat-icon">👥</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ totalPatients }}</span>
-        <span class="stat-label">Total de Pacientes</span>
-      </div>
-    </div>
-    <div class="stat-card stat-rating">
-      <div class="stat-icon">⭐</div>
-      <div class="stat-content">
-        <span class="stat-value">{{ averageRating }}</span>
-        <span class="stat-label">Avaliação Média</span>
-      </div>
-    </div>
   </div>
 
   <!-- Quick Actions -->
@@ -70,29 +38,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Next Appointment (if any) -->
-  <div class="next-appointment-section" *ngIf="hasNextAppointment">
-    <h2 class="section-title">Próxima Consulta</h2>
-    <div class="appointment-highlight">
-      <div class="appointment-date">
-        <div class="date-day">{{ nextAppointment.day }}</div>
-        <div class="date-month">{{ nextAppointment.month }}</div>
-      </div>
-      <div class="appointment-details">
-        <h3>{{ nextAppointment.patientName }} - {{ nextAppointment.specialty }}</h3>
-        <p class="appointment-time">⏰ {{ nextAppointment.time }}</p>
-        <p class="appointment-type">📍 {{ nextAppointment.type }}</p>
-        <p class="appointment-reason">📋 {{ nextAppointment.reason }}</p>
-      </div>
-      <button class="view-details-btn" (click)="viewAppointmentDetails()">Ver Detalhes</button>
-    </div>
-  </div>
 </div>
-
-<!-- Patient Appointment Details Modal -->
-<med-perfil-patient-modal
-  *ngIf="isModalOpen"
-  [appointment]="selectedAppointment"
-  (closeModal)="closeAppointmentModal()">
-</med-perfil-patient-modal>

@@ -115,7 +115,7 @@
     left: 0;
     right: 0;
     height: 100%;
-    background: linear-gradient(135deg, $neon-blue 0%, $blue-gem 50%, $paua-blue 100%);
+    background: linear-gradient(135deg, $cosmic-cobalt 0%, $blue-gem 50%, $paua-blue 100%);
     opacity: 0.95;
   }
   
@@ -239,7 +239,7 @@
     
     &:hover {
       background: $white;
-      color: $neon-blue;
+      color: $cosmic-cobalt;
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
       
@@ -262,7 +262,7 @@
   .doctor-card-header {
     position: relative;
     padding: 24px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
     border-bottom: 2px solid $periwinkle-blue;
     display: flex;
     justify-content: center;
@@ -315,7 +315,7 @@
       margin: 0 0 16px 0;
       font-size: 1.1rem;
       font-weight: 500;
-      color: $neon-blue;
+      color: $cosmic-cobalt;
     }
     
     .doctor-rating {
@@ -373,9 +373,9 @@
       text-align: left;
       
       &:hover {
-        border-color: $neon-blue;
+        border-color: $cosmic-cobalt;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba($neon-blue, 0.2);
+        box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.2);
       }
       
       .detail-icon {
@@ -422,7 +422,7 @@
   
   .section-header {
     padding: 18px 20px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
     border-bottom: 2px solid $periwinkle-blue;
     display: flex;
     justify-content: space-between;
@@ -444,11 +444,11 @@
     
     .history-count {
       padding: 4px 12px;
-      background: rgba($neon-blue, 0.1);
+      background: rgba($cosmic-cobalt, 0.1);
       border-radius: 15px;
       font-size: 0.85rem;
       font-weight: 600;
-      color: $neon-blue;
+      color: $cosmic-cobalt;
     }
   }
   
@@ -461,7 +461,7 @@
 .reason-box {
   padding: 18px 20px;
   background: $ghost-white;
-  border-left: 4px solid $neon-blue;
+  border-left: 4px solid $cosmic-cobalt;
   border-radius: 8px;
   
   .reason-text {
@@ -489,12 +489,12 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
     
     .marker-number {
       color: $white;
@@ -515,7 +515,7 @@
     transition: all 0.2s ease;
     
     &:hover {
-      border-color: $neon-blue;
+      border-color: $cosmic-cobalt;
       transform: translateX(4px);
     }
     

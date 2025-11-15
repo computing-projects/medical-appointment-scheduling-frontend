@@ -157,14 +157,14 @@
     
     .doctor-specialty {
       font-size: 0.9rem;
-      color: $neon-blue;
+      color: $cosmic-cobalt;
       font-weight: 600;
     }
     
     .appointment-type-badge {
       display: inline-block;
       padding: 4px 10px;
-      background: linear-gradient(135deg, $neon-blue, $blue-gem);
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
       color: $white;
       border-radius: 12px;
       font-size: 0.75rem;
@@ -331,17 +331,17 @@
   
   &.selected .option-content,
   &:hover .option-content {
-    border-color: $neon-blue;
-    background: rgba($neon-blue, 0.05);
+    border-color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.05);
     
     .option-text {
-      color: $neon-blue;
+      color: $cosmic-cobalt;
     }
   }
   
   &.selected .option-content {
-    background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
-    box-shadow: 0 2px 8px rgba($neon-blue, 0.2);
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
+    box-shadow: 0 2px 8px rgba($cosmic-cobalt, 0.2);
   }
 }
 
@@ -377,10 +377,10 @@
   transition: all 0.3s ease;
   
   &:hover {
-    border-color: $neon-blue;
-    background: rgba($neon-blue, 0.05);
+    border-color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.05);
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba($neon-blue, 0.1);
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.1);
   }
   
   .slot-date {
@@ -405,12 +405,12 @@
   .slot-time {
     font-size: 1.2rem;
     font-weight: 700;
-    color: $neon-blue;
+    color: $cosmic-cobalt;
   }
   
   .slot-btn {
     padding: 8px 16px;
-    background: $neon-blue;
+    background: $cosmic-cobalt;
     color: $white;
     border: none;
     border-radius: 8px;
@@ -455,15 +455,15 @@
 // Waitlist Section
 .waitlist-info {
   padding: 14px;
-  background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
-  border-left: 4px solid $neon-blue;
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
+  border-left: 4px solid $cosmic-cobalt;
   border-radius: 8px;
   margin-bottom: 14px;
   
   .info-text {
     margin: 0;
     font-size: 0.9rem;
-    color: #555;
+    color: $grey-dark;
     line-height: 1.6;
     
     strong {
@@ -510,7 +510,7 @@
   }
   
   input[type="checkbox"]:checked ~ .toggle-switch {
-    background: $neon-blue;
+    background: $cosmic-cobalt;
     
     &::after {
       transform: translateX(22px);
@@ -563,8 +563,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
   }
 }

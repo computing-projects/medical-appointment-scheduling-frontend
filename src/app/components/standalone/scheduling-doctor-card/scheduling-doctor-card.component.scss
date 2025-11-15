@@ -19,14 +19,14 @@
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(180deg, $neon-blue, $blue-gem);
+    background: linear-gradient(180deg, $cosmic-cobalt, $blue-gem);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
   
   &:hover {
-    border-color: $neon-blue;
-    box-shadow: 0 6px 20px rgba($neon-blue, 0.15);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 6px 20px rgba($cosmic-cobalt, 0.15);
     transform: translateY(-2px);
     
     &::before {
@@ -109,10 +109,10 @@
   .doctor-specialty {
     font-size: 0.9rem;
     font-weight: 600;
-    color: $neon-blue;
+    color: $cosmic-cobalt;
     display: inline-block;
     padding: 2px 10px;
-    background: rgba($neon-blue, 0.1);
+    background: rgba($cosmic-cobalt, 0.1);
     border-radius: 12px;
     width: fit-content;
   }
@@ -147,7 +147,7 @@
   background: $ghost-white;
   border-radius: 8px;
   font-size: 0.8rem;
-  color: #555;
+  color: $grey-dark;
   
   .detail-icon {
     font-size: 1rem;
@@ -195,13 +195,13 @@
   }
   
   &.agenda-btn {
-    background: linear-gradient(135deg, $neon-blue, $blue-gem);
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
     color: $white;
-    box-shadow: 0 2px 8px rgba($neon-blue, 0.3);
+    box-shadow: 0 2px 8px rgba($cosmic-cobalt, 0.3);
     
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+      box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
     }
   }
   
