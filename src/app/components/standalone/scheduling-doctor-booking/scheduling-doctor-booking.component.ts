@@ -166,18 +166,4 @@ export class SchedulingDoctorBookingComponent implements OnInit {
   closeWaitlistModal(): void {
     this.isWaitlistModalOpen = false;
   }
-  
-  onWaitlistSlotSelected(slotData: { date: string; time: string; type: 'local' | 'remote' }): void {
-    console.log('Slot selected from waitlist:', slotData);
-    
-    // Find the corresponding day and slot in the calendar
-    // In a real application, you would navigate to that date/time
-    alert(
-      `✅ Horário selecionado da lista de espera!\n\n` +
-      `Data: ${slotData.date}\n` +
-      `Horário: ${slotData.time}\n` +
-      `Tipo: ${slotData.type === 'local' ? 'Presencial' : 'Online'}\n\n` +
-      `Prossiga para confirmar o agendamento.`
-    );
-  }
 }
