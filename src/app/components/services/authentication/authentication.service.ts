@@ -136,4 +136,29 @@ export class AuthenticationService {
       'Content-Type': 'application/json',
     });
   }
+
+  getClient(): Observable<Clients> {
+    const user = this.getUser();
+    const role = this.getUserRole();
+
+    if (!user) {
+      return throwError(() => new Error('User not authenticated'));
+    }
+
+    // Get userId - check both id and userId (in case API returned userId directly)
+    const userId = user.id || (user as any).userId;
+    if (!userId) {
+      return throwError(() => new Error('User ID not found'));
+    }
+
+    if (role !== 'client') {
+      return throwError(() => new Error('User is not a client'));
+    }
+
+    return this.http
+      .get<Clients>(`${this.apiUrl}/Clients/GetByUserId/${userId}`, {
+        headers: this.getAuthHeaders(),
+      })
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
+  }
 }
