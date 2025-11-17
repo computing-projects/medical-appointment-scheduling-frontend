@@ -531,6 +531,37 @@
   animation: slideDown 0.3s ease;
 }
 
+.user-contact-info {
+  padding: 16px;
+  background: linear-gradient(135deg, rgba($green-fruit-salad, 0.08), rgba($green-fruit-salad, 0.03));
+  border: 2px solid rgba($green-fruit-salad, 0.2);
+  border-radius: 8px;
+  
+  .info-text {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: $grey-dark;
+    line-height: 1.8;
+    
+    strong {
+      color: $green-fruit-salad;
+      font-weight: 600;
+    }
+  }
+  
+  .info-note {
+    margin: 8px 0 0 0;
+    padding-top: 8px;
+    border-top: 1px solid rgba($green-fruit-salad, 0.2);
+    
+    small {
+      font-size: 0.8rem;
+      color: $grey-chateau;
+      font-style: italic;
+    }
+  }
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -566,6 +597,138 @@
       border-color: $cosmic-cobalt;
       box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
+  }
+}
+
+.info-note {
+  margin-top: 8px;
+  
+  small {
+    font-size: 0.8rem;
+    color: $grey-chateau;
+    font-style: italic;
+  }
+}
+
+// Appointment Type Section
+.appointment-type-section {
+  margin-bottom: 20px;
+}
+
+.appointment-type-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.appointment-type-option {
+  position: relative;
+  cursor: pointer;
+  
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .option-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 2px solid $grey-whisper;
+    border-radius: 10px;
+    background: $white;
+    transition: all 0.3s ease;
+    
+    .option-icon {
+      font-size: 1.5rem;
+    }
+    
+    .option-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $grey-dark;
+    }
+  }
+  
+  &:hover .option-content {
+    border-color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.05);
+  }
+  
+  input[type="radio"]:checked + .option-content,
+  &.selected .option-content {
+    border-color: $cosmic-cobalt;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($cosmic-cobalt, 0.05));
+    color: $cosmic-cobalt;
+    
+    .option-text {
+      color: $cosmic-cobalt;
+    }
+  }
+}
+
+// Reason Section
+.reason-section {
+  margin-bottom: 20px;
+}
+
+.field-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid $grey-whisper;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  min-height: 100px;
+  
+  &:focus {
+    outline: none;
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
+  }
+  
+  &::placeholder {
+    color: $grey-chateau;
+  }
+}
+
+// Reminder Section
+.reminder-section {
+  margin-top: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba($green-fruit-salad, 0.08), rgba($green-fruit-salad, 0.03));
+  border: 2px solid rgba($green-fruit-salad, 0.2);
+  border-radius: 8px;
+}
+
+.reminder-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  
+  input[type="checkbox"] {
+    margin-top: 4px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: $green-fruit-salad;
+    flex-shrink: 0;
+  }
+  
+  .checkbox-label {
+    font-size: 0.9rem;
+    color: $grey-dark;
+    line-height: 1.6;
+    flex: 1;
+  }
+  
+  &:hover .checkbox-label {
+    color: $green-fruit-salad;
   }
 }
 
@@ -613,9 +776,23 @@
       font-size: 1.1rem;
     }
     
-    &:hover {
+    &:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(#ff9800, 0.4);
+    }
+
+    &:disabled,
+    &.waitlist-btn--disabled {
+      background: linear-gradient(135deg, $grey-chateau, darken($grey-chateau, 10%));
+      color: rgba($white, 0.6);
+      box-shadow: none;
+      cursor: not-allowed;
+      opacity: 0.6;
+      
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
     }
   }
 }

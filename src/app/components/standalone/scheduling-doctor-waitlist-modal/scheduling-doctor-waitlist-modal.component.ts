@@ -1,15 +1,12 @@
-import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
+import { AppointmentType } from '../../models/api-models';
+import { Clients } from '../../models/user.model';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
-
-interface WaitlistOption {
-  date: string;
-  time: string;
-  dayOfWeek: string;
-  available: boolean;
-  reason?: string;
-}
 
 @Component({
   selector: 'med-scheduling-doctor-waitlist-modal',
@@ -19,99 +16,150 @@ interface WaitlistOption {
   styleUrl: './scheduling-doctor-waitlist-modal.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class SchedulingDoctorWaitlistModalComponent {
+export class SchedulingDoctorWaitlistModalComponent implements OnInit {
   @Input() doctor!: DoctorSummary;
   @Input() isOpen = false;
   @Input() appointmentType: 'local' | 'remote' = 'local';
+  @Input() clinicId?: number | null; // Optional clinic ID - only included if provided
   @Output() close = new EventEmitter<void>();
-  @Output() selectSlot = new EventEmitter<{ date: string; time: string; type: 'local' | 'remote' }>();
-
-  selectedPreference: 'earliest' | 'morning' | 'afternoon' | 'evening' = 'earliest';
-  notifyOnCancellation = true;
+  
   emailForNotification = '';
   phoneForNotification = '';
+  isUserLoggedIn = false;
+  selectedAppointmentType: 'local' | 'remote' = 'local';
+  appointmentReason = '';
+  reminderChecked = false;
+
+  constructor(
+    private authService: AuthenticationService,
+    private apiService: ApiService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.checkUserAuthentication();
+    this.selectedAppointmentType = this.appointmentType;
+  }
+
+  checkUserAuthentication(): void {
+    this.isUserLoggedIn = this.authService.isAuthenticated();
+    if (this.isUserLoggedIn) {
+      const user = this.authService.getUser();
+      if (user) {
+        this.emailForNotification = user.email || '';
+      }
+    }
+  }
 
   closeModal(): void {
     this.close.emit();
   }
 
-  getEarliestSlots(): WaitlistOption[] {
-    const slots: WaitlistOption[] = [];
-    const today = new Date();
-    
-    // Generate next 14 days with some available slots
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      
-      const dayOfWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][date.getDay()];
-      const dateString = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-      
-      // Mock available slots based on preference
-      const times = this.getTimesByPreference();
-      
-      times.forEach((time, index) => {
-        const isAvailable = Math.random() > 0.6; // 40% available
-        slots.push({
-          date: dateString,
-          time: time,
-          dayOfWeek: dayOfWeek,
-          available: isAvailable,
-          reason: isAvailable ? undefined : index % 2 === 0 ? 'Ocupado' : 'Feriado'
-        });
-      });
-    }
-    
-    return slots.filter(s => s.available).slice(0, 6); // Return first 6 available
-  }
-
-  getTimesByPreference(): string[] {
-    switch (this.selectedPreference) {
-      case 'morning':
-        return ['08:00', '09:00', '10:00', '11:00'];
-      case 'afternoon':
-        return ['13:00', '14:00', '15:00', '16:00'];
-      case 'evening':
-        return ['17:00', '18:00', '19:00', '20:00'];
-      default:
-        return ['08:00', '10:00', '13:00', '15:00', '17:00', '19:00'];
-    }
-  }
-
-  onSelectSlot(slot: WaitlistOption): void {
-    this.selectSlot.emit({
-      date: slot.date,
-      time: slot.time,
-      type: this.appointmentType
-    });
-    this.closeModal();
-  }
-
   joinWaitlist(): void {
-    if (!this.emailForNotification && !this.phoneForNotification) {
-      alert('Por favor, forneça pelo menos um meio de contato (email ou telefone).');
+    // Se usuário não está logado, validar email
+    if (!this.isUserLoggedIn) {
+      if (!this.emailForNotification) {
+        this.toastService.warning('Por favor, forneça um email para receber notificações.');
+        return;
+      }
+    } else {
+      // Se está logado mas não tem email no perfil, pedir
+      if (!this.emailForNotification) {
+        this.toastService.warning('Por favor, atualize seu perfil com email para receber notificações.');
+        return;
+      }
+    }
+
+    // Validate reason field
+    if (!this.appointmentReason || this.appointmentReason.trim().length === 0) {
+      this.toastService.warning('Por favor, informe o motivo da consulta.');
       return;
     }
 
-    const preference = this.selectedPreference === 'earliest' ? 'mais cedo possível' : this.selectedPreference;
-    
-    alert(
-      `✅ Você foi adicionado à lista de espera!\n\n` +
-      `Doutor: ${this.doctor.name}\n` +
-      `Preferência: ${preference}\n` +
-      `Tipo: ${this.appointmentType === 'local' ? 'Presencial' : 'Online'}\n\n` +
-      `Você será notificado por ${this.emailForNotification ? 'email' : 'telefone'} quando houver uma vaga disponível.`
-    );
-    
-    this.closeModal();
+    // Get user to check authentication
+    const user = this.authService.getUser();
+    if (!user) {
+      this.toastService.error('Erro: Usuário não autenticado. Por favor, faça login novamente.');
+      return;
+    }
+
+    // Get userId - check both id and userId (in case API returned userId directly)
+    const userId = user.id || (user as any).userId;
+    if (!userId) {
+      this.toastService.error('Erro: ID do usuário não encontrado. Por favor, faça login novamente.');
+      return;
+    }
+
+    // If user is a client, get client data to use clientId
+    const role = this.authService.getUserRole();
+    if (role === 'client') {
+      this.authService.getClient().subscribe({
+        next: (client: Clients) => {
+          console.log('client', client);
+          this.submitWaitlistEntry(client.id || userId, userId);
+        },
+        error: (error) => {
+          console.error('Erro ao obter dados do cliente:', error);
+          // Fallback: use userId as clientId if getClient fails
+          this.submitWaitlistEntry(userId, userId);
+        }
+      });
+    } else {
+      // For non-client users, use userId as clientId
+      this.submitWaitlistEntry(userId, userId);
+    }
   }
 
-  getNextAvailableSlot(): WaitlistOption | null {
-    const slots = this.getEarliestSlots();
-    return slots.length > 0 ? slots[0] : null;
+  private submitWaitlistEntry(clientId: number, userId: number): void {
+    // Map appointment type to number: local = 1 (InPerson), remote = 2 (Online)
+    const appointmentTypeNumber = this.selectedAppointmentType === 'local' 
+      ? AppointmentType.InPerson 
+      : AppointmentType.Online;
+
+    // Build waitlist entry - only include clinicId if it exists
+    const waitlistEntry: any = {
+      clientId: clientId,
+      doctorId: this.doctor.id,
+      appointmentType: appointmentTypeNumber,
+      reason: this.appointmentReason.trim()
+    };
+
+    // Only include clinicId if it's provided (not null/undefined)
+    if (this.clinicId !== null && this.clinicId !== undefined) {
+      waitlistEntry.clinicId = this.clinicId;
+    }
+
+    this.apiService.joinWaitlist(waitlistEntry).subscribe({
+      next: (response: boolean) => {
+        if (response === false) {
+          // User already has a waitlist entry with this doctor
+          this.toastService.info(
+            `Você já está na lista de espera para ${this.doctor.name}. Você será notificado quando houver uma vaga disponível.`
+          );
+        } else if (response === true) {
+          // Waitlist entry created successfully, appointment will be created
+          const appointmentTypeLabel = this.selectedAppointmentType === 'local' ? 'Presencial' : 'Online';
+          this.toastService.success(
+            `Você foi adicionado à lista de espera!\n\n` +
+            `Doutor: ${this.doctor.name}\n` +
+            `Tipo: ${appointmentTypeLabel}\n\n` +
+            `Sua consulta será agendada automaticamente quando houver uma vaga disponível. Você será notificado por email.`
+          );
+        }
+        this.closeModal();
+      },
+      error: (error: any) => {
+        console.error('Erro ao adicionar à lista de espera:', error);
+        this.toastService.error('Erro ao adicionar à lista de espera. Por favor, tente novamente.');
+      }
+    });
   }
 
   get appointmentTypeLabel(): string {
-    return this.appointmentType === 'local' ? 'Presencial' : 'Online';
+    return this.selectedAppointmentType === 'local' ? 'Presencial' : 'Online';
+  }
+
+  get isFormValid(): boolean {
+    return this.appointmentReason.trim().length > 0 && this.reminderChecked;
   }
 }
