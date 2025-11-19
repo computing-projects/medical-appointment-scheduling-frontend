@@ -42,9 +42,9 @@
   }
 
   &.today-stat {
-    border-left-color: $neon-blue;
+    border-left-color: $cosmic-cobalt;
     .stat-icon {
-      background: linear-gradient(135deg, $neon-blue, lighten($neon-blue, 10%));
+      background: linear-gradient(135deg, $cosmic-cobalt, lighten($cosmic-cobalt, 10%));
     }
   }
 
@@ -240,8 +240,8 @@
   &:not(.empty-day):hover {
     background: linear-gradient(135deg, lighten($periwinkle-blue, 10%) 0%, $white 100%);
     transform: translateY(-4px) scale(1.02);
-    border-color: $neon-blue;
-    box-shadow: 0 6px 16px rgba($neon-blue, 0.15);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.15);
   }
 }
 
@@ -297,7 +297,7 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  background: linear-gradient(135deg, $neon-blue 0%, darken($neon-blue, 10%) 100%);
+  background: linear-gradient(135deg, $cosmic-cobalt 0%, darken($cosmic-cobalt, 10%) 100%);
   color: $white;
   font-size: 0.65rem;
   padding: 2px 6px;
@@ -305,13 +305,13 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  box-shadow: 0 2px 6px rgba($neon-blue, 0.3);
+  box-shadow: 0 2px 6px rgba($cosmic-cobalt, 0.3);
 }
 
 .current-day {
-  border: 3px solid $neon-blue !important;
-  background: linear-gradient(135deg, lighten($neon-blue, 45%) 0%, $white 100%);
-  box-shadow: 0 4px 16px rgba($neon-blue, 0.2);
+  border: 3px solid $cosmic-cobalt !important;
+  background: linear-gradient(135deg, lighten($cosmic-cobalt, 45%) 0%, $white 100%);
+  box-shadow: 0 4px 16px rgba($cosmic-cobalt, 0.2);
 }
 
 .selected-day {
@@ -387,7 +387,7 @@
     transform: translateX(8px);
     box-shadow: 0 6px 20px rgba($nero-black, 0.12);
     background: linear-gradient(135deg, lighten($periwinkle-blue, 10%) 0%, $white 100%);
-    border-left-color: $neon-blue;
+    border-left-color: $cosmic-cobalt;
   }
 }
 
@@ -405,7 +405,7 @@
 
 .appointment-time {
   font-weight: 700;
-  color: $neon-blue;
+  color: $cosmic-cobalt;
   font-size: 1.3rem;
   line-height: 1;
 }
@@ -462,8 +462,8 @@
   }
 
   &.type-presencial {
-    background: linear-gradient(135deg, lighten($neon-blue, 40%) 0%, lighten($neon-blue, 45%) 100%);
-    color: darken($neon-blue, 10%);
+    background: linear-gradient(135deg, lighten($cosmic-cobalt, 40%) 0%, lighten($cosmic-cobalt, 45%) 100%);
+    color: darken($cosmic-cobalt, 10%);
   }
 
   .type-icon {
@@ -531,7 +531,7 @@
 }
 
 .empty-action-button {
-  background: linear-gradient(135deg, $neon-blue 0%, darken($neon-blue, 10%) 100%);
+  background: linear-gradient(135deg, $cosmic-cobalt 0%, darken($cosmic-cobalt, 10%) 100%);
   color: $white;
   border: none;
   padding: 12px 24px;
@@ -540,12 +540,12 @@
   font-size: 0.95rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba($neon-blue, 0.25);
+  box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.25);
 
   &:hover {
-    background: linear-gradient(135deg, darken($neon-blue, 5%) 0%, darken($neon-blue, 15%) 100%);
+    background: linear-gradient(135deg, darken($cosmic-cobalt, 5%) 0%, darken($cosmic-cobalt, 15%) 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($neon-blue, 0.35);
+    box-shadow: 0 6px 20px rgba($cosmic-cobalt, 0.35);
   }
 }
 

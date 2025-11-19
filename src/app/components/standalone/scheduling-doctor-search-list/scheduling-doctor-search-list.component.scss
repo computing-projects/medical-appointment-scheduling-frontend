@@ -67,8 +67,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
     
     &::placeholder {
@@ -129,8 +129,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
   }
 }
@@ -164,21 +164,21 @@
   }
   
   &:hover {
-    border-color: $neon-blue;
-    color: $neon-blue;
-    background: rgba($neon-blue, 0.05);
+    border-color: $cosmic-cobalt;
+    color: $cosmic-cobalt;
+    background: rgba($cosmic-cobalt, 0.05);
   }
   
   &.active {
-    border-color: $neon-blue;
-    background: $neon-blue;
+    border-color: $cosmic-cobalt;
+    background: $cosmic-cobalt;
     color: $white;
   }
 }
 
 // Advanced Filters Panel
 .more-filters-panel {
-  background: linear-gradient(135deg, rgba($neon-blue, 0.03), rgba($blue-gem, 0.03));
+  background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.03), rgba($blue-gem, 0.03));
   border: 2px solid $periwinkle-blue;
   border-radius: 12px;
   padding: 16px;
@@ -233,7 +233,7 @@
       
       &:focus {
         outline: none;
-        border-color: $neon-blue;
+        border-color: $cosmic-cobalt;
       }
     }
   }
@@ -291,7 +291,7 @@
     border-radius: 10px;
     
     &:hover {
-      background: $neon-blue;
+      background: $cosmic-cobalt;
     }
   }
 }
@@ -334,7 +334,7 @@
   
   .empty-btn {
     padding: 10px 24px;
-    background: $neon-blue;
+    background: $cosmic-cobalt;
     color: $white;
     border: none;
     border-radius: 8px;
@@ -346,7 +346,7 @@
     &:hover {
       background: $blue-gem;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+      box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
     }
   }
 }

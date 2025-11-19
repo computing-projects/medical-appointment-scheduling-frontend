@@ -47,7 +47,7 @@
   border-left: 4px solid $cosmic-cobalt;
 
   &.stat-users {
-    border-left-color: $neon-blue;
+    border-left-color: $cosmic-cobalt;
   }
 
   &.stat-doctors {
@@ -171,7 +171,7 @@
   }
 
   &.users {
-    background: linear-gradient(135deg, lighten($neon-blue, 40%) 0%, lighten($neon-blue, 45%) 100%);
+    background: linear-gradient(135deg, lighten($cosmic-cobalt, 40%) 0%, lighten($cosmic-cobalt, 45%) 100%);
   }
 
   &.reports {

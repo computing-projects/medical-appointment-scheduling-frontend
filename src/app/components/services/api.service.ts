@@ -52,7 +52,7 @@ export class ApiService {
   }
 
   // Waitlist endpoints
-  addToWaitlist(waitlistEntry: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Waitlist/Create`, waitlistEntry, { headers: this.getHeaders() });
+  joinWaitlist(waitlistEntry: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Waitlist/JoinWaitlist`, waitlistEntry, { headers: this.getHeaders() });
   }
 }

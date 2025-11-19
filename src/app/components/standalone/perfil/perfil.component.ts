@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PerfilAppointmentComponent } from '../perfil-appointment/perfil-appointment.component';
-import { PerfilAnamneseComponent } from '../perfil-anamnese/perfil-anamnese.component';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { take } from 'rxjs';
 
@@ -27,19 +26,19 @@ export interface UserProfile {
 @Component({
   selector: 'med-perfil',
   standalone: true,
-  imports: [CommonModule, PerfilAppointmentComponent, PerfilAnamneseComponent],
+  imports: [CommonModule, PerfilAppointmentComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class PerfilComponent implements OnInit {
-  selectedPerfilTab: 'informacoes' | 'consultas' | 'fichaMedica' = 'informacoes';
+  selectedPerfilTab: 'informacoes' | 'consultas' = 'informacoes';
   userProfile: UserProfile | null = null;
 
   constructor(private authService: AuthenticationService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.authService.getUserById(1)
+    this.authService.getUserById(1) //TODO: passar id do usuario
       .pipe(take(1))
       .subscribe({
         next: response => {
@@ -74,7 +73,7 @@ export class PerfilComponent implements OnInit {
   }
   
 
-  showPerfilTab(tab: 'informacoes' | 'consultas' | 'fichaMedica') {
+  showPerfilTab(tab: 'informacoes' | 'consultas') {
     this.selectedPerfilTab = tab;
   }
 }

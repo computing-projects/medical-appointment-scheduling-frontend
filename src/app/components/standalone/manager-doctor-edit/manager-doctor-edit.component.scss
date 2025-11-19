@@ -54,8 +54,8 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
-      box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
     }
   }
 }
@@ -80,7 +80,7 @@
     
     &:focus {
       outline: none;
-      border-color: $neon-blue;
+      border-color: $cosmic-cobalt;
     }
   }
 }
@@ -88,7 +88,7 @@
 .results-count {
   margin-left: auto;
   font-weight: 600;
-  color: $neon-blue;
+  color: $cosmic-cobalt;
   font-size: 1rem;
 }
 
@@ -233,10 +233,10 @@
   transition: all 0.2s ease;
   
   &.view {
-    background: rgba($neon-blue, 0.1);
+    background: rgba($cosmic-cobalt, 0.1);
     
     &:hover {
-      background: rgba($neon-blue, 0.2);
+      background: rgba($cosmic-cobalt, 0.2);
       transform: translateY(-2px);
     }
   }
@@ -458,8 +458,8 @@
   
   &:focus {
     outline: none;
-    border-color: $neon-blue;
-    box-shadow: 0 0 0 3px rgba($neon-blue, 0.1);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
   }
 }
 
@@ -502,13 +502,13 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, $neon-blue, $blue-gem);
+  background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
   color: $white;
-  box-shadow: 0 4px 12px rgba($neon-blue, 0.3);
+  box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba($neon-blue, 0.4);
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
   }
 }
 

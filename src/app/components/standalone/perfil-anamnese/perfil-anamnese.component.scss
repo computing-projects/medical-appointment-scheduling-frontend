@@ -54,7 +54,7 @@
   
   .card-header {
     padding: 20px 24px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.05), rgba($blue-gem, 0.05));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
     border-bottom: 2px solid $periwinkle-blue;
     
     &.alert {
@@ -103,7 +103,7 @@
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
   }
   
   .stat-icon-wrapper {
@@ -240,7 +240,7 @@
   padding: 12px 16px;
   background: $ghost-white;
   border-radius: 8px;
-  border-left: 4px solid $neon-blue;
+  border-left: 4px solid $cosmic-cobalt;
   transition: all 0.2s ease;
   
   &:hover {
@@ -251,7 +251,7 @@
   .timeline-date {
     font-size: 0.9rem;
     font-weight: 600;
-    color: $neon-blue;
+    color: $cosmic-cobalt;
     min-width: 100px;
   }
   
@@ -281,7 +281,7 @@
   
   &:hover {
     background: rgba($periwinkle-blue, 0.2);
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
   }
   
   .treatment-icon {
@@ -368,13 +368,13 @@
   
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba($neon-blue, 0.2);
-    border-color: $neon-blue;
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.2);
+    border-color: $cosmic-cobalt;
   }
   
   .medication-header {
     padding: 14px 16px;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.1), rgba($blue-gem, 0.1));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
     border-bottom: 2px solid $periwinkle-blue;
     display: flex;
     align-items: center;
@@ -446,8 +446,8 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.15), rgba($blue-gem, 0.15));
-    border: 3px solid $neon-blue;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.15), rgba($blue-gem, 0.15));
+    border: 3px solid $cosmic-cobalt;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -512,7 +512,7 @@
   transition: all 0.2s ease;
   
   &:hover {
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
@@ -522,7 +522,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba($neon-blue, 0.15), rgba($blue-gem, 0.15));
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.15), rgba($blue-gem, 0.15));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -570,7 +570,7 @@
   
   &:hover {
     transform: translateY(-2px);
-    border-color: $neon-blue;
+    border-color: $cosmic-cobalt;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   
