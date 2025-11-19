@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 import { LoginUser, TokenDto } from '../../models/api-models';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { UserProfile } from '../../standalone/perfil/perfil.component';
+import { MedicalHistory } from '../../standalone/perfil-anamnese/perfil-anamnese.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -136,4 +138,26 @@ export class AuthenticationService {
       'Content-Type': 'application/json',
     });
   }
+
+  //TODO: precisa tirar daqui pra baixo e criar as paradas certinho
+  
+  getUserById(id: number): Observable<UserProfile> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .get<UserProfile>(`${this.apiUrl}/Clients/GetById/${id}`, { headers })
+      .pipe(
+        catchError((err: HttpErrorResponse) => throwError(() => err))
+      );
+  }
+
+  getAnamneseById(id: number): Observable<MedicalHistory> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .get<MedicalHistory>(`${this.apiUrl}/Anamnese/client/${id}`, { headers })
+      .pipe(
+        catchError((err: HttpErrorResponse) => throwError(() => err))
+      );
+  }
+
+
 }

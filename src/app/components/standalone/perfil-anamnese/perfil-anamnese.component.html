@@ -21,7 +21,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Tipo Sanguíneo</span>
-            <span class="stat-value">{{ medicalHistory.basicInfo.bloodType }}</span>
+            <span class="stat-value">{{ medicalHistory?.basicInfo?.bloodType }}</span>
           </div>
         </div>
 
@@ -31,7 +31,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Peso</span>
-            <span class="stat-value">{{ medicalHistory.basicInfo.weight }}</span>
+            <span class="stat-value">{{ medicalHistory?.basicInfo?.weight }}</span>
           </div>
         </div>
 
@@ -41,7 +41,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Altura</span>
-            <span class="stat-value">{{ medicalHistory.basicInfo.height }}</span>
+            <span class="stat-value">{{ medicalHistory?.basicInfo?.height }}</span>
           </div>
         </div>
 
@@ -51,7 +51,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">IMC</span>
-            <span class="stat-value">{{ medicalHistory.basicInfo.imc }}</span>
+            <span class="stat-value">{{ medicalHistory?.basicInfo?.imc }}</span>
           </div>
         </div>
       </div>
@@ -61,8 +61,8 @@
           <span class="subtitle-icon">🏥</span>
           Doenças Crônicas
         </h4>
-        <div class="badge-list" *ngIf="medicalHistory.basicInfo.chronicDiseases.length > 0; else noChronicDiseases">
-          <span class="info-badge danger" *ngFor="let disease of medicalHistory.basicInfo.chronicDiseases">
+        <div class="badge-list" *ngIf="medicalHistory?.basicInfo?.chronicDiseases!.length > 0; else noChronicDiseases">
+          <span class="info-badge danger" *ngFor="let disease of medicalHistory?.basicInfo?.chronicDiseases">
             <span class="badge-icon">⚠️</span>
             {{ disease }}
           </span>
@@ -77,8 +77,8 @@
           <span class="subtitle-icon">🏥</span>
           Internações Anteriores
         </h4>
-        <div class="timeline-list" *ngIf="medicalHistory.basicInfo.hospitalizations.length > 0; else noHospitalizations">
-          <div class="timeline-item" *ngFor="let hosp of medicalHistory.basicInfo.hospitalizations">
+        <div class="timeline-list" *ngIf="medicalHistory?.basicInfo?.hospitalizations!.length > 0; else noHospitalizations">
+          <div class="timeline-item" *ngFor="let hosp of medicalHistory?.basicInfo?.hospitalizations">
             <span class="timeline-date">{{ hosp.date }}</span>
             <span class="timeline-content">{{ hosp.reason }}</span>
           </div>
@@ -93,8 +93,8 @@
           <span class="subtitle-icon">💊</span>
           Tratamentos Atuais
         </h4>
-        <div class="treatment-list" *ngIf="medicalHistory.basicInfo.currentTreatments.length > 0; else noCurrentTreatments">
-          <div class="treatment-item" *ngFor="let treatment of medicalHistory.basicInfo.currentTreatments">
+        <div class="treatment-list" *ngIf="medicalHistory?.basicInfo?.currentTreatments!.length > 0; else noCurrentTreatments">
+          <div class="treatment-item" *ngFor="let treatment of medicalHistory?.basicInfo!.currentTreatments">
             <span class="treatment-icon">💊</span>
             <span class="treatment-text">{{ treatment }}</span>
           </div>
@@ -115,7 +115,7 @@
       </h3>
     </div>
     <div class="card-content">
-      <div *ngIf="medicalHistory.allergies.noKnownAllergies; else hasAllergies">
+      <div *ngIf="medicalHistory?.allergies?.noKnownAllergies; else hasAllergies">
         <p class="success-message">✓ Não há alergias conhecidas</p>
       </div>
       <ng-template #hasAllergies>
@@ -125,8 +125,8 @@
               <span class="category-icon">💊</span>
               Medicamentos
             </h4>
-            <div class="badge-list" *ngIf="medicalHistory.allergies.medications.length > 0; else noMedAllergies">
-              <span class="info-badge danger" *ngFor="let allergy of medicalHistory.allergies.medications">
+            <div class="badge-list" *ngIf="medicalHistory?.allergies?.medications!.length > 0; else noMedAllergies">
+              <span class="info-badge danger" *ngFor="let allergy of medicalHistory?.allergies?.medications">
                 {{ allergy }}
               </span>
             </div>
@@ -140,8 +140,8 @@
               <span class="category-icon">🍎</span>
               Alimentos
             </h4>
-            <div class="badge-list" *ngIf="medicalHistory.allergies.food.length > 0; else noFoodAllergies">
-              <span class="info-badge warning" *ngFor="let allergy of medicalHistory.allergies.food">
+            <div class="badge-list" *ngIf="medicalHistory?.allergies?.food!.length > 0; else noFoodAllergies">
+              <span class="info-badge warning" *ngFor="let allergy of medicalHistory?.allergies?.food">
                 {{ allergy }}
               </span>
             </div>
@@ -155,8 +155,8 @@
               <span class="category-icon">🌸</span>
               Outras
             </h4>
-            <div class="badge-list" *ngIf="medicalHistory.allergies.others.length > 0; else noOtherAllergies">
-              <span class="info-badge info" *ngFor="let allergy of medicalHistory.allergies.others">
+            <div class="badge-list" *ngIf="medicalHistory?.allergies?.others!.length > 0; else noOtherAllergies">
+              <span class="info-badge info" *ngFor="let allergy of medicalHistory?.allergies?.others">
                 {{ allergy }}
               </span>
             </div>
@@ -178,8 +178,8 @@
       </h3>
     </div>
     <div class="card-content">
-      <div class="medications-grid" *ngIf="medicalHistory.medications.length > 0; else noMedications">
-        <div class="medication-card" *ngFor="let med of medicalHistory.medications">
+      <div class="medications-grid" *ngIf="medicalHistory?.medications!.length > 0; else noMedications">
+        <div class="medication-card" *ngFor="let med of medicalHistory?.medications">
           <div class="medication-header">
             <span class="medication-icon">💊</span>
             <span class="medication-name">{{ med.name }}</span>
@@ -215,8 +215,8 @@
       </h3>
     </div>
     <div class="card-content">
-      <div class="history-timeline" *ngIf="medicalHistory.pastIllnessesSurgeries.length > 0; else noPastHistory">
-        <div class="history-item" *ngFor="let item of medicalHistory.pastIllnessesSurgeries">
+      <div class="history-timeline" *ngIf="medicalHistory?.pastIllnessesSurgeries!.length > 0; else noPastHistory">
+        <div class="history-item" *ngFor="let item of medicalHistory?.pastIllnessesSurgeries">
           <div class="history-marker" [class.surgery]="item.type === 'Cirurgia'">
             <span class="marker-icon">{{ item.type === 'Cirurgia' ? '⚕️' : '🏥' }}</span>
           </div>
@@ -242,8 +242,8 @@
       </h3>
     </div>
     <div class="card-content">
-      <div class="family-grid" *ngIf="medicalHistory.familyHistory.length > 0; else noFamilyHistory">
-        <div class="family-item" *ngFor="let member of medicalHistory.familyHistory">
+      <div class="family-grid" *ngIf="medicalHistory?.familyHistory!.length > 0; else noFamilyHistory">
+        <div class="family-item" *ngFor="let member of medicalHistory?.familyHistory">
           <div class="family-icon">👤</div>
           <div class="family-details">
             <span class="family-relationship">{{ member.relationship }}</span>
@@ -271,7 +271,7 @@
           <span class="lifestyle-icon">🚭</span>
           <div class="lifestyle-info">
             <span class="lifestyle-label">Fumante</span>
-            <span class="lifestyle-value">{{ medicalHistory.lifestyle.smoker }}</span>
+            <span class="lifestyle-value">{{ medicalHistory?.lifestyle?.smoker }}</span>
           </div>
         </div>
 
@@ -279,7 +279,7 @@
           <span class="lifestyle-icon">🍷</span>
           <div class="lifestyle-info">
             <span class="lifestyle-label">Álcool</span>
-            <span class="lifestyle-value">{{ medicalHistory.lifestyle.alcohol }}</span>
+            <span class="lifestyle-value">{{ medicalHistory?.lifestyle?.alcohol }}</span>
           </div>
         </div>
 
@@ -287,7 +287,7 @@
           <span class="lifestyle-icon">🏃‍♂️</span>
           <div class="lifestyle-info">
             <span class="lifestyle-label">Atividade Física</span>
-            <span class="lifestyle-value">{{ medicalHistory.lifestyle.physicalActivity }}</span>
+            <span class="lifestyle-value">{{ medicalHistory?.lifestyle?.physicalActivity }}</span>
           </div>
         </div>
 
@@ -295,7 +295,7 @@
           <span class="lifestyle-icon">🥗</span>
           <div class="lifestyle-info">
             <span class="lifestyle-label">Dieta</span>
-            <span class="lifestyle-value">{{ medicalHistory.lifestyle.diet }}</span>
+            <span class="lifestyle-value">{{ medicalHistory?.lifestyle?.diet }}</span>
           </div>
         </div>
       </div>
@@ -311,8 +311,8 @@
       </h3>
     </div>
     <div class="card-content">
-      <div class="vaccine-grid" *ngIf="medicalHistory.vaccinations.length > 0; else noVaccinations">
-        <div class="vaccine-item" *ngFor="let vaccine of medicalHistory.vaccinations">
+      <div class="vaccine-grid" *ngIf="medicalHistory?.vaccinations!.length > 0; else noVaccinations">
+        <div class="vaccine-item" *ngFor="let vaccine of medicalHistory?.vaccinations">
           <span class="vaccine-icon">💉</span>
           <div class="vaccine-info">
             <span class="vaccine-name">{{ vaccine.name }}</span>
