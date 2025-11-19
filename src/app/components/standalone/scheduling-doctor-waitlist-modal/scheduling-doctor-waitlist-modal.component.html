@@ -3,149 +3,172 @@
     
     <!-- Modal Header -->
     <div class="modal-header">
-      <div class="header-content">
+      <div class="header-left">
         <div class="header-icon">🔔</div>
-        <div class="header-text">
+        <div>
           <h2>Lista de Espera</h2>
           <p>Seja notificado quando houver uma vaga disponível</p>
         </div>
       </div>
-      <button class="close-btn" (click)="closeModal()" aria-label="Fechar">
-        <span>✕</span>
-      </button>
+      <button class="close-btn" (click)="closeModal()" aria-label="Fechar">×</button>
     </div>
 
     <!-- Modal Body -->
     <div class="modal-body">
       
-      <!-- Doctor Info Summary -->
-      <div class="doctor-summary">
-        <img [src]="doctor.photo" [alt]="doctor.name" class="doctor-photo" />
-        <div class="doctor-info">
-          <strong class="doctor-name">{{ doctor.name }}</strong>
-          <span class="doctor-specialty">{{ doctor.specialty }}</span>
-        </div>
-      </div>
-
-      <!-- Appointment Type Selection -->
-      <div class="appointment-type-section">
-        <div class="section-header">
-          <span class="section-icon">📍</span>
-          <h3>Tipo de Consulta</h3>
-        </div>
+      <!-- Content Grid -->
+      <div class="content-grid">
         
-        <div class="appointment-type-options">
-          <label class="appointment-type-option" [class.selected]="selectedAppointmentType === 'local'">
-            <input 
-              type="radio" 
-              name="appointmentType" 
-              value="local" 
-              [(ngModel)]="selectedAppointmentType" />
-            <div class="option-content">
-              <span class="option-icon">🏥</span>
-              <span class="option-text">Presencial</span>
-            </div>
-          </label>
-          
-          <label class="appointment-type-option" [class.selected]="selectedAppointmentType === 'remote'">
-            <input 
-              type="radio" 
-              name="appointmentType" 
-              value="remote" 
-              [(ngModel)]="selectedAppointmentType" />
-            <div class="option-content">
-              <span class="option-icon">💻</span>
-              <span class="option-text">Online</span>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <!-- Reason Field -->
-      <div class="reason-section">
-        <div class="section-header">
-          <span class="section-icon">📝</span>
-          <h3>Motivo da Consulta *</h3>
-        </div>
+      <!-- Left Column -->
+      <div class="left-column">
         
-        <div class="field-group">
-          <textarea 
-            class="field-textarea" 
-            [(ngModel)]="appointmentReason"
-            placeholder="Descreva o motivo pelo qual você precisa desta consulta..."
-            rows="4"
-            required></textarea>
-        </div>
-      </div>
-
-      <!-- Waitlist Notification -->
-      <div class="waitlist-section">
-        <div class="section-header">
-          <span class="section-icon">🔔</span>
-          <h3>Receber Notificações</h3>
-        </div>
-        
-        <div class="waitlist-info">
-          <p class="info-text">
-            <strong>🚀 Agendamento o mais rápido possível</strong><br/>
-            Entre na lista de espera e seja notificado assim que houver uma vaga disponível para este médico.
-          </p>
-        </div>
-        
-        <div class="contact-fields">
-          <!-- Se usuário está logado, mostrar informações do perfil -->
-          <div *ngIf="isUserLoggedIn" class="user-contact-info">
-            <p class="info-text">
-              <strong>📧 Email:</strong> {{ emailForNotification || 'Não cadastrado' }}
-            </p>
-            <p class="info-note">
-              <small>Usaremos o email do seu perfil para notificações. Você pode atualizá-lo em "Meu Perfil".</small>
-            </p>
+        <!-- Doctor Info -->
+        <div class="doctor-card">
+          <img [src]="doctor.photo" [alt]="doctor.name" class="doctor-photo" />
+          <div class="doctor-info">
+            <h3>{{ doctor.name }}</h3>
+            <p>{{ doctor.specialty }}</p>
           </div>
-          
-          <!-- Se usuário não está logado, pedir email -->
-          <div *ngIf="!isUserLoggedIn">
-            <div class="field-group">
-              <label class="field-label">Email *</label>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <div class="info-header">
+            <span class="info-icon">💡</span>
+            <h4>Como funciona?</h4>
+          </div>
+          <ul class="info-list">
+            <li>Você será notificado por email quando houver uma vaga</li>
+            <li>Sua consulta será agendada automaticamente</li>
+            <li>Você pode cancelar a qualquer momento</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        
+        <!-- Appointment Type -->
+        <div class="form-section">
+          <label class="section-label">
+            <span class="label-icon">📍</span>
+            Tipo de Consulta
+          </label>
+          <div class="appointment-options">
+            <label class="appointment-option" [class.active]="selectedAppointmentType === 'local'">
               <input 
-                type="email" 
-                class="field-input" 
-                [(ngModel)]="emailForNotification"
-                placeholder="seu@email.com" 
-                required />
-            </div>
-            <p class="info-note">
-              <small>* Email é obrigatório para receber notificações</small>
-            </p>
+                type="radio" 
+                name="appointmentType" 
+                value="local" 
+                [(ngModel)]="selectedAppointmentType" />
+              <div class="option-content">
+                <span class="option-icon">🏥</span>
+                <div class="option-text">
+                  <strong>Presencial</strong>
+                  <span>Na clínica</span>
+                </div>
+              </div>
+            </label>
+            
+            <label class="appointment-option" [class.active]="selectedAppointmentType === 'remote'">
+              <input 
+                type="radio" 
+                name="appointmentType" 
+                value="remote" 
+                [(ngModel)]="selectedAppointmentType" />
+              <div class="option-content">
+                <span class="option-icon">💻</span>
+                <div class="option-text">
+                  <strong>Online</strong>
+                  <span>Por videoconferência</span>
+                </div>
+              </div>
+            </label>
           </div>
         </div>
+
+        <!-- Reason -->
+        <div class="form-section">
+          <label class="section-label" for="reason">
+            <span class="label-icon">📝</span>
+            Motivo da Consulta <span class="required">*</span>
+          </label>
+          <textarea 
+            id="reason"
+            class="textarea-field" 
+            [(ngModel)]="appointmentReason"
+            placeholder="Descreva o motivo da sua consulta. Exemplo: Dores de cabeça frequentes, necessidade de acompanhamento médico..."
+            rows="4"
+            maxlength="500"
+            required></textarea>
+          <div class="field-footer">
+            <p class="field-hint">Esta informação ajuda o médico a se preparar para sua consulta</p>
+            <div class="char-counter">{{ appointmentReason.length }} / 500 caracteres</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-section">
+          <label class="section-label">
+            <span class="label-icon">🔔</span>
+            Notificações
+          </label>
+          
+          <div *ngIf="isUserLoggedIn" class="email-display">
+            <div class="email-card">
+              <span class="email-icon">📧</span>
+              <div class="email-info">
+                <p class="email-label">Email cadastrado</p>
+                <p class="email-value">{{ emailForNotification || 'Não cadastrado' }}</p>
+              </div>
+            </div>
+            <p class="email-note">Usaremos o email do seu perfil para notificações</p>
+          </div>
+          
+          <div *ngIf="!isUserLoggedIn" class="email-input">
+            <input 
+              type="email" 
+              class="input-field" 
+              [(ngModel)]="emailForNotification"
+              placeholder="seu@email.com" 
+              required />
+            <p class="field-hint">Enviaremos notificações quando houver uma vaga disponível</p>
+          </div>
+        </div>
+
+      </div>
       </div>
 
-      <!-- Reminder Checkbox -->
-      <div class="reminder-section">
+      <!-- Reminder - Full Width -->
+      <div class="reminder-box">
         <label class="reminder-checkbox">
           <input 
             type="checkbox" 
             [(ngModel)]="reminderChecked" />
-          <span class="checkbox-label">
-            Não se esqueça de levar um acompanhante (caso seja criança ou idoso), exames anteriores e documentos pessoais
-          </span>
+          <div class="checkbox-content">
+            <span class="checkbox-icon">📋</span>
+            <span class="checkbox-text">
+              Lembre-se de levar acompanhante (se necessário), exames anteriores e documentos pessoais
+            </span>
+          </div>
         </label>
       </div>
+
     </div>
 
     <!-- Modal Footer -->
     <div class="modal-footer">
-      <button class="cancel-btn" (click)="closeModal()">
+      <button class="btn-cancel" (click)="closeModal()">
         Cancelar
       </button>
       <button 
-        class="waitlist-btn" 
-        [class.waitlist-btn--disabled]="!isFormValid"
+        class="btn-submit" 
+        [class.disabled]="!isFormValid"
         [disabled]="!isFormValid"
         (click)="joinWaitlist()">
-        <span class="btn-icon">🔔</span>
-        Entrar na Lista de Espera
+        <span>✓</span>
+        Confirmar Entrada na Lista
       </button>
     </div>
 

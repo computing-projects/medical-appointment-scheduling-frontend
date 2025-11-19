@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
 import { SchedulingDoctorAppointmentModalComponent } from '../scheduling-doctor-appointment-modal/scheduling-doctor-appointment-modal.component';
 import { SchedulingDoctorWaitlistModalComponent } from '../scheduling-doctor-waitlist-modal/scheduling-doctor-waitlist-modal.component';
+import { ToastService } from '../../services/toast.service';
 
 interface TimeSlot {
   time: string;
@@ -45,6 +46,10 @@ export class SchedulingDoctorBookingComponent implements OnInit {
   
   // Waitlist modal control
   isWaitlistModalOpen = false;
+
+  constructor(
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.generateWeekSchedule();
@@ -142,13 +147,13 @@ export class SchedulingDoctorBookingComponent implements OnInit {
     console.log('Agendamento confirmado:', data);
     
     // Show success message
-    alert(
-      `✅ Agendamento confirmado com sucesso!\n\n` +
-      `Doutor: ${data.appointmentDetails.doctor.name}\n` +
-      `Data: ${data.appointmentDetails.date} às ${data.appointmentDetails.time}\n` +
-      `Tipo: ${data.appointmentDetails.type === 'local' ? 'Presencial' : 'Online'}\n` +
-      `Motivo: ${data.reason}\n\n` +
-      `Você receberá uma confirmação por email em breve.`
+    const appointmentTypeLabel = data.appointmentDetails.type === 'local' ? 'Presencial' : 'Online';
+    this.toastService.success(
+      `Agendamento confirmado com sucesso!\n\n` +
+      `${data.appointmentDetails.doctor.name} - ${data.appointmentDetails.date} às ${data.appointmentDetails.time}\n` +
+      `${appointmentTypeLabel}\n\n` +
+      `Você receberá uma confirmação por email em breve.`,
+      6000
     );
     
     // Reset selection

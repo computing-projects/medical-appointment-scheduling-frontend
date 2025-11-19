@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastService } from '../../services/toast.service';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
 
 interface AppointmentDetails {
@@ -37,6 +38,8 @@ export class SchedulingDoctorAppointmentModalComponent {
   confirmedReminder = false;
   isSubmitting = false;
 
+  constructor(private toastService: ToastService) {}
+
   closeModal(): void {
     if (this.isSubmitting) return;
     this.appointmentReason = '';
@@ -46,12 +49,12 @@ export class SchedulingDoctorAppointmentModalComponent {
 
   confirmAppointment(): void {
     if (!this.appointmentReason.trim()) {
-      alert('Por favor, informe o motivo da consulta.');
+      this.toastService.warning('Por favor, informe o motivo da consulta.');
       return;
     }
 
     if (!this.confirmedReminder) {
-      alert('Por favor, confirme que leu as instruções importantes.');
+      this.toastService.warning('Por favor, confirme que leu as instruções importantes.');
       return;
     }
 

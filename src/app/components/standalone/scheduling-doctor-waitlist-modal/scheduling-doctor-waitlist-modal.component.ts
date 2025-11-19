@@ -160,6 +160,6 @@ export class SchedulingDoctorWaitlistModalComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    return this.appointmentReason.trim().length > 0 && this.reminderChecked;
+    return this.appointmentReason.trim().length > 10 && this.reminderChecked;
   }
 }
