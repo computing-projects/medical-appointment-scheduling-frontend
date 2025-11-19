@@ -44,10 +44,6 @@
         <span>›</span>
       </button>
     </div>
-    <button class="create-appointment-button" (click)="createNewAppointment()">
-      <span class="button-icon">+</span>
-      <span>Criar Agendamento</span>
-    </button>
   </div>
 
   <!-- Calendar Grid -->
@@ -83,14 +79,14 @@
       </h3>
       <span class="appointment-total-badge">{{ selectedDayAppointments.length }} consulta<span *ngIf="selectedDayAppointments.length !== 1">s</span></span>
     </div>
-    
+
     <div *ngIf="selectedDayAppointments.length > 0; else noAppointments" class="appointment-list">
       <div *ngFor="let appt of selectedDayAppointments" class="appointment-item" (click)="openAppointmentDetails(appt.id)">
         <div class="appointment-time-block">
           <span class="appointment-time">{{ appt.time }}</span>
           <span class="appointment-duration" *ngIf="appt.duration">{{ appt.duration }}</span>
         </div>
-        
+
         <div class="appointment-details">
           <div class="appointment-client-info">
             <span class="appointment-client">{{ appt.client }}</span>
@@ -103,7 +99,7 @@
             </span>
           </div>
         </div>
-        
+
         <div class="appointment-status-wrapper">
           <span class="appointment-status" [ngClass]="{
             'status-confirmada': appt.status === 'Confirmada',
@@ -117,12 +113,11 @@
         </div>
       </div>
     </div>
-    
+
     <ng-template #noAppointments>
       <div class="empty-state">
         <div class="empty-icon">📭</div>
         <p class="empty-message">Nenhum agendamento para este dia</p>
-        <button class="empty-action-button" (click)="createNewAppointment()">Criar novo agendamento</button>
       </div>
     </ng-template>
   </div>
