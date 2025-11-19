@@ -581,11 +581,31 @@
   font-weight: bold;
 }
 
-/* Estilo para simular o estado 'Inativo' do dropdown na imagem */
-.form-input:not([type="email"]):not([type="text"]):not([type="number"]):not(select) {
-    background-color: #f3f4f6; /* gray-100 */
-    border: 1px solid #e5e7eb; /* gray-200 */
+.arrow-down {
+  position: relative;
+  padding-right: 28px !important;
 }
+
+.arrow-down::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #333; /* seta */
+  pointer-events: none;
+  z-index: 5;
+}
+
+select.form-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 // Responsive
 @media (max-width: 1200px) {
   .doctors-table {

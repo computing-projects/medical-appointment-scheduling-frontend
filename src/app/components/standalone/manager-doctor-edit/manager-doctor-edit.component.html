@@ -234,49 +234,71 @@
             <label class="form-label">Email:</label>
             <input type="email" class="form-input" [(ngModel)]="selectedDoctor.email" name="email">
           </div>
-          <!-- PLANOS -->
-          <div class="custom-dropdown" (click)="toggleDropdown('plansOpen')" tabindex="0" (focusout)="closeDropdown('plansOpen')">
+        <div class="custom-dropdown"
+            (click)="toggleDropdown('plansOpen')"
+            tabindex="0"
+            (focusout)="closeDropdown('plansOpen')">
+
             <label class="form-label">Planos que atende:</label>
-            <div class="dropdown-display">
-              {{ selectedDoctor.plans?.length ? selectedDoctor.plans.join(', ') : '' }}
+
+            <div class="dropdown-display form-input arrow-down">
+                {{ selectedDoctor.plans?.length ? selectedDoctor.plans.join(', ') : '' }}
             </div>
+
             <div class="dropdown-list" *ngIf="plansOpen">
-              <div
-                class="dropdown-item"
-                *ngFor="let plan of plans"
-                (click)="toggleSelection(plan, 'plans', $event)"
-                [class.selected]="selectedDoctor.plans.includes(plan)">
-                {{ plan }}
-              </div>
+                <div class="dropdown-item"
+                    *ngFor="let plan of plans"
+                    (click)="toggleSelection(plan, 'plans', $event)"
+                    [class.selected]="selectedDoctor.plans.includes(plan)">
+                    {{ plan }}
+                </div>
             </div>
-          </div>
-          <!-- ESPECIALIDADES -->
-          <div class="custom-dropdown" (click)="toggleDropdown('specialtiesOpen')" tabindex="0" (focusout)="closeDropdown('specialtiesOpen')">
+        </div>
+
+        <div class="custom-dropdown"
+            (click)="toggleDropdown('specialtiesOpen')"
+            tabindex="0"
+            (focusout)="closeDropdown('specialtiesOpen')">
+
             <label class="form-label">Especialidades:</label>
-            <div class="dropdown-display">
-              {{ selectedDoctor.specialtys?.length ? selectedDoctor.specialtys.join(', ') : '' }}
+
+            <div class="dropdown-display form-input arrow-down">
+                {{ selectedDoctor.specialtys?.length ? selectedDoctor.specialtys.join(', ') : '' }}
             </div>
+
             <div class="dropdown-list" *ngIf="specialtiesOpen" style="margin-top:10px;">
-              <div
-                class="dropdown-item"
-                *ngFor="let sp of specialties"
-                (click)="toggleSelection(sp, 'specialtys', $event)"
-                [class.selected]="selectedDoctor.specialtys.includes(sp)">
-                {{ sp }}
-              </div>
+                <div class="dropdown-item"
+                    *ngFor="let sp of specialties"
+                    (click)="toggleSelection(sp, 'specialtys', $event)"
+                    [class.selected]="selectedDoctor.specialtys.includes(sp)">
+                    {{ sp }}
+                </div>
             </div>
-          </div>
+        </div>
 
           <div class="form-group form-group-triple">
             <label class="form-label">Tempo médio de atendimento (em minutos):</label>
             <input type="number" class="form-input" [(ngModel)]="selectedDoctor.avgAppointmentTime" name="avg_service_time">
           </div>
-          <div class="form-group form-group-triple">
-            <label class="form-label">Ativo:</label>
-            <select class="form-input" [(ngModel)]="selectedDoctor.status" name="active">
-              <option [ngValue]="'active'">Ativo</option>
-              <option [ngValue]="'inactive'">Inativo</option>
-            </select>
+          <div class="custom-dropdown"
+              (click)="toggleDropdown('statusOpen')"
+              tabindex="0"
+              (focusout)="closeDropdown('statusOpen')">
+
+              <label class="form-label">Ativo:</label>
+
+              <div class="dropdown-display form-input arrow-down">
+                  {{ selectedDoctor.status }}
+              </div>
+
+              <div class="dropdown-list" *ngIf="statusOpen">
+                <div class="dropdown-item"
+                    *ngFor="let st of statusList"
+                    (click)="selectStatus(st.value, $event)"
+                    [class.selected]="selectedDoctor.status === st.value">
+                  {{ st.label }}
+                </div>
+              </div>
           </div>
           <div class="form-group form-group-triple"></div> </div>
       </form>

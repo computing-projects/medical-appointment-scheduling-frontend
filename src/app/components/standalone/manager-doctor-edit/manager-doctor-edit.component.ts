@@ -40,9 +40,11 @@ export class ManagerDoctorEditComponent implements OnInit {
   showDeleteConfirm = false;
   plansOpen = false;
   specialtiesOpen = false;
+  statusOpen = false;
 
   plans: string[] = [];
   specialties: string[] = [];
+  statusList: { label: string; value: string }[] = [];
   ngOnInit(): void {
     this.loadMockDoctors();
     this.applyFilters();
@@ -71,6 +73,10 @@ export class ManagerDoctorEditComponent implements OnInit {
       "Oftalmologia",
       "Endocrinologia",
       "Urologia"
+    ];
+    this.statusList = [
+      { label: 'Ativo', value: 'active' },
+      { label: 'Inativo', value: 'inactive' }
     ];
     this.doctors = [
       {
@@ -255,11 +261,11 @@ export class ManagerDoctorEditComponent implements OnInit {
     return Array(5 - Math.floor(rating)).fill(0);
   }
 
-  toggleDropdown(field: 'plansOpen' | 'specialtiesOpen') {
+  toggleDropdown(field: 'plansOpen' | 'specialtiesOpen' | 'statusOpen') {
     this[field] = !this[field];
   }
 
-  closeDropdown(field: 'plansOpen' | 'specialtiesOpen') {
+  closeDropdown(field: 'plansOpen' | 'specialtiesOpen' | 'statusOpen') {
     // pequeno delay para não fechar antes de clicar
     setTimeout(() => this[field] = false, 50);
   }
@@ -276,5 +282,13 @@ export class ManagerDoctorEditComponent implements OnInit {
     } else {
       list.push(item); // adiciona
     }
+  }
+
+  selectStatus(st: string, event: MouseEvent) {
+    event.stopPropagation();
+    if (this.selectedDoctor) {
+      this.selectedDoctor.status = st as 'active' | 'inactive';
+    }
+    this.statusOpen = false;
   }
 }
