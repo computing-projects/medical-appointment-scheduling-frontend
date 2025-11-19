@@ -46,11 +46,11 @@
         <span class="title-icon">✓</span>
         Consultas Realizadas
       </h3>
-      <span class="results-count">{{ filteredRealizadasConsultas.length }} consulta(s)</span>
+      <span class="results-count">{{ filteredConsultas.length }} consulta(s)</span>
     </div>
 
-    <div class="appointments-grid" *ngIf="filteredRealizadasConsultas.length > 0; else noRealizadas">
-      <div class="appointment-card completed" *ngFor="let consulta of filteredRealizadasConsultas">
+    <div class="appointments-grid" *ngIf="filteredConsultas.length > 0; else noRealizadas">
+      <div class="appointment-card completed" *ngFor="let consulta of filteredConsultas">
         <div class="card-badge">
           <span class="badge-icon">✓</span>
           <span class="badge-text">Realizada</span>
@@ -107,11 +107,11 @@
         <span class="title-icon">📅</span>
         Consultas Agendadas
       </h3>
-      <span class="results-count">{{ filteredAgendadasConsultas.length }} consulta(s)</span>
+      <span class="results-count">{{ filteredConsultas.length }} consulta(s)</span>
     </div>
 
-    <div class="appointments-grid" *ngIf="filteredAgendadasConsultas.length > 0; else noAgendadas">
-      <div class="appointment-card scheduled" *ngFor="let consulta of filteredAgendadasConsultas">
+    <div class="appointments-grid" *ngIf="filteredConsultas.length > 0; else noAgendadas">
+      <div class="appointment-card scheduled" *ngFor="let consulta of filteredConsultas">
         <div class="card-badge" [class.confirmed]="consulta.status === 'Confirmada'" [class.pending]="consulta.status === 'Pendente'">
           <span class="badge-icon">{{ consulta.status === 'Confirmada' ? '✓' : '⏳' }}</span>
           <span class="badge-text">{{ consulta.status }}</span>
@@ -120,7 +120,7 @@
         <div class="card-header">
           <img [src]="consulta.doctorPhoto" alt="Doctor Photo" class="doctor-avatar">
           <div class="doctor-info">
-            <h4 class="doctor-name">{{ consulta.doutor }}</h4>
+            <h4 class="doctor-name">{{ consulta.profissional }}</h4>
             <span class="doctor-specialty">{{ consulta.especialidade }}</span>
           </div>
         </div>
