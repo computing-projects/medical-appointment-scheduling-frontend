@@ -9,6 +9,7 @@ import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { UserProfile } from '../../standalone/perfil/perfil.component';
 import { MedicalHistory } from '../../standalone/perfil-anamnese/perfil-anamnese.component';
+import { Consultation } from '../../standalone/perfil-appointment/perfil-appointment.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -154,6 +155,15 @@ export class AuthenticationService {
     const headers = this.getAuthHeaders();
     return this.http
       .get<MedicalHistory>(`${this.apiUrl}/Anamnese/client/${id}`, { headers })
+      .pipe(
+        catchError((err: HttpErrorResponse) => throwError(() => err))
+      );
+  }
+
+  getConsultasByUserId(id: number): Observable<Consultation[]> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .get<Consultation[]>(`${this.apiUrl}/Appointments/GetById/${id}`, { headers })
       .pipe(
         catchError((err: HttpErrorResponse) => throwError(() => err))
       );
