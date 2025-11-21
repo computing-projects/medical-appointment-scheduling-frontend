@@ -16,8 +16,6 @@ Uma aplicação single-page (SPA) completa para gerenciamento de consultas médi
 - [Desenvolvimento](#desenvolvimento)
 - [Build para Produção](#build-para-produção)
 - [Testes](#testes)
-- [Deploy](#deploy)
-- [Contribuindo](#contribuindo)
 - [Licença](#licença)
 
 ## Visão Geral
