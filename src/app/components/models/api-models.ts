@@ -167,3 +167,42 @@ export interface Anamnese {
   updatedAt: string;
 }
 
+// Request DTOs for API calls
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  passwordHash: string;
+  cep: string;
+  address: string;
+  phone?: string;
+  role: string;
+  city?: string;
+  state?: string;
+}
+
+export interface CreateDoctorRequest {
+  userId: number;
+  crm: string;
+  specialty: number;
+}
+
+export interface CreateScheduleRequest {
+  doctorId: number;
+  clinicId: number;
+  weekday: number;
+  startTime: string;
+  endTime: string;
+  available?: boolean;
+}
+
+export interface CreateClinicUserRequest {
+  clinicId: number;
+  userId: number;
+  role: number;
+}
+
+export interface CreateDoctorHealthPlanRequest {
+  doctorId: number;
+  healthPlanId: number;
+}
+

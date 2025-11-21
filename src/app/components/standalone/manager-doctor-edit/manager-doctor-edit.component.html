@@ -172,9 +172,13 @@
               <span class="info-value">{{ selectedDoctor.specialtys.join(', ') }}</span>
             </div>
 
-            <div class="info-item">
-              <span class="info-label">Tempo médio de atendimento (em minutos):</span>
-              <span class="info-value">{{ selectedDoctor.avgAppointmentTime }}</span>
+            <div class="info-item" *ngIf="selectedDoctor.schedule && selectedDoctor.schedule.length > 0">
+              <span class="info-label">Horários de Atendimento:</span>
+              <div class="schedule-display">
+                <div *ngFor="let item of selectedDoctor.schedule" class="schedule-item">
+                  {{ getDayName(item.dayOfWeek) }}: {{ item.startTime }} - {{ item.endTime }}
+                </div>
+              </div>
             </div>
 
             <div class="info-item">
@@ -242,7 +246,7 @@
             <label class="form-label">Planos que atende:</label>
 
             <div class="dropdown-display form-input arrow-down">
-                {{ selectedDoctor.plans?.length ? selectedDoctor.plans.join(', ') : '' }}
+                {{ selectedDoctor.plans.length ? selectedDoctor.plans.join(', ') : '' }}
             </div>
 
             <div class="dropdown-list" *ngIf="plansOpen">
@@ -263,42 +267,92 @@
             <label class="form-label">Especialidades:</label>
 
             <div class="dropdown-display form-input arrow-down">
-                {{ selectedDoctor.specialtys?.length ? selectedDoctor.specialtys.join(', ') : '' }}
+                {{ selectedDoctor.specialtys.length ? selectedDoctor.specialtys.join(', ') : '' }}
             </div>
 
             <div class="dropdown-list" *ngIf="specialtiesOpen" style="margin-top:10px;">
                 <div class="dropdown-item"
                     *ngFor="let sp of specialties"
                     (click)="toggleSelection(sp, 'specialtys', $event)"
-                    [class.selected]="selectedDoctor.specialtys.includes(sp)">
-                    {{ sp }}
+                    [class.selected]="selectedDoctor.specialtys.includes(sp.label)">
+                    {{ sp.label }}
                 </div>
             </div>
         </div>
 
-          <div class="form-group form-group-triple">
-            <label class="form-label">Tempo médio de atendimento (em minutos):</label>
-            <input type="number" class="form-input" [(ngModel)]="selectedDoctor.avgAppointmentTime" name="avg_service_time">
-          </div>
-          <div class="custom-dropdown"
-              (click)="toggleDropdown('statusOpen')"
-              tabindex="0"
-              (focusout)="closeDropdown('statusOpen')">
+        <div class="custom-dropdown"
+            (click)="toggleDropdown('statusOpen')"
+            tabindex="0"
+            (focusout)="closeDropdown('statusOpen')">
 
-              <label class="form-label">Ativo:</label>
+            <label class="form-label">Ativo:</label>
 
-              <div class="dropdown-display form-input arrow-down">
-                  {{ selectedDoctor.status }}
+            <div class="dropdown-display form-input arrow-down">
+                {{ selectedDoctor.status }}
+            </div>
+
+            <div class="dropdown-list" *ngIf="statusOpen">
+              <div class="dropdown-item"
+                  *ngFor="let st of statusList"
+                  (click)="selectStatus(st.value, $event)"
+                  [class.selected]="selectedDoctor.status === st.value">
+                {{ st.label }}
               </div>
+            </div>
+        </div>
 
-              <div class="dropdown-list" *ngIf="statusOpen">
-                <div class="dropdown-item"
-                    *ngFor="let st of statusList"
-                    (click)="selectStatus(st.value, $event)"
-                    [class.selected]="selectedDoctor.status === st.value">
-                  {{ st.label }}
+          <!-- Schedule Section -->
+          <div class="form-group form-group-full">
+            <label class="form-label">Horários de Atendimento:</label>
+            <div class="schedule-table">
+              <div class="schedule-row schedule-header">
+                <div class="schedule-col-day">Dia</div>
+                <div class="schedule-col-times">Horários</div>
+                <div class="schedule-col-actions"></div>
+              </div>
+              <div class="schedule-row" *ngFor="let day of weeklySchedule">
+                <div class="schedule-col-day">
+                  <label class="day-checkbox-compact">
+                    <input type="checkbox" [checked]="day.enabled" (change)="toggleDayEnabled(day)">
+                    <span>{{ getDayShortName(day.dayOfWeek) }}</span>
+                  </label>
+                </div>
+                <div class="schedule-col-times">
+                  <div class="time-ranges-compact" *ngIf="day.enabled && day.timeRanges.length > 0 && !day.editing">
+                    <div class="time-range-badge" *ngFor="let range of day.timeRanges; let i = index">
+                      <span class="time-display">{{ range.startTime }} - {{ range.endTime }}</span>
+                      <button type="button" class="btn-remove-badge" (click)="removeTimeRange(day, i)" *ngIf="day.timeRanges.length > 1" title="Remover">
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                  <div class="time-ranges-editor" *ngIf="day.enabled && day.editing">
+                    <div class="time-range-edit" *ngFor="let range of day.timeRanges; let i = index" [class.has-error]="getTimeRangeErrors(day, i).length > 0">
+                      <select [(ngModel)]="range.startTime" [ngModelOptions]="{standalone: true}" class="time-select-compact" (change)="sortDayTimeRanges(day)">
+                        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+                      </select>
+                      <span class="time-separator">-</span>
+                      <select [(ngModel)]="range.endTime" [ngModelOptions]="{standalone: true}" class="time-select-compact" (change)="sortDayTimeRanges(day)">
+                        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+                      </select>
+                      <div class="time-error-compact" *ngIf="getTimeRangeErrors(day, i).length > 0" [title]="getTimeRangeErrors(day, i).join(', ')">⚠</div>
+                    </div>
+                    <div class="time-range-error-message" *ngFor="let range of day.timeRanges; let i = index">
+                      <div *ngFor="let error of getTimeRangeErrors(day, i)" class="error-text">{{ error }}</div>
+                    </div>
+                    <button type="button" class="btn-add-range-compact" (click)="addTimeRange(day)" title="Adicionar horário">
+                      + Horário
+                    </button>
+                  </div>
+                  <span class="day-disabled" *ngIf="!day.enabled">Não disponível</span>
+                </div>
+                <div class="schedule-col-actions">
+                  <button type="button" class="btn-toggle-edit" (click)="toggleDayEdit(day)" *ngIf="day.enabled" [title]="day.editing ? 'Salvar' : 'Editar'">
+                    {{ day.editing ? '✓' : '✎' }}
+                  </button>
                 </div>
               </div>
+            </div>
           </div>
           <div class="form-group form-group-triple"></div> </div>
       </form>
