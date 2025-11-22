@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { UserProfile } from '../../standalone/perfil/perfil.component';
 import { MedicalHistory } from '../../standalone/perfil-anamnese/perfil-anamnese.component';
 import { Consultation } from '../../standalone/perfil-appointment/perfil-appointment.component';
+import { DoctorProfile } from '../../standalone/perfil-doctor/perfil-doctor.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -150,6 +151,24 @@ export class AuthenticationService {
         catchError((err: HttpErrorResponse) => throwError(() => err))
       );
   }
+    
+  getDoctorById(id: number): Observable<DoctorProfile> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .get<DoctorProfile>(`${this.apiUrl}/Doctors/GetById/${id}`, { headers })
+      .pipe(
+        catchError((err: HttpErrorResponse) => throwError(() => err))
+      );
+  }
+
+  getDoctorCalendarById(id: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http
+      .get<any>(`${this.apiUrl}/Doctors/GetCalendarById/${id}`, { headers })
+      .pipe(
+        catchError((err: HttpErrorResponse) => throwError(() => err))
+      );
+  }
 
   getAnamneseById(id: number): Observable<MedicalHistory> {
     const headers = this.getAuthHeaders();
@@ -168,7 +187,6 @@ export class AuthenticationService {
         catchError((err: HttpErrorResponse) => throwError(() => err))
       );
   }
-
 
   getClient(): Observable<Clients> {
     const user = this.getUser();

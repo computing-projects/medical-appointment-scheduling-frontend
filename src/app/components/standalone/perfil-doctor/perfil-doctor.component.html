@@ -4,33 +4,33 @@
     <div class="banner-gradient"></div>
     <div class="profile-header-content">
       <div class="profile-photo-wrapper">
-        <img [src]="doctorProfile.photo" alt="Doctor Photo" class="profile-photo">
+        <img [src]="doctorProfile?.photo" alt="Doctor Photo" class="profile-photo">
         <div class="photo-badge">
           <span class="badge-icon">✓</span>
         </div>
       </div>
       <div class="profile-header-info">
-        <h1 class="profile-name">Dr(a). {{ doctorProfile.name }} {{ doctorProfile.lastName }}</h1>
-        <p class="profile-subtitle">{{ doctorProfile.specialty }}</p>
+        <h1 class="profile-name">Dr(a). {{ doctorProfile?.name }} {{ doctorProfile?.lastname }}</h1>
+        <p class="profile-subtitle">{{ doctorProfile?.specialty }}</p>
         <div class="profile-rating">
           <div class="stars">
-            <span *ngFor="let _ of getStarsArray(doctorProfile.review)" class="star filled">★</span>
-            <span *ngFor="let _ of getStarsArray(5 - doctorProfile.review)" class="star empty">★</span>
+            <span *ngFor="let _ of getStarsArray(doctorProfile?.review!)" class="star filled">★</span>
+            <span *ngFor="let _ of getStarsArray(5 - doctorProfile?.review!)" class="star empty">★</span>
           </div>
-          <span class="rating-text">{{ doctorProfile.review }}/5.0</span>
+          <span class="rating-text">{{ doctorProfile?.review }}/5.0</span>
         </div>
         <div class="profile-quick-info">
           <span class="info-chip">
             <span class="chip-icon">🆔</span>
-            {{ doctorProfile.crm }}
+            {{ doctorProfile?.crm }}
           </span>
           <span class="info-chip">
             <span class="chip-icon">📞</span>
-            {{ doctorProfile.contact }}
+            {{ doctorProfile?.contact }}
           </span>
           <span class="info-chip">
             <span class="chip-icon">🎂</span>
-            {{ doctorProfile.age }} anos
+            {{ doctorProfile?.age }} anos
           </span>
         </div>
       </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="card-content">
           <div class="doctor-bio">
-            <p class="bio-text">{{ doctorProfile.bio }}</p>
+            <p class="bio-text">{{ doctorProfile?.bio }}</p>
           </div>
           
           <div class="info-grid">
@@ -75,7 +75,7 @@
               <span class="info-icon">📧</span>
               <div class="info-details">
                 <span class="info-label">Email</span>
-                <span class="info-value">{{ doctorProfile.email }}</span>
+                <span class="info-value">{{ doctorProfile?.email }}</span>
               </div>
             </div>
             
@@ -83,7 +83,7 @@
               <span class="info-icon">🏙️</span>
               <div class="info-details">
                 <span class="info-label">Cidade</span>
-                <span class="info-value">{{ doctorProfile.city }}</span>
+                <span class="info-value">{{ doctorProfile?.city }}</span>
               </div>
             </div>
             
@@ -91,7 +91,7 @@
               <span class="info-icon">📮</span>
               <div class="info-details">
                 <span class="info-label">CEP</span>
-                <span class="info-value">{{ doctorProfile.cep }}</span>
+                <span class="info-value">{{ doctorProfile?.cep }}</span>
               </div>
             </div>
             
@@ -99,7 +99,7 @@
               <span class="info-icon">📍</span>
               <div class="info-details">
                 <span class="info-label">Endereço</span>
-                <span class="info-value">{{ doctorProfile.address }}</span>
+                <span class="info-value">{{ doctorProfile?.address }}</span>
               </div>
             </div>
           </div>
@@ -117,13 +117,13 @@
         <div class="card-content">
           <div class="availability-section">
             <span class="availability-label">Horário Disponível Hoje:</span>
-            <span class="availability-value">{{ doctorProfile.availableHoursToday }}</span>
+            <span class="availability-value">{{ doctorProfile?.availableHoursToday }}</span>
           </div>
           
           <div class="plans-section">
             <h4 class="plans-title">Planos de Saúde Aceitos:</h4>
             <div class="plans-list">
-              <span class="plan-badge" *ngFor="let plan of doctorProfile.acceptedPlans">
+              <span class="plan-badge" *ngFor="let plan of doctorProfile?.acceptedPlans">
                 <span class="plan-icon">✓</span>
                 {{ plan }}
               </span>
@@ -133,7 +133,7 @@
       </div>
 
       <!-- Today's Appointments -->
-      <div class="appointments-section">
+      <!-- <div class="appointments-section">
         <div class="section-header">
           <h3 class="section-title">
             <span class="title-icon">📋</span>
@@ -191,7 +191,7 @@
             <p class="empty-text">Nenhuma consulta agendada para hoje</p>
           </div>
         </ng-template>
-      </div>
+      </div> -->
 
       <!-- Monthly Statistics -->
       <div class="stats-section">
@@ -206,7 +206,7 @@
             </div>
             <div class="stat-content">
               <span class="stat-label">Consultas</span>
-              <span class="stat-value">{{ currentMonthStats.consultas }}</span>
+              <span class="stat-value">{{ doctorProfile?.currentMonthStats?.consultas }}</span>
             </div>
           </div>
 
@@ -216,7 +216,7 @@
             </div>
             <div class="stat-content">
               <span class="stat-label">Exames</span>
-              <span class="stat-value">{{ currentMonthStats.exames }}</span>
+              <span class="stat-value">{{ doctorProfile?.currentMonthStats?.exames }}</span>
             </div>
           </div>
 
@@ -226,7 +226,7 @@
             </div>
             <div class="stat-content">
               <span class="stat-label">Cirurgias</span>
-              <span class="stat-value">{{ currentMonthStats.cirurgias }}</span>
+              <span class="stat-value">{{ doctorProfile?.currentMonthStats?.cirurgias }}</span>
             </div>
           </div>
 
@@ -236,7 +236,7 @@
             </div>
             <div class="stat-content">
               <span class="stat-label">Procedimentos</span>
-              <span class="stat-value">{{ currentMonthStats.procedimentos }}</span>
+              <span class="stat-value">{{ doctorProfile?.currentMonthStats?.procedimentos }}</span>
             </div>
           </div>
 
@@ -246,7 +246,7 @@
             </div>
             <div class="stat-content">
               <span class="stat-label">Cancelados</span>
-              <span class="stat-value">{{ currentMonthStats.agendamentosCanceladosOuFaltados }}</span>
+              <span class="stat-value">{{ doctorProfile?.currentMonthStats?.agendamentosCanceladosOuFaltados }}</span>
             </div>
           </div>
         </div>

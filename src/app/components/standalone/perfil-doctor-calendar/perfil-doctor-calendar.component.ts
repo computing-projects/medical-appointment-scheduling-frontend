@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CalendarAppointment } from '../../shared/interfaces/appointment.interface';
+import { AppointmentStatus, CalendarAppointment } from '../../shared/interfaces/appointment.interface';
 import { MONTH_NAMES, DAY_NAMES_SHORT } from '../../shared/constants/calendar.constants';
 import { DateUtils } from '../../shared/utils/date.utils';
 import { StatusUtils } from '../../shared/utils/status.utils';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'med-perfil-doctor-calendar',
@@ -19,103 +21,12 @@ export class PerfilDoctorCalendarComponent implements OnInit {
   selectedDayAppointments: CalendarAppointment[] = [];
   selectedDate: Date | null = null;
 
-  // Mock appointments data, keyed by YYYY-MM-DD
-  mockAppointments: { [key: string]: CalendarAppointment[] } = {
-    '2025-10-10': [
-      {
-        id: 1,
-        time: '10:00',
-        client: 'Alice Souza',
-        type: 'Presencial',
-        status: 'Confirmada',
-        specialty: 'Cardiologia',
-        duration: '30 min',
-      },
-      {
-        id: 2,
-        time: '14:00',
-        client: 'Bob Lima',
-        type: 'Online',
-        status: 'Pendente',
-        specialty: 'Clínico Geral',
-        duration: '45 min',
-      },
-      {
-        id: 7,
-        time: '16:00',
-        client: 'Fernanda Silva',
-        type: 'Presencial',
-        status: 'Confirmada',
-        specialty: 'Cardiologia',
-        duration: '30 min',
-      },
-    ],
-    '2025-10-15': [
-      {
-        id: 3,
-        time: '09:30',
-        client: 'Charlie Brown',
-        type: 'Presencial',
-        status: 'Confirmada',
-        specialty: 'Pediatria',
-        duration: '40 min',
-      },
-      {
-        id: 8,
-        time: '11:00',
-        client: 'Rodrigo Alves',
-        type: 'Online',
-        status: 'Confirmada',
-        specialty: 'Clínico Geral',
-        duration: '30 min',
-      },
-    ],
-    '2025-10-26': [
-      // Today's date
-      {
-        id: 4,
-        time: '10:00',
-        client: 'Ana Paula Costa',
-        type: 'Presencial',
-        status: 'Realizada',
-        specialty: 'Cardiologia',
-        duration: '30 min',
-      },
-      {
-        id: 5,
-        time: '11:00',
-        client: 'Carlos Eduardo Lima',
-        type: 'Online',
-        status: 'Confirmada',
-        specialty: 'Clínico Geral',
-        duration: '45 min',
-      },
-      {
-        id: 9,
-        time: '14:30',
-        client: 'Juliana Mendes',
-        type: 'Presencial',
-        status: 'Pendente',
-        specialty: 'Pediatria',
-        duration: '30 min',
-      },
-    ],
-    '2025-11-05': [
-      {
-        id: 6,
-        time: '16:00',
-        client: 'Maria Clara',
-        type: 'Presencial',
-        status: 'Pendente',
-        specialty: 'Cardiologia',
-        duration: '30 min',
-      },
-    ],
-  };
+  doctorCalendar: { [key: string]: CalendarAppointment[] } = {};
 
-  constructor() {}
+  constructor(private authService: AuthenticationService, private cdr: ChangeDetectorRef,) {}
 
   ngOnInit(): void {
+    this.loadConsultas();
     this.generateCalendar();
   }
 
@@ -138,7 +49,7 @@ export class PerfilDoctorCalendarComponent implements OnInit {
       const dateString = DateUtils.toISODateString(dayDate);
       this.daysInMonth.push({
         date: dayDate,
-        hasAppointments: !!this.mockAppointments[dateString],
+        hasAppointments: !!this.doctorCalendar[dateString],
       });
     }
   }
@@ -163,7 +74,7 @@ export class PerfilDoctorCalendarComponent implements OnInit {
     this.selectedDayAppointments = [];
     if (dayDate) {
       const dateString = DateUtils.toISODateString(dayDate);
-      this.selectedDayAppointments = this.mockAppointments[dateString] || [];
+      this.selectedDayAppointments = this.doctorCalendar[dateString] || [];
     }
   }
 
@@ -174,7 +85,7 @@ export class PerfilDoctorCalendarComponent implements OnInit {
   getAppointmentCount(date: Date | null): number {
     if (!date) return 0;
     const dateString = DateUtils.toISODateString(date);
-    return this.mockAppointments[dateString]?.length || 0;
+    return this.doctorCalendar[dateString]?.length || 0;
   }
 
   getStatusIcon(status: string): string {
@@ -183,7 +94,7 @@ export class PerfilDoctorCalendarComponent implements OnInit {
 
   getTodayStats() {
     const today = DateUtils.toISODateString(new Date());
-    const todayAppts = this.mockAppointments[today] || [];
+    const todayAppts = this.doctorCalendar[today] || [];
     return {
       total: todayAppts.length,
       confirmed: todayAppts.filter(a => a.status === 'Confirmada').length,
@@ -198,10 +109,10 @@ export class PerfilDoctorCalendarComponent implements OnInit {
     let total = 0;
     let daysWithAppointments = 0;
 
-    Object.keys(this.mockAppointments).forEach(dateStr => {
+    Object.keys(this.doctorCalendar).forEach(dateStr => {
       const date = new Date(dateStr);
       if (date.getFullYear() === year && date.getMonth() === month) {
-        total += this.mockAppointments[dateStr].length;
+        total += this.doctorCalendar[dateStr].length;
         daysWithAppointments++;
       }
     });
@@ -221,5 +132,39 @@ export class PerfilDoctorCalendarComponent implements OnInit {
     console.log(`Abrir detalhes do agendamento ID: ${appointmentId}`);
     // You could reuse PerfilAppointmentModalComponent or create a new one specific to doctor's editing needs
     alert(`Abrir detalhes/edição para agendamento ID ${appointmentId}`);
+  }
+
+  loadConsultas() {
+    this.authService.getDoctorCalendarById(1) //TODO: passar id do usuario
+      .pipe(take(1))
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.doctorCalendar = this.mapToDoctorCalendar(response);
+          console.log('Agenda carregado:', this.doctorCalendar);
+          this.cdr.detectChanges();
+        },
+        error: err => {
+          console.error('Erro no login:', err);
+        },
+      });
+  }
+
+  mapToDoctorCalendar(response: any): { [key: string]: CalendarAppointment[] } {
+    const calendar: { [key: string]: CalendarAppointment[] } = {};
+    
+    Object.keys(response).forEach(date => {
+      calendar[date] = response[date].map((item: any) => ({
+        id: item.id,
+        time: item.time,
+        client: item.client,
+        type: item.type,
+        status: item.status,
+        specialty: item.specialty,
+        duration: item.duration
+      }));
+    });
+    
+    return calendar;
   }
 }
