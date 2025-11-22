@@ -19,7 +19,7 @@
     left: 0;
     width: 4px;
     height: 100%;
-    background: linear-gradient(180deg, $cosmic-cobalt, $blue-gem);
+    background-color: $cosmic-cobalt;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -195,7 +195,7 @@
   }
   
   &.agenda-btn {
-    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+    background-color: $cosmic-cobalt;
     color: $white;
     box-shadow: 0 2px 8px rgba($cosmic-cobalt, 0.3);
     

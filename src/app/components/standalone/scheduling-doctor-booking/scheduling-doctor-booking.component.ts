@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnInit, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
 import { SchedulingDoctorAppointmentModalComponent } from '../scheduling-doctor-appointment-modal/scheduling-doctor-appointment-modal.component';
 import { SchedulingDoctorWaitlistModalComponent } from '../scheduling-doctor-waitlist-modal/scheduling-doctor-waitlist-modal.component';
+import { ToastService } from '../../services/toast.service';
 
 interface TimeSlot {
   time: string;
@@ -31,6 +32,8 @@ const MONTHS = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', '
 })
 
 export class SchedulingDoctorBookingComponent implements OnInit {
+  @HostBinding('class.med-scheduling-doctor-booking') readonly hostClass = true;
+  
   @Input() doctor!: DoctorSummary;
 
   appointmentType: 'local' | 'remote' = 'local';
@@ -45,6 +48,10 @@ export class SchedulingDoctorBookingComponent implements OnInit {
   
   // Waitlist modal control
   isWaitlistModalOpen = false;
+
+  constructor(
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.generateWeekSchedule();
@@ -142,13 +149,13 @@ export class SchedulingDoctorBookingComponent implements OnInit {
     console.log('Agendamento confirmado:', data);
     
     // Show success message
-    alert(
-      `✅ Agendamento confirmado com sucesso!\n\n` +
-      `Doutor: ${data.appointmentDetails.doctor.name}\n` +
-      `Data: ${data.appointmentDetails.date} às ${data.appointmentDetails.time}\n` +
-      `Tipo: ${data.appointmentDetails.type === 'local' ? 'Presencial' : 'Online'}\n` +
-      `Motivo: ${data.reason}\n\n` +
-      `Você receberá uma confirmação por email em breve.`
+    const appointmentTypeLabel = data.appointmentDetails.type === 'local' ? 'Presencial' : 'Online';
+    this.toastService.success(
+      `Agendamento confirmado com sucesso!\n\n` +
+      `${data.appointmentDetails.doctor.name} - ${data.appointmentDetails.date} às ${data.appointmentDetails.time}\n` +
+      `${appointmentTypeLabel}\n\n` +
+      `Você receberá uma confirmação por email em breve.`,
+      6000
     );
     
     // Reset selection
@@ -165,19 +172,5 @@ export class SchedulingDoctorBookingComponent implements OnInit {
   
   closeWaitlistModal(): void {
     this.isWaitlistModalOpen = false;
-  }
-  
-  onWaitlistSlotSelected(slotData: { date: string; time: string; type: 'local' | 'remote' }): void {
-    console.log('Slot selected from waitlist:', slotData);
-    
-    // Find the corresponding day and slot in the calendar
-    // In a real application, you would navigate to that date/time
-    alert(
-      `✅ Horário selecionado da lista de espera!\n\n` +
-      `Data: ${slotData.date}\n` +
-      `Horário: ${slotData.time}\n` +
-      `Tipo: ${slotData.type === 'local' ? 'Presencial' : 'Online'}\n\n` +
-      `Prossiga para confirmar o agendamento.`
-    );
   }
 }

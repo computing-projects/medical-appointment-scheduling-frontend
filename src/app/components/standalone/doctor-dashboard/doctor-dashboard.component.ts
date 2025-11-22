@@ -1,18 +1,20 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PerfilPatientModalComponent, PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
+import { PatientDetails } from '../perfil-patient-modal/perfil-patient-modal.component';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'med-doctor-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, PerfilPatientModalComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './doctor-dashboard.component.html',
   styleUrl: './doctor-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DoctorDashboardComponent {
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, private authService: AuthenticationService) {}
 
   navigateToAgenda(event?: Event): void {
     if (event) {
@@ -73,5 +75,11 @@ export class DoctorDashboardComponent {
   closeAppointmentModal(): void {
     this.isModalOpen = false;
     this.selectedAppointment = null;
+  }
+
+  displayUserName(): string | undefined {
+    if (this.authService.getUser()?.name !== undefined)
+      return this.authService.getUser()?.name
+    else return '';
   }
 }

@@ -1,20 +1,22 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PerfilDoctorModalComponent, DoctorDetails } from '../perfil-doctor-modal/perfil-doctor-modal.component';
+import { DoctorDetails } from '../perfil-doctor-modal/perfil-doctor-modal.component';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'med-home-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, PerfilDoctorModalComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home-dashboard.component.html',
   styleUrl: './home-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeDashboardComponent {
 
+  constructor(private authService: AuthenticationService) {}
+
   // Dashboard data (in a real app, this would come from a service)
-  userName = 'Fulano';
   upcomingAppointments = 2;
   totalConsultations = 15;
   pendingTasks = 1;
@@ -66,6 +68,11 @@ export class HomeDashboardComponent {
   closeAppointmentModal(): void {
     this.isModalOpen = false;
     this.selectedAppointment = null;
+  }
+  displayUserName(): string | undefined {
+    if (this.authService.getUser()?.name !== undefined)
+      return this.authService.getUser()?.name
+    else return '';
   }
 }
 

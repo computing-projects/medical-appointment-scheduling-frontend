@@ -2,6 +2,35 @@ import { Speciality } from './../../models/api-models';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+// Mapping from Speciality enum to Portuguese display names
+const SPECIALITY_NAMES: { [key in Speciality]: string } = {
+  [Speciality.Cardiology]: 'Cardiologia',
+  [Speciality.Dermatology]: 'Dermatologia',
+  [Speciality.Endocrinology]: 'Endocrinologia',
+  [Speciality.Gastroenterology]: 'Gastroenterologia',
+  [Speciality.Neurology]: 'Neurologia',
+  [Speciality.Orthopedics]: 'Ortopedia',
+  [Speciality.Pediatrics]: 'Pediatria',
+  [Speciality.Psychiatry]: 'Psiquiatria',
+  [Speciality.General]: 'Clínico Geral'
+};
+
+interface TimeRange {
+  startTime: string;
+  endTime: string;
+}
+
+interface DaySchedule {
+  dayOfWeek: number;
+  dayName: string;
+  enabled: boolean;
+  timeRanges: TimeRange[];
+  editing?: boolean;
+}
 
 interface Doctor {
   id: number;
@@ -16,7 +45,11 @@ interface Doctor {
   specialtys: string[];
   email: string;
   phone: string;
+<<<<<<< HEAD
   avgAppointmentTime: number;
+=======
+  schedule?: any[];
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
   status: 'active' | 'inactive';
   patientsCount: number;
   rating: number;
@@ -41,16 +74,80 @@ export class ManagerDoctorEditComponent implements OnInit {
   plansOpen = false;
   specialtiesOpen = false;
   statusOpen = false;
+<<<<<<< HEAD
+=======
+
+  plans: string[] = [];
+  specialties: { value: Speciality; label: string }[] = [];
+  statusList: { label: string; value: string }[] = [];
+
+  // Schedule management
+  // Backend enum: Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6, Sunday=7
+  weeklySchedule: DaySchedule[] = [
+    { dayOfWeek: 1, dayName: 'Segunda-feira', enabled: false, timeRanges: [] },
+    { dayOfWeek: 2, dayName: 'Terça-feira', enabled: false, timeRanges: [] },
+    { dayOfWeek: 3, dayName: 'Quarta-feira', enabled: false, timeRanges: [] },
+    { dayOfWeek: 4, dayName: 'Quinta-feira', enabled: false, timeRanges: [] },
+    { dayOfWeek: 5, dayName: 'Sexta-feira', enabled: false, timeRanges: [] },
+    { dayOfWeek: 6, dayName: 'Sábado', enabled: false, timeRanges: [] },
+    { dayOfWeek: 7, dayName: 'Domingo', enabled: false, timeRanges: [] }
+  ];
+
+  // Time options for dropdowns
+  timeOptions: string[] = [];
+
+  constructor(private apiService: ApiService) {
+    this.initializeTimeOptions();
+  }
+
+  initializeTimeOptions(): void {
+    // Generate time options from 00:00 to 23:30 in 30-minute intervals
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        this.timeOptions.push(timeStr);
+      }
+    }
+  }
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
 
   plans: string[] = [];
   specialties: string[] = [];
   statusList: { label: string; value: string }[] = [];
   ngOnInit(): void {
+    this.loadHealthPlans();
     this.loadMockDoctors();
     this.applyFilters();
   }
 
+  loadHealthPlans(): void {
+    this.apiService.getHealthPlans().pipe(
+      catchError(error => {
+        console.error('Error loading health plans:', error);
+        console.error('Error details:', error.error, error.status, error.statusText);
+        // Return empty array if API fails - no fallback to mock data
+        return of([]);
+      })
+    ).subscribe({
+      next: (response: any) => {
+        // Check if response is an array
+        if (Array.isArray(response) && response.length > 0) {
+          // Map the API response (array of {id, name}) to just the names
+          this.plans = response.map((plan: { id: number; name: string }) => plan.name);
+        } else {
+          console.warn('Unexpected response format or empty response:', response);
+          this.plans = [];
+        }
+      },
+      error: (error) => {
+        console.error('Subscription error:', error);
+        this.plans = [];
+      }
+    });
+  }
+
   loadMockDoctors(): void {
+<<<<<<< HEAD
     this.plans = [
       "Unimed",
       "Bradesco Saúde",
@@ -74,6 +171,20 @@ export class ManagerDoctorEditComponent implements OnInit {
       "Endocrinologia",
       "Urologia"
     ];
+=======
+    // Plans are loaded from API in loadHealthPlans() - no mock fallback
+
+    // Initialize specialties from enum
+    this.specialties = Object.keys(Speciality)
+      .filter(key => isNaN(Number(key))) // Filter out numeric keys, keep string keys
+      .map((key: string) => {
+        const enumValue = Speciality[key as keyof typeof Speciality] as Speciality;
+        return {
+          value: enumValue,
+          label: SPECIALITY_NAMES[enumValue]
+        };
+      });
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
     this.statusList = [
       { label: 'Ativo', value: 'active' },
       { label: 'Inativo', value: 'inactive' }
@@ -93,7 +204,16 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'carlos.silva@clinic.com',
         phone: '(11) 98765-4321',
         status: 'active',
+<<<<<<< HEAD
         avgAppointmentTime: 30,
+=======
+        schedule: [
+          { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 1, startTime: '14:00', endTime: '18:00', isActive: true },
+          { dayOfWeek: 2, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 2, startTime: '14:00', endTime: '18:00', isActive: true }
+        ],
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 245,
         rating: 4.8
       },
@@ -111,7 +231,15 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'maria.santos@clinic.com',
         phone: '(11) 97654-3210',
         status: 'active',
+<<<<<<< HEAD
         avgAppointmentTime: 25,
+=======
+        schedule: [
+          { dayOfWeek: 3, startTime: '09:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 3, startTime: '13:00', endTime: '17:00', isActive: true },
+          { dayOfWeek: 4, startTime: '09:00', endTime: '12:00', isActive: true }
+        ],
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 312,
         rating: 4.9
       },
@@ -129,7 +257,17 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'joao.costa@clinic.com',
         phone: '(11) 96543-2109',
         status: 'inactive',
+<<<<<<< HEAD
         avgAppointmentTime: 40,
+=======
+        schedule: [
+          { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 2, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 3, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 4, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 5, startTime: '08:00', endTime: '12:00', isActive: true }
+        ],
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 187,
         rating: 4.6
       },
@@ -146,7 +284,14 @@ export class ManagerDoctorEditComponent implements OnInit {
         estado: 'SP',
         cep: '14010000',
         cpf: '32165498732165',
+<<<<<<< HEAD
         avgAppointmentTime: 20,
+=======
+        schedule: [
+          { dayOfWeek: 2, startTime: '10:00', endTime: '13:00', isActive: true },
+          { dayOfWeek: 4, startTime: '10:00', endTime: '13:00', isActive: true }
+        ],
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         status: 'active',
         patientsCount: 198,
         rating: 4.7
@@ -165,7 +310,17 @@ export class ManagerDoctorEditComponent implements OnInit {
         estado: 'SP',
         cep: '18010000',
         cpf: '78912345678912',
+<<<<<<< HEAD
         avgAppointmentTime: 35,
+=======
+        schedule: [
+          { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 1, startTime: '14:00', endTime: '18:00', isActive: true },
+          { dayOfWeek: 3, startTime: '08:00', endTime: '12:00', isActive: true },
+          { dayOfWeek: 3, startTime: '14:00', endTime: '18:00', isActive: true },
+          { dayOfWeek: 5, startTime: '08:00', endTime: '12:00', isActive: true }
+        ],
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 156,
         rating: 4.5
       }
@@ -200,7 +355,36 @@ export class ManagerDoctorEditComponent implements OnInit {
 
   editDoctor(doctor: Doctor): void {
     this.selectedDoctor = { ...doctor };
+    this.loadScheduleFromDoctor(doctor);
     this.showEditModal = true;
+  }
+
+  loadScheduleFromDoctor(doctor: Doctor): void {
+    // Reset schedule
+    this.weeklySchedule.forEach(day => {
+      day.enabled = false;
+      day.timeRanges = [];
+    });
+
+    // Load schedule from doctor if available
+    if (doctor.schedule && Array.isArray(doctor.schedule)) {
+      doctor.schedule.forEach((scheduleItem: any) => {
+        const day = this.weeklySchedule.find(d => d.dayOfWeek === scheduleItem.dayOfWeek);
+        if (day) {
+          day.enabled = true;
+          // Check if time range already exists
+          const existingRange = day.timeRanges.find(
+            r => r.startTime === scheduleItem.startTime && r.endTime === scheduleItem.endTime
+          );
+          if (!existingRange) {
+            day.timeRanges.push({
+              startTime: scheduleItem.startTime,
+              endTime: scheduleItem.endTime
+            });
+          }
+        }
+      });
+    }
   }
 
   confirmDelete(doctor: Doctor): void {
@@ -221,6 +405,20 @@ export class ManagerDoctorEditComponent implements OnInit {
 
   saveEdit(): void {
     if (this.selectedDoctor) {
+      // Validate schedule before saving
+      if (!this.isScheduleValid()) {
+        alert('Por favor, corrija os erros nos horários de atendimento antes de salvar.');
+        // Find first invalid day and open it for editing
+        const invalidDay = this.weeklySchedule.find(day => !this.isDayScheduleValid(day));
+        if (invalidDay) {
+          invalidDay.editing = true;
+        }
+        return;
+      }
+
+      // Save schedule to doctor
+      this.selectedDoctor.schedule = this.getScheduleData();
+      
       const index = this.doctors.findIndex(d => d.id === this.selectedDoctor!.id);
       if (index > -1) {
         this.doctors[index] = { ...this.selectedDoctor };
@@ -257,6 +455,170 @@ export class ManagerDoctorEditComponent implements OnInit {
     return Array(Math.floor(rating)).fill(0);
   }
 
+  /* ============================================================================
+     SCHEDULE MANAGEMENT
+     ========================================================================== */
+
+  toggleDayEnabled(day: DaySchedule): void {
+    day.enabled = !day.enabled;
+    if (!day.enabled) {
+      day.timeRanges = [];
+      day.editing = false;
+    } else if (day.timeRanges.length === 0) {
+      // Add default time range when enabling
+      this.addTimeRange(day);
+      day.editing = true; // Start in edit mode when first enabled
+    }
+  }
+
+  toggleDayEdit(day: DaySchedule): void {
+    if (day.editing) {
+      // When closing edit mode, validate and sort
+      if (this.isDayScheduleValid(day)) {
+        this.sortDayTimeRanges(day);
+        day.editing = false;
+      } else {
+        // Keep in edit mode if there are errors
+        alert('Por favor, corrija os erros nos horários antes de salvar.');
+      }
+    } else {
+      day.editing = true;
+    }
+  }
+
+  getDayShortName(dayOfWeek: number): string {
+    const dayNames: { [key: number]: string } = {
+      1: 'Seg',
+      2: 'Ter',
+      3: 'Qua',
+      4: 'Qui',
+      5: 'Sex',
+      6: 'Sáb',
+      7: 'Dom'
+    };
+    return dayNames[dayOfWeek] || '';
+  }
+
+  addTimeRange(day: DaySchedule): void {
+    day.timeRanges.push({
+      startTime: '08:00',
+      endTime: '12:00'
+    });
+  }
+
+  removeTimeRange(day: DaySchedule, index: number): void {
+    day.timeRanges.splice(index, 1);
+  }
+
+  getScheduleData(): any[] {
+    const scheduleData: any[] = [];
+    this.weeklySchedule.forEach(day => {
+      if (day.enabled && day.timeRanges.length > 0) {
+        day.timeRanges.forEach(range => {
+          scheduleData.push({
+            dayOfWeek: day.dayOfWeek,
+            startTime: range.startTime,
+            endTime: range.endTime,
+            isActive: true
+          });
+        });
+      }
+    });
+    return scheduleData;
+  }
+
+  isTimeRangeValid(range: TimeRange): boolean {
+    if (!range.startTime || !range.endTime) return false;
+    return range.startTime < range.endTime;
+  }
+
+  // Convert time string (HH:MM) to minutes for comparison
+  private timeToMinutes(time: string): number {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  // Check if two time ranges overlap
+  private rangesOverlap(range1: TimeRange, range2: TimeRange): boolean {
+    const start1 = this.timeToMinutes(range1.startTime);
+    const end1 = this.timeToMinutes(range1.endTime);
+    const start2 = this.timeToMinutes(range2.startTime);
+    const end2 = this.timeToMinutes(range2.endTime);
+    
+    // Ranges overlap if one starts before the other ends
+    return (start1 < end2 && start2 < end1);
+  }
+
+  // Get validation errors for a specific time range in a day
+  getTimeRangeErrors(day: DaySchedule, rangeIndex: number): string[] {
+    const errors: string[] = [];
+    const range = day.timeRanges[rangeIndex];
+    
+    if (!range) return errors;
+
+    // Check if start < end
+    if (!this.isTimeRangeValid(range)) {
+      errors.push('Horário de início deve ser anterior ao horário de término');
+      return errors; // Return early if basic validation fails
+    }
+
+    // Check for overlaps with other ranges in the same day
+    for (let i = 0; i < day.timeRanges.length; i++) {
+      if (i !== rangeIndex) {
+        const otherRange = day.timeRanges[i];
+        if (this.rangesOverlap(range, otherRange)) {
+          errors.push(`Sobreposição com ${otherRange.startTime} - ${otherRange.endTime}`);
+          break; // Only show one overlap error at a time
+        }
+      }
+    }
+
+    return errors;
+  }
+
+  // Check if a day has any validation errors
+  isDayScheduleValid(day: DaySchedule): boolean {
+    if (!day.enabled || day.timeRanges.length === 0) {
+      return true; // Empty days are valid
+    }
+
+    // Check each range
+    for (let i = 0; i < day.timeRanges.length; i++) {
+      const errors = this.getTimeRangeErrors(day, i);
+      if (errors.length > 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Check if entire schedule is valid
+  isScheduleValid(): boolean {
+    return this.weeklySchedule.every(day => this.isDayScheduleValid(day));
+  }
+
+  // Auto-sort time ranges by start time
+  sortDayTimeRanges(day: DaySchedule): void {
+    day.timeRanges.sort((a, b) => {
+      return this.timeToMinutes(a.startTime) - this.timeToMinutes(b.startTime);
+    });
+  }
+
+  getDayName(dayOfWeek: number): string {
+    // Backend enum: Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6, Sunday=7
+    const dayNames: { [key: number]: string } = {
+      1: 'Segunda-feira',
+      2: 'Terça-feira',
+      3: 'Quarta-feira',
+      4: 'Quinta-feira',
+      5: 'Sexta-feira',
+      6: 'Sábado',
+      7: 'Domingo'
+    };
+    return dayNames[dayOfWeek] || '';
+  }
+
   getEmptyStarArray(rating: number): number[] {
     return Array(5 - Math.floor(rating)).fill(0);
   }
@@ -270,20 +632,49 @@ export class ManagerDoctorEditComponent implements OnInit {
     setTimeout(() => this[field] = false, 50);
   }
 
+<<<<<<< HEAD
   toggleSelection(item: string, field: 'plans' | 'specialtys', event: Event) {
+=======
+  toggleSelection(item: string | { value: Speciality; label: string }, field: 'plans' | 'specialtys', event: Event) {
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
     event.stopPropagation();
 
     const list = this.selectedDoctor ? this.selectedDoctor[field] : [];
 
+<<<<<<< HEAD
     const index = list.indexOf(item);
+=======
+    let valueToAdd: string;
+    if (typeof item === 'string') {
+      valueToAdd = item;
+    } else {
+      // For specialties, store the enum value as string
+      valueToAdd = SPECIALITY_NAMES[item.value];
+    }
+
+    const index = list.indexOf(valueToAdd);
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
 
     if (index >= 0) {
       list.splice(index, 1); // remove
     } else {
+<<<<<<< HEAD
       list.push(item); // adiciona
     }
   }
 
+=======
+      list.push(valueToAdd); // adiciona
+    }
+  }
+
+  getSpecialityLabel(value: string): string {
+    // Find the enum value that matches this label
+    const entry = Object.entries(SPECIALITY_NAMES).find(([_, label]) => label === value);
+    return entry ? entry[1] : value;
+  }
+
+>>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
   selectStatus(st: string, event: MouseEvent) {
     event.stopPropagation();
     if (this.selectedDoctor) {

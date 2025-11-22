@@ -5,7 +5,7 @@ export enum Roles {
 }
 
 export interface Users {
-  // id: number;
+  id?: number;
   name: string;
   email: string;
   passwordHash: string;
@@ -22,8 +22,8 @@ export interface Users {
 }
 
 export interface Clients {
-  // id: number;
-  // userId: number;
+  id?: number;
+  userId: number | undefined;
   rg: string;
   cpf: string;
   phone?: string;
@@ -31,14 +31,14 @@ export interface Clients {
 }
 
 export interface Doctors {
-  // id: number;
-  // userId: number;
+  id?: number;
+  userId: number;
   crm: string;
   specialty: string;
 }
 
 export interface ClinicUsers {
-  // id: number;
+  id?: number;
   clinicId: number;
   userId: number;
   role: string;
@@ -51,7 +51,7 @@ export interface AuthState {
 }
 
 export interface Clinics {
-  // id: number;
+  id?: number;
   name: string;
   address: string;
   cnpj: string;

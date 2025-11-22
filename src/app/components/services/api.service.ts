@@ -2,6 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment';
+import {
+  HealthPlan,
+  Clinic,
+  CreateUserRequest,
+  CreateDoctorRequest,
+  CreateScheduleRequest,
+  CreateClinicUserRequest,
+  CreateDoctorHealthPlanRequest
+} from '../models/api-models';
+import { ClinicUsers } from '../models/user.model';
+import { API_ENDPOINTS } from '../models/api-endpoints';
 
 @Injectable({
   providedIn: 'root',
@@ -19,52 +30,84 @@ export class ApiService {
     });
   }
 
-  // Auth endpoints
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Auth/DirectLogin`, credentials);
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.AUTH.DIRECT_LOGIN}`, credentials);
   }
 
-  signup(credentials: { email: string; password: string }):  Observable<any> {
-    return this.http.post(`${this.baseUrl}/Auth/Register`, credentials, { headers: this.getHeaders() });
+  signup(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.AUTH.REGISTER}`, credentials, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 
-  // Doctor endpoints
   getDoctors(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Doctors`, { headers: this.getHeaders() });
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.DOCTORS.BASE}`, { headers: this.getHeaders() });
   }
 
   getDoctorById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Doctors/GetById/${id}`, { headers: this.getHeaders() });
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.DOCTORS.GET_BY_ID(id)}`, { headers: this.getHeaders() });
   }
 
   getDoctorsByFilter(filter: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Doctors/GetDoctorsByFilter`, filter, { headers: this.getHeaders() });
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.DOCTORS.GET_BY_FILTER}`, filter, { headers: this.getHeaders() });
   }
 
-  createDoctor(doctor: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Doctors/Create`, doctor, { headers: this.getHeaders() });
-  }
-
-  updateDoctor(id: number, doctor: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/Doctors/Update/${id}`, doctor, { headers: this.getHeaders() });
-  }
-
-  deleteDoctor(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/Doctors/Delete/${id}`, { headers: this.getHeaders() });
-  }
-
-  // User endpoints
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/Auth/CurrentUser`, { headers: this.getHeaders() });
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.AUTH.CURRENT_USER}`, { headers: this.getHeaders() });
   }
 
-  // Appointment endpoints
   createAppointment(appointment: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Appointments/Create`, appointment, { headers: this.getHeaders() });
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.APPOINTMENTS.SCHEDULE}`, appointment, { headers: this.getHeaders() });
   }
 
-  // Waitlist endpoints
   addToWaitlist(waitlistEntry: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Waitlist/Create`, waitlistEntry, { headers: this.getHeaders() });
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.WAITLIST.CREATE}`, waitlistEntry, { headers: this.getHeaders() });
   }
+
+  joinWaitlist(waitlistEntry: any): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}${API_ENDPOINTS.WAITLIST.JOIN}`, waitlistEntry, { headers: this.getHeaders() });
+  }
+
+  getHealthPlans(): Observable<HealthPlan[]> {
+    return this.http.get<HealthPlan[]>(`${this.baseUrl}${API_ENDPOINTS.HEALTH_PLANS.BASE}`, { headers: this.getHeaders() });
+  }
+
+  registerUser(userData: CreateUserRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.USERS.REGISTER}`, userData, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
+  createDoctor(doctorData: CreateDoctorRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.DOCTORS.CREATE}`, doctorData, { headers: this.getHeaders() });
+  }
+
+  getDoctorByUserId(userId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.DOCTORS.GET_BY_USER_ID(userId)}`, { headers: this.getHeaders() });
+  }
+
+  getClinics(): Observable<Clinic[]> {
+    return this.http.get<Clinic[]>(`${this.baseUrl}${API_ENDPOINTS.CLINICS.BASE}`, { headers: this.getHeaders() });
+  }
+
+  getClinicUsersByUserId(userId: number): Observable<ClinicUsers[]> {
+    return this.http.get<ClinicUsers[]>(`${this.baseUrl}${API_ENDPOINTS.CLINIC_USERS.GET_BY_USER_ID(userId)}`, { headers: this.getHeaders() });
+  }
+
+  createClinicUser(data: CreateClinicUserRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.CLINIC_USERS.CREATE}`, data, { headers: this.getHeaders() });
+  }
+
+  createDoctorHealthPlan(data: CreateDoctorHealthPlanRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.DOCTOR_HEALTH_PLANS.CREATE}`, data, { headers: this.getHeaders() });
+  }
+
+  createSchedule(scheduleData: CreateScheduleRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.SCHEDULES.CREATE}`, scheduleData, { headers: this.getHeaders() });
+  }
+
+  clientGetById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.CLIENTS.GET_BY_ID}${id}`, { headers: this.getHeaders() });
+  }
+
 }

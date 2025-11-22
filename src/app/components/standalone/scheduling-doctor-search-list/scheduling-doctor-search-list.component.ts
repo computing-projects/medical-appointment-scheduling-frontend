@@ -35,7 +35,6 @@ export class SchedulingDoctorSearchListComponent {
 
   // Advanced filters
   selectedHealthPlan = '';
-  minRating = '';
   allowPresencial = true;
   allowOnline = true;
 
@@ -84,13 +83,10 @@ export class SchedulingDoctorSearchListComponent {
       const matchesHealthPlan = !this.selectedHealthPlan || 
         d.acceptedPlans.some(plan => plan.toLowerCase().includes(this.selectedHealthPlan.toLowerCase()));
       
-      // Rating filter
-      const matchesRating = !this.minRating || d.review >= parseFloat(this.minRating);
-      
       // Appointment type filter (for now just check if at least one type is allowed)
       const matchesAppointmentType = this.allowPresencial || this.allowOnline;
       
-      return matchesSearch && matchesSpec && matchesHealthPlan && matchesRating && matchesAppointmentType;
+      return matchesSearch && matchesSpec && matchesHealthPlan && matchesAppointmentType;
     });
   }
 
@@ -102,7 +98,6 @@ export class SchedulingDoctorSearchListComponent {
     this.search = '';
     this.specialty = '';
     this.selectedHealthPlan = '';
-    this.minRating = '';
     this.allowPresencial = true;
     this.allowOnline = true;
     this.moreFiltersOpen = false;

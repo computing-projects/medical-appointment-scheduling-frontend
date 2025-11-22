@@ -1,18 +1,17 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PerfilAppointmentComponent } from '../perfil-appointment/perfil-appointment.component';
-import { PerfilAnamneseComponent } from '../perfil-anamnese/perfil-anamnese.component';
 
 @Component({
   selector: 'med-perfil',
   standalone: true,
-  imports: [CommonModule, PerfilAppointmentComponent, PerfilAnamneseComponent],
+  imports: [CommonModule, PerfilAppointmentComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class PerfilComponent implements OnInit {
-  selectedPerfilTab: 'informacoes' | 'consultas' | 'fichaMedica' = 'informacoes';
+  selectedPerfilTab: 'informacoes' | 'consultas' = 'informacoes';
 
   // Placeholder for profile data
   userProfile = {
@@ -38,7 +37,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showPerfilTab(tab: 'informacoes' | 'consultas' | 'fichaMedica') {
+  showPerfilTab(tab: 'informacoes' | 'consultas') {
     this.selectedPerfilTab = tab;
   }
 }

@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { Clients, Users } from '../../models/user.model';
 import { take } from 'rxjs';
 import { ApiService } from '../../services/api.service';
+import { EmailSentModalComponent } from "../email-sent-modal/email-sent-modal.component";
 
 interface HealthPlan {
   id: number | string;
@@ -27,13 +28,13 @@ interface HealthPlan {
 @Component({
   selector: 'med-signup-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIcon, MatTooltipModule],
+  imports: [CommonModule, FormsModule, MatIcon, MatTooltipModule, EmailSentModalComponent],
   templateUrl: './signup-modal.component.html',
   styleUrls: ['./signup-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class SignupModalComponent implements AfterViewInit {
-  @HostBinding('class.med-modal') isActive = true;
+  @HostBinding('class.med-signup-modal') isActive = true;
 
   @Input() modalOpen = false;
   @Output() close = new EventEmitter<void>();
@@ -61,6 +62,7 @@ export class SignupModalComponent implements AfterViewInit {
   showPasswordInfo = false;
   isSubmitting = false;
   errorMessage = '';
+  emailSent = false;
 
   healthPlans: HealthPlan[] = [];
 
@@ -118,7 +120,6 @@ export class SignupModalComponent implements AfterViewInit {
 
   submit(form: NgForm) {
     this.errorMessage = '';
-    console.log(form);
 
     if (form.invalid) {
       this.errorMessage = 'Verifique os campos preenchidos e tente novamente.';
@@ -129,7 +130,6 @@ export class SignupModalComponent implements AfterViewInit {
     const currentDate = new Date().toISOString();
 
     const user: Users = {
-      // id: 9,
       name: this.name,
       email: this.email,
       passwordHash: this.password,
@@ -145,13 +145,12 @@ export class SignupModalComponent implements AfterViewInit {
       deletedAt: currentDate,
     };
 
-    const client: Clients = {
-      // id: 1,
-      // userId: user.id,
+    let client: Clients = {
       rg: this.rg,
       cpf: this.cpf,
       phone: this.phone,
-      birthDate: this.toUtcDateTimeString(this.birthDate)
+      birthDate: this.toUtcDateTimeString(this.birthDate),
+      userId: 0
     }
 
     const credentialsUser = {
@@ -165,12 +164,17 @@ export class SignupModalComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe({
         next: response => {
+          console.log(response);
           this.isSubmitting = false;
+          client = {
+            ...client, userId: response.user.id
+          }
           this.authService.clientRegister(client)
           .pipe(take(1))
           .subscribe({
-            next: response => {
+            next: res => {
               this.isSubmitting = false;
+              
               this.apiService.signup(credentialsUser).subscribe({
                 next: (response) => {
                   localStorage.setItem('token', response.token);
@@ -181,15 +185,13 @@ export class SignupModalComponent implements AfterViewInit {
                     },
                     error: err => {
                       this.isSubmitting = false;
-                      this.errorMessage = err.error?.message || 'Erro ao cadastrar. Tente novamente mais tarde.';
-                      console.error('Erro:', err);
                     },
                   });
                 },
                 error: err => {
                   this.isSubmitting = false;
-                  this.errorMessage = err.error?.message || 'Erro ao cadastrar. Tente novamente mais tarde.';
-                  console.error('Erro:', err);
+                  this.modalOpen = false;
+                  this.emailSent = true;
                 },
               });
             },
