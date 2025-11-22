@@ -340,7 +340,7 @@ export class ManagerDoctorRegisterComponent implements OnInit {
             return;
           }
 
-          this.continueWithAuthRegister(userId, credentialsUser, formValue, specialtyEnumValue, scheduleData);
+          this.continueWithAuthRegister(userId, formValue, specialtyEnumValue, scheduleData);
         },
         error: (error) => {
           this.isSubmitting = false;
@@ -351,168 +351,109 @@ export class ManagerDoctorRegisterComponent implements OnInit {
   }
 
   private continueWithAuthRegister(
-    userId: number,
-    credentialsUser: { email: string; password: string },
-    formValue: any,
-    specialtyEnumValue: Speciality,
-    scheduleData: any[]
-  ): void {
-          // Step 2: Register in Supabase Auth to get token (Auth/Register)
-          // This sends an email to the doctor, so we continue even if it fails
-          this.apiService.signup(credentialsUser)
-            .pipe(
-              take(1),
-              catchError((error) => {
-                // Log the error but continue with registration
-                // Return a mock response so the flow continues
-                return of({ token: null });
-              })
-            )
-            .subscribe({
-              next: (authResponse) => {
-                // If we got a token, store it. If not, continue anyway (email sending failed)
-                if (authResponse && authResponse.token) {
-                  localStorage.setItem('token', authResponse.token);
-                } else {
-                }
+  userId: number,
+  formValue: any,
+  specialtyEnumValue: Speciality,
+  scheduleData: any[]
+): void {
 
-                // Step 1.5: Create ClinicUser association (ClinicUsers/Create)
-                // This links the user to the clinic with role 1 (doctor)
-                // Note: This requires authentication, so we call it after getting token
-                if (this.selectedDoctor.clinicId) {
-                  this.apiService.createClinicUser({
-                    clinicId: this.selectedDoctor.clinicId,
-                    userId: userId,
-                    role: 1 // Always 1 for doctor
-                  })
-                    .pipe(
-                      take(1),
-                      catchError((error) => {
-                        // Log error but continue - clinic association is important but not critical
-                        return of(null);
-                      })
-                    )
-                    .subscribe({
-                      next: () => {
-                      },
-                      error: (error) => {
-                      }
-                    });
-                } else {
-                }
-
-                this.apiService.createDoctor({
-                  userId: userId,
-                  crm: formValue.crm,
-                  specialty: specialtyEnumValue
-                })
-                  .pipe(
-                    take(1),
-                    catchError((error) => {
-                      return of(null);
-                    })
-                  )
-                  .subscribe({
-                    next: (createDoctorResult) => {
-                      this.apiService.getDoctorByUserId(userId)
-                        .pipe(
-                          take(1),
-                          catchError((error) => {
-                            return of(null);
-                          })
-                        )
-                        .subscribe({
-                          next: (doctor) => {
-                            if (!doctor || !doctor.id) {
-                              this.isSubmitting = false;
-                              this.showSuccess = true;
-                              setTimeout(() => {
-                                this.showSuccess = false;
-                                this.resetForm();
-                              }, 3000);
-                              return;
-                            }
-
-                            const doctorId = doctor.id;
-
-                            const healthPlanObservables = this.selectedPlanIds.length > 0
-                              ? this.selectedPlanIds.map(healthPlanId => {
-                                  return this.apiService.createDoctorHealthPlan({
-                                    doctorId: doctorId,
-                                    healthPlanId: healthPlanId
-                                  }).pipe(
-                                    catchError(error => {
-                                      return of(null);
-                                    })
-                                  );
-                                })
-                              : [];
-
-                            const scheduleObservables = scheduleData.length > 0 && this.selectedDoctor.clinicId
-                              ? scheduleData.map(schedule => {
-                                  return this.apiService.createSchedule({
-                                    doctorId: doctorId,
-                                    clinicId: this.selectedDoctor.clinicId!,
-                                    weekday: schedule.dayOfWeek,
-                                    startTime: `${schedule.startTime}:00`,
-                                    endTime: `${schedule.endTime}:00`,
-                                    available: schedule.isActive ?? true
-                                  }).pipe(
-                                    catchError(error => {
-                                      return of(null);
-                                    })
-                                  );
-                                })
-                              : [];
-
-                            // Wait for all optional operations to complete
-                            const allObservables = [...healthPlanObservables, ...scheduleObservables];
-
-                            if (allObservables.length > 0) {
-                              forkJoin(allObservables).subscribe({
-                                next: () => {
-                                  this.isSubmitting = false;
-                                  this.showSuccess = true;
-                                  setTimeout(() => {
-                                    this.showSuccess = false;
-                                    this.resetForm();
-                                  }, 3000);
-                                },
-                                error: () => {
-                                  this.isSubmitting = false;
-                                  this.showSuccess = true;
-                                  setTimeout(() => {
-                                    this.showSuccess = false;
-                                    this.resetForm();
-                                  }, 3000);
-                                }
-                              });
-                            } else {
-                              // No optional operations, just show success
-                              this.isSubmitting = false;
-                              this.showSuccess = true;
-                              setTimeout(() => {
-                                this.showSuccess = false;
-                                this.resetForm();
-                              }, 3000);
-                            }
-                          },
-                          error: (error) => {
-                            this.isSubmitting = false;
-                            const errorMessage = error.error?.error || 'Erro ao obter ID do médico';
-                            alert(`Erro: ${errorMessage}`);
-                          }
-                        });
-                    },
-                    error: (error) => {
-                      this.isSubmitting = false;
-                      const errorMessage = error.error?.error || 'Erro ao criar perfil do médico';
-                      alert(`Erro: ${errorMessage}`);
-                    }
-                  });
-              }
-            });
+  // STEP 1: Criar vínculo ClinicUser (role = 1 = médico)
+  if (this.selectedDoctor.clinicId) {
+    this.apiService.createClinicUser({
+      clinicId: this.selectedDoctor.clinicId,
+      userId: userId,
+      role: 1
+    })
+    .pipe(
+      take(1),
+      catchError(() => of(null)) // Continua mesmo com erro
+    )
+    .subscribe();
   }
+
+  // STEP 2: Criar Doctor
+  this.apiService.createDoctor({
+    userId: userId,
+    crm: formValue.crm,
+    specialty: specialtyEnumValue
+  })
+  .pipe(
+    take(1),
+    catchError(() => of(null))
+  )
+  .subscribe({
+    next: () => {
+      this.apiService.getDoctorByUserId(userId)
+        .pipe(
+          take(1),
+          catchError(() => of(null))
+        )
+        .subscribe({
+          next: (doctor) => {
+            if (!doctor || !doctor.id) {
+              this.finishSuccess();
+              return;
+            }
+
+            const doctorId = doctor.id;
+
+            // STEP 3: Criar vínculos com convênios
+            const healthPlanObservables =
+              this.selectedPlanIds.length > 0
+                ? this.selectedPlanIds.map(healthPlanId =>
+                    this.apiService.createDoctorHealthPlan({
+                      doctorId,
+                      healthPlanId
+                    }).pipe(catchError(() => of(null)))
+                  )
+                : [];
+
+            // STEP 4: Criar agenda
+            const scheduleObservables =
+              scheduleData.length > 0 && this.selectedDoctor.clinicId
+                ? scheduleData.map(schedule =>
+                    this.apiService.createSchedule({
+                      doctorId,
+                      clinicId: this.selectedDoctor.clinicId!,
+                      weekday: schedule.dayOfWeek,
+                      startTime: `${schedule.startTime}:00`,
+                      endTime: `${schedule.endTime}:00`,
+                      available: schedule.isActive ?? true
+                    }).pipe(catchError(() => of(null)))
+                  )
+                : [];
+
+            const all = [...healthPlanObservables, ...scheduleObservables];
+
+            if (all.length > 0) {
+              forkJoin(all).subscribe(() => this.finishSuccess());
+            } else {
+              this.finishSuccess();
+            }
+          },
+          error: (error) => {
+            this.isSubmitting = false;
+            const msg = error.error?.error || 'Erro ao obter ID do médico';
+            alert(`Erro: ${msg}`);
+          }
+        });
+    },
+    error: (error) => {
+      this.isSubmitting = false;
+      const msg = error.error?.error || 'Erro ao criar perfil do médico';
+      alert(`Erro: ${msg}`);
+    }
+  });
+}
+
+private finishSuccess(): void {
+  this.isSubmitting = false;
+  this.showSuccess = true;
+  setTimeout(() => {
+    this.showSuccess = false;
+    this.resetForm();
+  }, 3000);
+}
 
   /* ============================================================================
      DROPDOWNS CUSTOMIZADOS

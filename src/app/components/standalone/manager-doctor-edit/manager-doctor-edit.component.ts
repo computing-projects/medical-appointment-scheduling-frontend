@@ -45,11 +45,7 @@ interface Doctor {
   specialtys: string[];
   email: string;
   phone: string;
-<<<<<<< HEAD
-  avgAppointmentTime: number;
-=======
   schedule?: any[];
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
   status: 'active' | 'inactive';
   patientsCount: number;
   rating: number;
@@ -74,8 +70,6 @@ export class ManagerDoctorEditComponent implements OnInit {
   plansOpen = false;
   specialtiesOpen = false;
   statusOpen = false;
-<<<<<<< HEAD
-=======
 
   plans: string[] = [];
   specialties: { value: Speciality; label: string }[] = [];
@@ -109,11 +103,7 @@ export class ManagerDoctorEditComponent implements OnInit {
       }
     }
   }
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
 
-  plans: string[] = [];
-  specialties: string[] = [];
-  statusList: { label: string; value: string }[] = [];
   ngOnInit(): void {
     this.loadHealthPlans();
     this.loadMockDoctors();
@@ -147,31 +137,6 @@ export class ManagerDoctorEditComponent implements OnInit {
   }
 
   loadMockDoctors(): void {
-<<<<<<< HEAD
-    this.plans = [
-      "Unimed",
-      "Bradesco Saúde",
-      "Amil",
-      "SulAmérica",
-      "NotreDame Intermédica",
-      "Hapvida",
-      "Porto Seguro Saúde",
-      "Particular"
-    ];
-
-    this.specialties = [
-      "Cardiologia",
-      "Dermatologia",
-      "Pediatria",
-      "Ortopedia",
-      "Ginecologia",
-      "Neurologia",
-      "Psiquiatria",
-      "Oftalmologia",
-      "Endocrinologia",
-      "Urologia"
-    ];
-=======
     // Plans are loaded from API in loadHealthPlans() - no mock fallback
 
     // Initialize specialties from enum
@@ -184,7 +149,6 @@ export class ManagerDoctorEditComponent implements OnInit {
           label: SPECIALITY_NAMES[enumValue]
         };
       });
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
     this.statusList = [
       { label: 'Ativo', value: 'active' },
       { label: 'Inativo', value: 'inactive' }
@@ -204,16 +168,12 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'carlos.silva@clinic.com',
         phone: '(11) 98765-4321',
         status: 'active',
-<<<<<<< HEAD
-        avgAppointmentTime: 30,
-=======
         schedule: [
           { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 1, startTime: '14:00', endTime: '18:00', isActive: true },
           { dayOfWeek: 2, startTime: '08:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 2, startTime: '14:00', endTime: '18:00', isActive: true }
         ],
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 245,
         rating: 4.8
       },
@@ -231,15 +191,11 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'maria.santos@clinic.com',
         phone: '(11) 97654-3210',
         status: 'active',
-<<<<<<< HEAD
-        avgAppointmentTime: 25,
-=======
         schedule: [
           { dayOfWeek: 3, startTime: '09:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 3, startTime: '13:00', endTime: '17:00', isActive: true },
           { dayOfWeek: 4, startTime: '09:00', endTime: '12:00', isActive: true }
         ],
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 312,
         rating: 4.9
       },
@@ -257,9 +213,6 @@ export class ManagerDoctorEditComponent implements OnInit {
         email: 'joao.costa@clinic.com',
         phone: '(11) 96543-2109',
         status: 'inactive',
-<<<<<<< HEAD
-        avgAppointmentTime: 40,
-=======
         schedule: [
           { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 2, startTime: '08:00', endTime: '12:00', isActive: true },
@@ -267,7 +220,6 @@ export class ManagerDoctorEditComponent implements OnInit {
           { dayOfWeek: 4, startTime: '08:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 5, startTime: '08:00', endTime: '12:00', isActive: true }
         ],
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 187,
         rating: 4.6
       },
@@ -284,14 +236,10 @@ export class ManagerDoctorEditComponent implements OnInit {
         estado: 'SP',
         cep: '14010000',
         cpf: '32165498732165',
-<<<<<<< HEAD
-        avgAppointmentTime: 20,
-=======
         schedule: [
           { dayOfWeek: 2, startTime: '10:00', endTime: '13:00', isActive: true },
           { dayOfWeek: 4, startTime: '10:00', endTime: '13:00', isActive: true }
         ],
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         status: 'active',
         patientsCount: 198,
         rating: 4.7
@@ -310,9 +258,6 @@ export class ManagerDoctorEditComponent implements OnInit {
         estado: 'SP',
         cep: '18010000',
         cpf: '78912345678912',
-<<<<<<< HEAD
-        avgAppointmentTime: 35,
-=======
         schedule: [
           { dayOfWeek: 1, startTime: '08:00', endTime: '12:00', isActive: true },
           { dayOfWeek: 1, startTime: '14:00', endTime: '18:00', isActive: true },
@@ -320,7 +265,6 @@ export class ManagerDoctorEditComponent implements OnInit {
           { dayOfWeek: 3, startTime: '14:00', endTime: '18:00', isActive: true },
           { dayOfWeek: 5, startTime: '08:00', endTime: '12:00', isActive: true }
         ],
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
         patientsCount: 156,
         rating: 4.5
       }
@@ -418,7 +362,7 @@ export class ManagerDoctorEditComponent implements OnInit {
 
       // Save schedule to doctor
       this.selectedDoctor.schedule = this.getScheduleData();
-      
+
       const index = this.doctors.findIndex(d => d.id === this.selectedDoctor!.id);
       if (index > -1) {
         this.doctors[index] = { ...this.selectedDoctor };
@@ -544,7 +488,7 @@ export class ManagerDoctorEditComponent implements OnInit {
     const end1 = this.timeToMinutes(range1.endTime);
     const start2 = this.timeToMinutes(range2.startTime);
     const end2 = this.timeToMinutes(range2.endTime);
-    
+
     // Ranges overlap if one starts before the other ends
     return (start1 < end2 && start2 < end1);
   }
@@ -553,7 +497,7 @@ export class ManagerDoctorEditComponent implements OnInit {
   getTimeRangeErrors(day: DaySchedule, rangeIndex: number): string[] {
     const errors: string[] = [];
     const range = day.timeRanges[rangeIndex];
-    
+
     if (!range) return errors;
 
     // Check if start < end
@@ -632,18 +576,11 @@ export class ManagerDoctorEditComponent implements OnInit {
     setTimeout(() => this[field] = false, 50);
   }
 
-<<<<<<< HEAD
-  toggleSelection(item: string, field: 'plans' | 'specialtys', event: Event) {
-=======
   toggleSelection(item: string | { value: Speciality; label: string }, field: 'plans' | 'specialtys', event: Event) {
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
     event.stopPropagation();
 
     const list = this.selectedDoctor ? this.selectedDoctor[field] : [];
 
-<<<<<<< HEAD
-    const index = list.indexOf(item);
-=======
     let valueToAdd: string;
     if (typeof item === 'string') {
       valueToAdd = item;
@@ -653,17 +590,10 @@ export class ManagerDoctorEditComponent implements OnInit {
     }
 
     const index = list.indexOf(valueToAdd);
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
 
     if (index >= 0) {
       list.splice(index, 1); // remove
     } else {
-<<<<<<< HEAD
-      list.push(item); // adiciona
-    }
-  }
-
-=======
       list.push(valueToAdd); // adiciona
     }
   }
@@ -674,7 +604,6 @@ export class ManagerDoctorEditComponent implements OnInit {
     return entry ? entry[1] : value;
   }
 
->>>>>>> c1eb2563ec913eaae365df38c05510c37c365523
   selectStatus(st: string, event: MouseEvent) {
     event.stopPropagation();
     if (this.selectedDoctor) {
