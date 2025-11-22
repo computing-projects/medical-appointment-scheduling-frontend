@@ -31,37 +31,22 @@
 
 // Header Section with Banner
 .info-header {
-  position: relative;
-  margin: -20px -20px 0 -20px;
   
-  .header-banner {
-    height: 120px;
+  & > .header-banner {
     background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem, $paua-blue);
-    position: relative;
     overflow: hidden;
     
-    .banner-gradient {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, 
-        rgba($cosmic-cobalt, 0.8) 0%, 
-        rgba($blue-gem, 0.6) 50%, 
-        rgba($paua-blue, 0.8) 100%);
-      opacity: 0.9;
+    & > .banner-gradient {
+      background-color: $cosmic-cobalt;
+      & > .doctor-profile {
+        display: flex;
+        align-items: flex-end;
+        gap: 20px;
+        padding: 24px;
+        color: $ghost-white;
+      }
     }
   }
-}
-
-.doctor-profile {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-  padding: 0 24px 20px 24px;
-  margin-top: -60px;
-  position: relative;
 }
 
 .profile-photo-container {
@@ -77,26 +62,6 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
   
-  .verified-badge {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #4caf50, #66bb6a);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid $white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    
-    span {
-      color: $white;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-  }
 }
 
 .profile-info {
@@ -107,7 +72,6 @@
     margin: 0 0 4px 0;
     font-size: 1.8rem;
     font-weight: 700;
-    color: $paua-blue;
     line-height: 1.2;
   }
   
@@ -115,7 +79,6 @@
     margin: 0 0 12px 0;
     font-size: 1.1rem;
     font-weight: 600;
-    color: $cosmic-cobalt;
   }
 }
 
@@ -142,13 +105,11 @@
   .rating-value {
     font-size: 1rem;
     font-weight: 700;
-    color: $paua-blue;
     margin-left: 4px;
   }
   
   .rating-count {
     font-size: 0.85rem;
-    color: #666;
   }
 }
 

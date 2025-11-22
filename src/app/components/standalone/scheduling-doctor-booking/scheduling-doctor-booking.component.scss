@@ -1,5 +1,9 @@
 @import '../../../../assets/style/color-palette.scss';
 
+.med-scheduling-doctor-booking {
+  overflow-y: auto;
+}
+
 .booking-container {
   display: flex;
   flex-direction: column;

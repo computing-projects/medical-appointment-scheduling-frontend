@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnInit, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
 import { SchedulingDoctorAppointmentModalComponent } from '../scheduling-doctor-appointment-modal/scheduling-doctor-appointment-modal.component';
@@ -32,6 +32,8 @@ const MONTHS = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', '
 })
 
 export class SchedulingDoctorBookingComponent implements OnInit {
+  @HostBinding('class.med-scheduling-doctor-booking') readonly hostClass = true;
+  
   @Input() doctor!: DoctorSummary;
 
   appointmentType: 'local' | 'remote' = 'local';

@@ -22,7 +22,7 @@ export const API_ENDPOINTS = {
 
   // Appointment endpoints
   APPOINTMENTS: {
-    CREATE: '/Appointments/Create'
+    SCHEDULE: '/Appointments/Schedule'
   },
 
   // Waitlist endpoints
@@ -55,6 +55,11 @@ export const API_ENDPOINTS = {
   // Schedule endpoints
   SCHEDULES: {
     CREATE: '/Schedules/Create'
+  },
+
+  CLIENTS: {
+    GET_BY_ID: '/Clients/GetByUserId/'
   }
+
 } as const;
 

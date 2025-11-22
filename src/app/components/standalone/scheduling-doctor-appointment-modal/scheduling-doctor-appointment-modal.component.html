@@ -54,10 +54,10 @@
                 <span class="patient-label">Email:</span>
                 <span class="patient-value">{{ userData.email }}</span>
               </div>
-              <div class="patient-row">
+              <!-- <div class="patient-row">
                 <span class="patient-label">Plano:</span>
                 <span class="patient-value">{{ userData.healthPlan }}</span>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -138,6 +138,11 @@
       </div>
 
     </div>
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
 
     <!-- Modal Footer -->
     <div class="modal-footer">
@@ -150,13 +155,8 @@
       <button 
         class="btn-submit" 
         (click)="confirmAppointment()"
-        [disabled]="!isFormValid || isSubmitting"
-        [class.loading]="isSubmitting">
-        <span *ngIf="!isSubmitting">✓ Confirmar Agendamento</span>
-        <span *ngIf="isSubmitting" class="loading-text">
-          <span class="spinner"></span>
-          Confirmando...
-        </span>
+        [disabled]="!isFormValid || isSubmitting">
+        {{ isSubmitting ? 'Confirmando...' : 'Confirmar consulta' }}
       </button>
     </div>
 

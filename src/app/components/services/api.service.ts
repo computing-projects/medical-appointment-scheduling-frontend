@@ -57,7 +57,7 @@ export class ApiService {
   }
 
   createAppointment(appointment: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.APPOINTMENTS.CREATE}`, appointment, { headers: this.getHeaders() });
+    return this.http.post(`${this.baseUrl}${API_ENDPOINTS.APPOINTMENTS.SCHEDULE}`, appointment, { headers: this.getHeaders() });
   }
 
   addToWaitlist(waitlistEntry: any): Observable<any> {
@@ -105,4 +105,9 @@ export class ApiService {
   createSchedule(scheduleData: CreateScheduleRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}${API_ENDPOINTS.SCHEDULES.CREATE}`, scheduleData, { headers: this.getHeaders() });
   }
+
+  clientGetById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}${API_ENDPOINTS.CLIENTS.GET_BY_ID}${id}`, { headers: this.getHeaders() });
+  }
+
 }
