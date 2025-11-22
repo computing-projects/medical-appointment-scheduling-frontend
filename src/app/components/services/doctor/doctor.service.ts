@@ -1,49 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { ApiService } from '../api.service';
 
 interface FilterDoctor {
-  specialty: String;
+  specialty: string;
   InitialDate: Date;
   FinalDate: Date;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DoctorService {
-  private baseUrl = 'https://api.seuservidor.com/doctors'; // Substitua pela URL base da sua API
-
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   // GET: Get all doctors
   getAll(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+    return this.apiService.getDoctors();
   }
 
   // GET: Get doctor by ID
   getById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/GetById/${id}`);
+    return this.apiService.getDoctorById(id);
   }
 
   // POST: Create a new doctor
   create(doctor: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/Create`, doctor);
+    return this.apiService.createDoctor(doctor);
   }
 
   // PUT: Update an existing doctor
   update(id: number, doctor: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/Update/${id}`, doctor);
+    return this.apiService.updateDoctor(id, doctor);
   }
 
   // DELETE: Delete a doctor by ID
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/Delete/${id}`);
+    return this.apiService.deleteDoctor(id);
   }
 
   // POST: Get doctors by filter
   getDoctorsByFilter(filter: FilterDoctor): Observable<any> {
-    return this.http.post(`${this.baseUrl}/GetDoctorsByFilter`, filter);
+    return this.apiService.getDoctorsByFilter(filter);
   }
 }

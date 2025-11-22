@@ -1,7 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DoctorService } from '../../services/doctor/doctor.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { Users } from '../../models/user.model';
+import { take } from 'rxjs';
 
+interface Doctor {
+  id: number;
+  userId: number;
+  crm: string;
+  plans: string[];
+  specialtys: string[];
+}
 
 interface StatusUtils{
   label: string;
@@ -20,6 +31,8 @@ export class ManagerDoctorRegisterComponent {
   registerForm: FormGroup;
   isSubmitting = false;
   showSuccess = false;
+  showError = false;
+  errorMessage = '';
 
   // Dropdown flags
   plansOpen = false;
@@ -49,7 +62,7 @@ export class ManagerDoctorRegisterComponent {
     status: 'active' as 'active' | 'inactive'
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private doctorService: DoctorService, private authService: AuthenticationService) {
 
     this.registerForm = this.fb.group({
       // dados pessoais
@@ -91,8 +104,6 @@ export class ManagerDoctorRegisterComponent {
      ========================================================================== */
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
-
       // Atualiza o formulário com os valores dos dropdowns customizados
       this.registerForm.patchValue({
         acceptedPlans: this.selectedDoctor.plans,
@@ -102,23 +113,65 @@ export class ManagerDoctorRegisterComponent {
 
       this.isSubmitting = true;
 
-      setTimeout(() => {
-        console.log('Doctor Registration Data:', this.registerForm.value);
+      // cria o payload no formato da interface `Doctor`
+      const form = this.registerForm.value;
 
-        this.isSubmitting = false;
-        this.showSuccess = true;
+    const currentDate = new Date().toISOString();
+    const user: Users = {
+      // id: 9,
+      name: form.fullName,
+      email: form.email,
+      passwordHash: form.password,
+      phone: form.phone,
+      role: 'doctor',
+      cep: form.cep,
+      state: form.state,
+      city: form.city,
+      address: form.address,
+      profilePhotoUrl: '',
+      createdAt: currentDate,
+      updatedAt: currentDate,
+      deletedAt: currentDate,
+    };
 
-        setTimeout(() => {
-          this.showSuccess = false;
-          this.registerForm.reset();
-        }, 3000);
+      const doc: Doctor = {
+        id: 0,
+        userId: 0,
+        crm: form.crm,
+        plans: this.selectedDoctor.plans,
+        specialtys: this.selectedDoctor.specialties,
+      };
 
-      }, 1500);
-    } else {
-      Object.keys(this.registerForm.controls).forEach(key => {
-        this.registerForm.get(key)?.markAsTouched();
+    this.authService.signup(user)
+      .pipe(take(1))
+      .subscribe({
+        next: response => {
+          this.isSubmitting = false;
+          this.doctorService.create(doc).subscribe({
+            next: () => {
+              this.isSubmitting = false;
+              this.showSuccess = true;
+              this.showError = false;
+
+              setTimeout(() => {
+                this.showSuccess = false;
+                this.registerForm.reset();
+              }, 3000);
+            },
+            error: (err: any) => {
+              console.error('Erro ao criar médico:', err);
+              this.isSubmitting = false;
+              this.showError = true;
+              this.errorMessage = err?.message || 'Erro ao criar médico';
+            },
+          });
+        },
+        error: err => {
+          this.isSubmitting = false;
+          this.errorMessage = err.error?.message || 'Erro ao cadastrar. Verifique se os campos estão corretos.';
+          console.error('Erro no cadastro do usuário:', err);
+        },
       });
-    }
   }
 
   /* ============================================================================

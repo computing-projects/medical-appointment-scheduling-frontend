@@ -41,6 +41,18 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/Doctors/GetDoctorsByFilter`, filter, { headers: this.getHeaders() });
   }
 
+  createDoctor(doctor: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Doctors/Create`, doctor, { headers: this.getHeaders() });
+  }
+
+  updateDoctor(id: number, doctor: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/Doctors/Update/${id}`, doctor, { headers: this.getHeaders() });
+  }
+
+  deleteDoctor(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/Doctors/Delete/${id}`, { headers: this.getHeaders() });
+  }
+
   // User endpoints
   getCurrentUser(): Observable<any> {
     return this.http.get(`${this.baseUrl}/Auth/CurrentUser`, { headers: this.getHeaders() });
