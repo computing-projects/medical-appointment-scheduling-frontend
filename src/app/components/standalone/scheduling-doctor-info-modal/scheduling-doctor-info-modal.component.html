@@ -2,28 +2,25 @@
   <!-- Header Section with Photo -->
   <div class="info-header">
     <div class="header-banner">
-      <div class="banner-gradient"></div>
-    </div>
-    
-    <div class="doctor-profile">
-      <div class="profile-photo-container">
-        <img [src]="doctor.photo" [alt]="'Foto de ' + doctor.name" class="profile-photo" />
-        <div class="verified-badge" title="Perfil verificado">
-          <span>✓</span>
-        </div>
-      </div>
-      
-      <div class="profile-info">
-        <h2 class="doctor-name">{{ doctor.name }}</h2>
-        <p class="doctor-specialty">{{ doctor.specialty }}</p>
-        
-        <div class="rating-section">
-          <div class="stars">
-            <span class="star filled" *ngFor="let star of getStarArray()">★</span>
-            <span class="star" *ngFor="let star of getEmptyStarArray()">★</span>
+      <div class="banner-gradient">
+        <div class="doctor-profile">
+          <div class="profile-photo-container">
+            <img [src]="doctor.photo" [alt]="'Foto de ' + doctor.name" class="profile-photo" />
           </div>
-          <span class="rating-value">{{ doctor.review }}</span>
-          <span class="rating-count">({{ getReviewCount() }} avaliações)</span>
+          
+          <div class="profile-info">
+            <h2 class="doctor-name">{{ doctor.name }}</h2>
+            <p class="doctor-specialty">{{ doctor.specialty }}</p>
+            
+            <!-- <div class="rating-section">
+              <div class="stars">
+                <span class="star filled" *ngFor="let star of getStarArray()">★</span>
+                <span class="star" *ngFor="let star of getEmptyStarArray()">★</span>
+              </div>
+              <span class="rating-value">{{ doctor.review }}</span>
+              <span class="rating-count">({{ getReviewCount() }} avaliações)</span>
+            </div> -->
+          </div>
         </div>
       </div>
     </div>

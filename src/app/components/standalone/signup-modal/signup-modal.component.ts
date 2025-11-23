@@ -164,6 +164,7 @@ export class SignupModalComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe({
         next: response => {
+          console.log(response);
           this.isSubmitting = false;
           client = {
             ...client, userId: response.user.id

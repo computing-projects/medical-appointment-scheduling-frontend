@@ -1,358 +1,198 @@
-<div class="register-container">
-  <div class="register-header">
-    <h2 class="register-title">📋 Cadastrar Novo Médico</h2>
-    <p class="register-subtitle">Preencha os dados abaixo para registrar um novo médico na plataforma</p>
-  </div>
+<div class="cadastro-medico-container">
+  <h1 class="form-title">Cadastrar Médico</h1>
 
-  <!-- Success Message -->
-  <div class="success-message" *ngIf="showSuccess">
-    <span class="success-icon">✓</span>
-    <span class="success-text">Médico cadastrado com sucesso!</span>
-  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-grid">
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-    <!-- Personal Information Section -->
-    <div class="form-section">
-      <h3 class="section-title">👤 Informações Pessoais</h3>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Nome Completo *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('fullName')"
-            formControlName="fullName"
-            placeholder="Ex: Dr. João Silva Santos">
-          <span class="error-message" *ngIf="isFieldInvalid('fullName')">
-            {{ getErrorMessage('fullName') }}
-          </span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Email *</label>
-          <input 
-            type="email" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('email')"
-            formControlName="email"
-            placeholder="joao.silva@example.com">
-          <span class="error-message" *ngIf="isFieldInvalid('email')">
-            {{ getErrorMessage('email') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Telefone *</label>
-          <input 
-            type="tel" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('phone')"
-            formControlName="phone"
-            placeholder="(11) 98765-4321">
-          <span class="error-message" *ngIf="isFieldInvalid('phone')">
-            {{ getErrorMessage('phone') }}
-          </span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">CPF *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('cpf')"
-            formControlName="cpf"
-            placeholder="123.456.789-00">
-          <span class="error-message" *ngIf="isFieldInvalid('cpf')">
-            {{ getErrorMessage('cpf') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Data de Nascimento *</label>
-          <input 
-            type="date" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('birthDate')"
-            formControlName="birthDate">
-          <span class="error-message" *ngIf="isFieldInvalid('birthDate')">
-            {{ getErrorMessage('birthDate') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Gênero *</label>
-          <select 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('gender')"
-            formControlName="gender">
-            <option value="">Selecione</option>
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-            <option value="O">Outro</option>
-          </select>
-          <span class="error-message" *ngIf="isFieldInvalid('gender')">
-            {{ getErrorMessage('gender') }}
-          </span>
-        </div>
-      </div>
+    <!-- Linha 1 -->
+    <div class="form-group">
+      <label>Nome Completo:</label>
+      <input type="text" formControlName="fullName">
     </div>
 
-    <!-- Professional Information Section -->
-    <div class="form-section">
-      <h3 class="section-title">🩺 Informações Profissionais</h3>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">CRM *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('crm')"
-            formControlName="crm"
-            placeholder="SP/123456">
-          <span class="error-message" *ngIf="isFieldInvalid('crm')">
-            {{ getErrorMessage('crm') }}
-          </span>
-        </div>
+    <div class="form-group">
+      <label>CRM:</label>
+      <input type="text" formControlName="crm">
+    </div>
 
-        <div class="form-group">
-          <label class="form-label">Especialidade Principal *</label>
-          <select 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('specialty')"
-            formControlName="specialty">
-            <option value="">Selecione</option>
-            <option *ngFor="let spec of availableSpecialties" [value]="spec">{{ spec }}</option>
-          </select>
-          <span class="error-message" *ngIf="isFieldInvalid('specialty')">
-            {{ getErrorMessage('specialty') }}
-          </span>
-        </div>
+    <!-- Linha 2 -->
+    <div class="form-group">
+      <label>CEP:</label>
+      <input type="text" formControlName="cep">
+    </div>
 
-        <div class="form-group">
-          <label class="form-label">Valor da Consulta (R$) *</label>
-          <input 
-            type="number" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('consultationFee')"
-            formControlName="consultationFee"
-            placeholder="300.00"
-            step="0.01">
-          <span class="error-message" *ngIf="isFieldInvalid('consultationFee')">
-            {{ getErrorMessage('consultationFee') }}
-          </span>
-        </div>
-      </div>
+    <div class="form-group">
+      <label>Rua/Logradouro:</label>
+      <input type="text" formControlName="street">
+    </div>
 
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label class="form-label">Formação Acadêmica *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('education')"
-            formControlName="education"
-            placeholder="Ex: Medicina - USP, Residência em Cardiologia - HC-FMUSP">
-          <span class="error-message" *ngIf="isFieldInvalid('education')">
-            {{ getErrorMessage('education') }}
-          </span>
-        </div>
-      </div>
+    <div class="form-group">
+      <label>Número:</label>
+      <input type="text" formControlName="number">
+    </div>
 
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label class="form-label">Biografia / Sobre o Profissional *</label>
-          <textarea 
-            class="form-textarea"
-            [class.invalid]="isFieldInvalid('bio')"
-            formControlName="bio"
-            rows="4"
-            maxlength="500"
-            placeholder="Descreva a experiência, áreas de atuação e diferenciais do médico..."></textarea>
-          <div class="char-counter">
-            {{ registerForm.get('bio')?.value?.length || 0 }}/500 caracteres
+    <!-- Linha 3 -->
+    <div class="form-group">
+      <label>Bairro:</label>
+      <input type="text" formControlName="neighborhood">
+    </div>
+
+    <div class="form-group">
+      <label>Complemento (Opcional):</label>
+      <input type="text" formControlName="complement">
+    </div>
+
+    <div class="form-group">
+      <label>Cidade (Opcional):</label>
+      <input type="text" formControlName="city">
+    </div>
+
+    <!-- Linha 4 -->
+    <div class="form-group">
+      <label>Estado (Opcional):</label>
+      <input type="text" formControlName="state">
+    </div>
+
+    <div class="form-group">
+      <label>Telefone (Opcional):</label>
+      <input type="text" formControlName="phone">
+    </div>
+
+    <!-- Linha 5 -->
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label>Senha:</label>
+      <input type="password" formControlName="password">
+    </div>
+
+    <div class="custom-dropdown"
+     (click)="toggleDropdown('plansOpen')"
+     tabindex="0"
+     (focusout)="closeDropdown('plansOpen')">
+
+    <label class="form-label">Planos que atende (Opcional):</label>
+
+    <div class="dropdown-display form-input arrow-down">
+        {{ selectedDoctor.plans.length ? selectedDoctor.plans.join(', ') : '' }}
+    </div>
+
+    <div class="dropdown-list" *ngIf="plansOpen">
+        <div class="dropdown-item"
+            *ngFor="let plan of availablePlans"
+            (click)="toggleSelection(plan, 'plans', $event)"
+            [class.selected]="selectedDoctor.plans.includes(plan.name)">
+            {{ plan.name }}
+        </div>
+    </div>
+
+</div>
+
+    <!-- Linha 6 -->
+    <div class="custom-dropdown"
+    (click)="toggleDropdown('specialtiesOpen')"
+    tabindex="0"
+    (focusout)="closeDropdown('specialtiesOpen')">
+
+    <label class="form-label">Especialidades:</label>
+
+    <div class="dropdown-display form-input arrow-down">
+        {{ selectedDoctor.specialties.length ? selectedDoctor.specialties.join(', ') : '' }}
+    </div>
+
+    <div class="dropdown-list" *ngIf="specialtiesOpen" style="margin-top:10px;">
+        <div class="dropdown-item"
+            *ngFor="let sp of availableSpecialties"
+            (click)="toggleSelection(sp, 'specialties', $event)"
+            [class.selected]="selectedDoctor.specialties.includes(sp.label)">
+            {{ sp.label }}
+        </div>
+    </div>
+</div>
+
+    <div class="custom-dropdown"
+              (click)="toggleDropdown('statusOpen')"
+              tabindex="0"
+              (focusout)="closeDropdown('statusOpen')">
+
+              <label class="form-label">Ativo:</label>
+
+              <div class="dropdown-display form-input arrow-down">
+                  {{ selectedDoctor.status }}
+              </div>
+
+              <div class="dropdown-list" *ngIf="statusOpen">
+                <div class="dropdown-item"
+                    *ngFor="let st of statusList"
+                    (click)="selectStatus(st.value, $event)"
+                    [class.selected]="selectedDoctor.status === st.value">
+                  {{ st.label }}
+                </div>
+              </div>
           </div>
-          <span class="error-message" *ngIf="isFieldInvalid('bio')">
-            {{ getErrorMessage('bio') }}
-          </span>
-        </div>
-      </div>
 
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label class="form-label">Planos de Saúde Aceitos</label>
-          <div class="checkbox-grid">
-            <label 
-              class="checkbox-label" 
-              *ngFor="let plan of availablePlans"
-              [class.selected]="isPlanSelected(plan)">
-              <input 
-                type="checkbox" 
-                [checked]="isPlanSelected(plan)"
-                (change)="togglePlan(plan)">
-              <span class="checkbox-text">{{ plan }}</span>
+    <!-- Schedule Section -->
+    <div class="form-group form-group-full">
+      <label class="form-label">Horários de Atendimento (Opcional):</label>
+      <div class="schedule-table">
+        <div class="schedule-row schedule-header">
+          <div class="schedule-col-day">Dia</div>
+          <div class="schedule-col-times">Horários</div>
+          <div class="schedule-col-actions"></div>
+        </div>
+        <div class="schedule-row" *ngFor="let day of weeklySchedule">
+          <div class="schedule-col-day">
+            <label class="day-checkbox-compact">
+              <input type="checkbox" [checked]="day.enabled" (change)="toggleDayEnabled(day)">
+              <span>{{ getDayShortName(day.dayOfWeek) }}</span>
             </label>
           </div>
+          <div class="schedule-col-times">
+            <div class="time-ranges-compact" *ngIf="day.enabled && day.timeRanges.length > 0 && !day.editing">
+              <div class="time-range-badge" *ngFor="let range of day.timeRanges; let i = index">
+                <span class="time-display">{{ range.startTime }} - {{ range.endTime }}</span>
+                <button type="button" class="btn-remove-badge" (click)="removeTimeRange(day, i)" *ngIf="day.timeRanges.length > 1" title="Remover">
+                  ×
+                </button>
+              </div>
+            </div>
+                  <div class="time-ranges-editor" *ngIf="day.enabled && day.editing">
+                    <div class="time-range-edit" *ngFor="let range of day.timeRanges; let i = index" [class.has-error]="getTimeRangeErrors(day, i).length > 0">
+                      <select [(ngModel)]="range.startTime" [ngModelOptions]="{standalone: true}" class="time-select-compact" (change)="sortDayTimeRanges(day)">
+                        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+                      </select>
+                      <span class="time-separator">-</span>
+                      <select [(ngModel)]="range.endTime" [ngModelOptions]="{standalone: true}" class="time-select-compact" (change)="sortDayTimeRanges(day)">
+                        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+                      </select>
+                      <div class="time-error-compact" *ngIf="getTimeRangeErrors(day, i).length > 0" [title]="getTimeRangeErrors(day, i).join(', ')">⚠</div>
+                    </div>
+                    <div class="time-range-error-message" *ngFor="let range of day.timeRanges; let i = index">
+                      <div *ngFor="let error of getTimeRangeErrors(day, i)" class="error-text">{{ error }}</div>
+                    </div>
+                    <button type="button" class="btn-add-range-compact" (click)="addTimeRange(day)" title="Adicionar horário">
+                      + Horário
+                    </button>
+                  </div>
+            <span class="day-disabled" *ngIf="!day.enabled">Não disponível</span>
+          </div>
+          <div class="schedule-col-actions">
+            <button type="button" class="btn-toggle-edit" (click)="toggleDayEdit(day)" *ngIf="day.enabled" [title]="day.editing ? 'Salvar' : 'Editar'">
+              {{ day.editing ? '✓' : '✎' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Address Section -->
-    <div class="form-section">
-      <h3 class="section-title">📍 Endereço</h3>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">CEP *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('cep')"
-            formControlName="cep"
-            placeholder="01310-100">
-          <span class="error-message" *ngIf="isFieldInvalid('cep')">
-            {{ getErrorMessage('cep') }}
-          </span>
-        </div>
-
-        <div class="form-group flex-2">
-          <label class="form-label">Rua/Avenida *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('street')"
-            formControlName="street"
-            placeholder="Av. Paulista">
-          <span class="error-message" *ngIf="isFieldInvalid('street')">
-            {{ getErrorMessage('street') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Número *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('number')"
-            formControlName="number"
-            placeholder="1000">
-          <span class="error-message" *ngIf="isFieldInvalid('number')">
-            {{ getErrorMessage('number') }}
-          </span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Complemento</label>
-          <input 
-            type="text" 
-            class="form-input"
-            formControlName="complement"
-            placeholder="Sala 502">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Bairro *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('neighborhood')"
-            formControlName="neighborhood"
-            placeholder="Bela Vista">
-          <span class="error-message" *ngIf="isFieldInvalid('neighborhood')">
-            {{ getErrorMessage('neighborhood') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Cidade *</label>
-          <input 
-            type="text" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('city')"
-            formControlName="city"
-            placeholder="São Paulo">
-          <span class="error-message" *ngIf="isFieldInvalid('city')">
-            {{ getErrorMessage('city') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Estado *</label>
-          <select 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('state')"
-            formControlName="state">
-            <option value="">UF</option>
-            <option value="SP">SP</option>
-            <option value="RJ">RJ</option>
-            <option value="MG">MG</option>
-            <option value="RS">RS</option>
-            <option value="SC">SC</option>
-            <option value="PR">PR</option>
-            <!-- Add more states as needed -->
-          </select>
-          <span class="error-message" *ngIf="isFieldInvalid('state')">
-            {{ getErrorMessage('state') }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Account Credentials Section -->
-    <div class="form-section">
-      <h3 class="section-title">🔐 Credenciais de Acesso</h3>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Senha *</label>
-          <input 
-            type="password" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('password')"
-            formControlName="password"
-            placeholder="Mínimo 8 caracteres">
-          <span class="error-message" *ngIf="isFieldInvalid('password')">
-            {{ getErrorMessage('password') }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Confirmar Senha *</label>
-          <input 
-            type="password" 
-            class="form-input"
-            [class.invalid]="isFieldInvalid('confirmPassword')"
-            formControlName="confirmPassword"
-            placeholder="Repita a senha">
-          <span class="error-message" *ngIf="isFieldInvalid('confirmPassword')">
-            {{ getErrorMessage('confirmPassword') }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Form Actions -->
-    <div class="form-actions">
-      <button 
-        type="button" 
-        class="btn-secondary"
-        (click)="registerForm.reset()">
-        Limpar Formulário
-      </button>
-      <button 
-        type="submit" 
-        class="btn-primary"
-        [disabled]="isSubmitting">
-        <span *ngIf="!isSubmitting">Cadastrar Médico</span>
+    <div class="submit-wrapper">
+      <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Cadastrar</span>
         <span *ngIf="isSubmitting">Cadastrando...</span>
       </button>
     </div>
+
   </form>
 </div>

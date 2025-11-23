@@ -11,7 +11,7 @@ describe('ManagerDoctorRegisterComponent', () => {
       imports: [ManagerDoctorRegisterComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ManagerDoctorRegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

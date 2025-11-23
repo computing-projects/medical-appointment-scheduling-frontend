@@ -1,4 +1,4 @@
-import { AuthState, Clients, Users } from '../../models/user.model';
+import { AuthState, Clients, Users, ClinicUsers } from '../../models/user.model';
 import { environment } from '../../../../environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject } from 'rxjs';
@@ -56,10 +56,38 @@ export class AuthenticationService {
         next: (response: AuthTokenModel) => {
           localStorage.setItem('token', response.token);
           this.apiService.getCurrentUser().subscribe({
-            next: (user: Users) => {
+            next: (user: any) => {
               localStorage.setItem('user', JSON.stringify(user));
               localStorage.setItem('role', user.role);
               this.roleUser = user.role;
+              
+              // Fetch clinicId for doctors and admins
+              if ((user.role === 'doctor' || user.role === 'admin')) {
+                // Try to get userId from the user object (it might be in different formats)
+                // The API might return id directly or nested in a user property
+                const userId = user.id || user.userId || (user.user && user.user.id) || (user.user && user.user.userId);
+                
+                if (userId) {
+                  this.apiService.getClinicUsersByUserId(userId).subscribe({
+                    next: (clinicUsers: ClinicUsers[]) => {
+                      if (clinicUsers && Array.isArray(clinicUsers) && clinicUsers.length > 0) {
+                        const clinicId = clinicUsers[0].clinicId;
+                        localStorage.setItem('clinicId', clinicId.toString());
+                      } else {
+                        localStorage.removeItem('clinicId');
+                      }
+                    },
+                    error: () => {
+                      localStorage.removeItem('clinicId');
+                    }
+                  });
+                } else {
+                  localStorage.removeItem('clinicId');
+                }
+              } else {
+                localStorage.removeItem('clinicId');
+              }
+
               this.authStateSubject.next({
                 user,
                 token: response.token,
@@ -100,6 +128,7 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     localStorage.removeItem('role');
     localStorage.removeItem('token');
+    localStorage.removeItem('clinicId');
     this.currentUserSubject.next(null);
     this.router.navigate(['/']);
   }

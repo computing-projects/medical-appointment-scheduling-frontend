@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import type { DoctorSummary } from '../scheduling-doctor-search-list/scheduling-doctor-search-list.component';
+import { ApiService } from '../../services/api.service';
+import { take } from 'rxjs';
 
 interface AppointmentDetails {
   doctor: DoctorSummary;
@@ -27,18 +29,34 @@ export class SchedulingDoctorAppointmentModalComponent {
 
   // Mock user data (in production, this would come from auth service)
   userData = {
-    name: 'Maria Silva Santos',
-    email: 'maria.santos@email.com',
-    phone: '(11) 98765-4321',
-    cpf: '123.456.789-00',
+    name: 'Paciente',
+    email: 'paciente@email.com',
+    phone: '(99) 99999-9999',
+    cpf: '123.456.789-10',
     healthPlan: 'Unimed'
   };
 
   appointmentReason = '';
   confirmedReminder = false;
   isSubmitting = false;
+  id = 0;
+  errorMessage = '';
 
-  constructor(private toastService: ToastService) {}
+  constructor(private apiService: ApiService, private toastService: ToastService) {}
+
+  ngOnInit(): void {
+    const userStorage = JSON.parse(localStorage.getItem('user')!);
+
+    this.id = userStorage.userId;
+    this.apiService.clientGetById(this.id).subscribe({
+      next: response => {
+        this.userData.name = userStorage.name;
+        this.userData.email = userStorage.email;
+        this.userData.cpf = response.cpf;
+        this.userData.phone = response.phone;
+      }
+    });
+  }
 
   closeModal(): void {
     if (this.isSubmitting) return;
@@ -60,7 +78,33 @@ export class SchedulingDoctorAppointmentModalComponent {
 
     this.isSubmitting = true;
     
-    // Simulate API call
+    let data = {
+      clientId: this.id,
+      doctorId: 1,
+      clinicId: 1,
+      appointmentDatetime: "2025-11-19T11:00:00.676Z",
+      appointmentType: 1,
+      status: 1,
+      videoCallLink: this.appointmentTypeLabel? this.appointmentTypeLabel : "",
+      category: 1,
+      reason: this.appointmentReason
+    }
+    
+
+    // Request not working
+
+    // this.apiService.createAppointment(data).pipe(take(1)).subscribe({
+    //   next: (response) => {
+    //     this.isSubmitting = false;
+    //     this.closeModal();
+    //   },
+    //   error: err => {
+    //     this.isSubmitting = false;
+    //     this.errorMessage = err.error?.message || 'Erro ao agendar. Tente novamente mais tarde.';
+    //     console.error('Erro:', err);
+    //   },
+    // });
+
     setTimeout(() => {
       this.confirm.emit({
         appointmentDetails: this.appointmentDetails,

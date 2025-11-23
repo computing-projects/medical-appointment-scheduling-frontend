@@ -209,13 +209,6 @@ export class PerfilDoctorCalendarComponent implements OnInit {
     return { total, daysWithAppointments };
   }
 
-  // Placeholder for opening a new appointment creation modal/form
-  createNewAppointment(): void {
-    console.log('Abrir modal para criar novo agendamento');
-    // Here you would typically open a dedicated modal component for creating appointments
-    alert('Funcionalidade de criar novo agendamento será implementada aqui!');
-  }
-
   // Placeholder for opening an existing appointment's details/edit modal
   openAppointmentDetails(appointmentId: number): void {
     console.log(`Abrir detalhes do agendamento ID: ${appointmentId}`);
