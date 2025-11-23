@@ -1,0 +1,660 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.anamnese-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Header
+.anamnese-header {
+  text-align: center;
+  margin-bottom: 8px;
+  
+  .anamnese-title {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $paua-blue;
+  }
+  
+  .anamnese-description {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Info Cards
+.info-card {
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+  
+  .card-header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
+    border-bottom: 2px solid $periwinkle-blue;
+    
+    &.alert {
+      background: linear-gradient(135deg, rgba(#ff9800, 0.08), rgba(#f57c00, 0.08));
+      border-bottom-color: #ff9800;
+    }
+  }
+  
+  .card-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .title-icon {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .card-content {
+    padding: 24px;
+  }
+}
+
+// Stats Grid (Basic Info)
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 2px solid $grey-whisper;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: $cosmic-cobalt;
+  }
+  
+  .stat-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
+    .stat-icon {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .stat-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .stat-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $paua-blue;
+  }
+  
+  &.blood .stat-icon-wrapper {
+    background: linear-gradient(135deg, rgba(#dc3545, 0.15), rgba(#c82333, 0.15));
+  }
+  
+  &.weight .stat-icon-wrapper {
+    background: linear-gradient(135deg, rgba(#28a745, 0.15), rgba(#218838, 0.15));
+  }
+  
+  &.height .stat-icon-wrapper {
+    background: linear-gradient(135deg, rgba(#17a2b8, 0.15), rgba(#138496, 0.15));
+  }
+  
+  &.imc .stat-icon-wrapper {
+    background: linear-gradient(135deg, rgba(#ffc107, 0.15), rgba(#e0a800, 0.15));
+  }
+}
+
+// Info Sections
+.info-section {
+  margin-bottom: 24px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  .section-subtitle {
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .subtitle-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Badges
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  .badge-icon {
+    font-size: 1rem;
+  }
+  
+  &.danger {
+    background: linear-gradient(135deg, rgba(#dc3545, 0.15), rgba(#c82333, 0.15));
+    color: #721c24;
+    border: 2px solid #dc3545;
+  }
+  
+  &.warning {
+    background: linear-gradient(135deg, rgba(#ffc107, 0.15), rgba(#e0a800, 0.15));
+    color: #856404;
+    border: 2px solid #ffc107;
+  }
+  
+  &.info {
+    background: linear-gradient(135deg, rgba(#17a2b8, 0.15), rgba(#138496, 0.15));
+    color: #0c5460;
+    border: 2px solid #17a2b8;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Timeline
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: $ghost-white;
+  border-radius: 8px;
+  border-left: 4px solid $cosmic-cobalt;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateX(4px);
+    background: rgba($periwinkle-blue, 0.3);
+  }
+  
+  .timeline-date {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $cosmic-cobalt;
+    min-width: 100px;
+  }
+  
+  .timeline-content {
+    font-size: 0.95rem;
+    color: $paua-blue;
+    font-weight: 500;
+  }
+}
+
+// Treatment List
+.treatment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.treatment-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: $ghost-white;
+  border-radius: 8px;
+  border: 1px solid $grey-whisper;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba($periwinkle-blue, 0.2);
+    border-color: $cosmic-cobalt;
+  }
+  
+  .treatment-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .treatment-text {
+    font-size: 0.95rem;
+    color: $paua-blue;
+    font-weight: 500;
+  }
+}
+
+// Empty States
+.empty-state,
+.success-message {
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.empty-state {
+  background: rgba($periwinkle-blue, 0.2);
+  color: #666;
+  border: 2px dashed $grey-whisper;
+}
+
+.success-message {
+  background: linear-gradient(135deg, rgba(#28a745, 0.1), rgba(#218838, 0.1));
+  color: #155724;
+  border: 2px solid #28a745;
+}
+
+.empty-state-small {
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+}
+
+// Allergies Grid
+.allergies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.allergy-category {
+  padding: 16px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 2px solid $grey-whisper;
+  
+  .category-title {
+    margin: 0 0 12px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .category-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// Medications Grid
+.medications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.medication-card {
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 2px solid $periwinkle-blue;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.2);
+    border-color: $cosmic-cobalt;
+  }
+  
+  .medication-header {
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
+    border-bottom: 2px solid $periwinkle-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .medication-icon {
+      font-size: 1.5rem;
+    }
+    
+    .medication-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $paua-blue;
+    }
+  }
+  
+  .medication-body {
+    padding: 14px 16px;
+  }
+  
+  .medication-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    
+    .detail-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #666;
+    }
+    
+    .detail-value {
+      font-size: 0.9rem;
+      color: $paua-blue;
+      font-weight: 600;
+    }
+  }
+  
+  .medication-reason {
+    display: flex;
+    align-items: start;
+    gap: 6px;
+    padding: 10px;
+    background: rgba($periwinkle-blue, 0.2);
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    
+    .reason-icon {
+      flex-shrink: 0;
+    }
+  }
+}
+
+// History Timeline
+.history-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  
+  .history-marker {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.15), rgba($blue-gem, 0.15));
+    border: 3px solid $cosmic-cobalt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
+    &.surgery {
+      background: linear-gradient(135deg, rgba(#dc3545, 0.15), rgba(#c82333, 0.15));
+      border-color: #dc3545;
+    }
+    
+    .marker-icon {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .history-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+    background: $ghost-white;
+    border-radius: 8px;
+    border: 1px solid $grey-whisper;
+    
+    .history-type {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .history-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $paua-blue;
+    }
+    
+    .history-date {
+      font-size: 0.85rem;
+      color: #999;
+    }
+  }
+}
+
+// Family Grid
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.family-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 2px solid $grey-whisper;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: $cosmic-cobalt;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .family-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.15), rgba($blue-gem, 0.15));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .family-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .family-relationship {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .family-condition {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $paua-blue;
+    }
+  }
+}
+
+// Lifestyle Grid
+.lifestyle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.lifestyle-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: $ghost-white;
+  border-radius: 10px;
+  border: 2px solid $grey-whisper;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $cosmic-cobalt;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .lifestyle-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  
+  .lifestyle-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .lifestyle-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .lifestyle-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: $paua-blue;
+    }
+  }
+}
+
+// Vaccine Grid
+.vaccine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.vaccine-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: $ghost-white;
+  border-radius: 8px;
+  border: 2px solid #28a745;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(#28a745, 0.1);
+    transform: translateX(4px);
+  }
+  
+  .vaccine-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  
+  .vaccine-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .vaccine-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $paua-blue;
+    }
+    
+    .vaccine-date {
+      font-size: 0.85rem;
+      color: #666;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .stats-grid,
+  .allergies-grid,
+  .medications-grid,
+  .family-grid,
+  .lifestyle-grid,
+  .vaccine-grid {
+    grid-template-columns: 1fr;
+  }
+}

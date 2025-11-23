@@ -1,0 +1,89 @@
+<nav class="sidebar">
+  @if (getUserRole() === 'client') {
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'home'"
+    [routerLink]="'/cliente/home'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home_health"></mat-icon>
+      Home
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'agendamento'"
+    [routerLink]="'/cliente/agendamento'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="calendar_month"></mat-icon>
+      Agendamento
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'perfil'"
+    [routerLink]="'/cliente/perfil'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="account_circle"></mat-icon>
+      Perfil
+    </span>
+  </a>
+  } @if (getUserRole() === 'doctor') {
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'home'"
+    [routerLink]="'/doutor/home'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home_health"></mat-icon>
+      Home
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'perfil-medico'"
+    [routerLink]="'/doutor/perfil'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="perfil" fontIcon="account_circle"></mat-icon>
+      Perfil
+    </span>
+  </a>
+  } @if (getUserRole() === 'admin') {
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'home'"
+    [routerLink]="'/admin/home'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="home_health"></mat-icon>
+      Home
+    </span>
+  </a>
+  <a
+    clrVerticalNavLink
+    class="nav-button"
+    [class.active]="selectedView === 'gerenciar-medicos'"
+    [routerLink]="'/admin/gerenciar-medicos'"
+    routerLinkActive="active">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="gerenciar-medicos" fontIcon="manage_accounts"></mat-icon>
+      Gerenciar Médicos
+    </span>
+  </a>
+  }
+  <a clrVerticalNavLink class="nav-button" (click)="logout()">
+    <span class="nav-content">
+      <mat-icon aria-hidden="false" aria-label="home" fontIcon="logout"></mat-icon>
+      Logout
+    </span>
+  </a>
+</nav>

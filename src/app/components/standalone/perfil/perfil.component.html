@@ -1,0 +1,205 @@
+<div class="perfil-container">
+  <!-- Header Section with Gradient Banner -->
+  <div class="perfil-banner">
+    <div class="banner-gradient"></div>
+    <div class="profile-header-content">
+      <div class="profile-photo-wrapper">
+        <img [src]="userProfile.photo" alt="Profile Photo" class="profile-photo">
+        <div class="photo-badge">
+          <span class="badge-icon">✓</span>
+        </div>
+      </div>
+      <div class="profile-header-info">
+        <h1 class="profile-name">{{ userProfile.name }}</h1>
+        <p class="profile-subtitle">{{ userProfile.email }}</p>
+        <div class="profile-quick-info">
+          <span class="info-chip">
+            <span class="chip-icon">📍</span>
+            {{ userProfile.city }}, {{ userProfile.state }}
+          </span>
+          <span class="info-chip">
+            <span class="chip-icon">🎂</span>
+            {{ userProfile.age }} anos
+          </span>
+          <span class="info-chip">
+            <span class="chip-icon">📞</span>
+            {{ userProfile.contact }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="perfil-header-nav">
+    <button class="perfil-nav-button"
+            (click)="showPerfilTab('informacoes')"
+            [class.active]="selectedPerfilTab === 'informacoes'">
+      <span class="nav-icon">👤</span>
+      <span class="nav-text">Informações</span>
+    </button>
+    <button class="perfil-nav-button"
+            (click)="showPerfilTab('consultas')"
+            [class.active]="selectedPerfilTab === 'consultas'">
+      <span class="nav-icon">🩺</span>
+      <span class="nav-text">Consultas</span>
+    </button>
+  </div>
+
+  <div class="perfil-content">
+    <!-- Informações Tab Content -->
+    <div *ngIf="selectedPerfilTab === 'informacoes'" class="informacoes-tab">
+      <!-- Personal Information Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="title-icon">👤</span>
+            Informações Pessoais
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="profile-details-grid">
+            <div class="detail-item">
+              <span class="detail-icon">👤</span>
+              <div class="detail-content">
+                <label>Nome Completo</label>
+                <span>{{ userProfile.name }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">📧</span>
+              <div class="detail-content">
+                <label>Email</label>
+                <span>{{ userProfile.email }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">📞</span>
+              <div class="detail-content">
+                <label>Telefone</label>
+                <span>{{ userProfile.contact }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🆔</span>
+              <div class="detail-content">
+                <label>CPF</label>
+                <span>{{ userProfile.cpf }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🎂</span>
+              <div class="detail-content">
+                <label>Idade</label>
+                <span>{{ userProfile.age }} anos</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">📮</span>
+              <div class="detail-content">
+                <label>CEP</label>
+                <span>{{ userProfile.cep }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🏙️</span>
+              <div class="detail-content">
+                <label>Cidade</label>
+                <span>{{ userProfile.city }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">📍</span>
+              <div class="detail-content">
+                <label>Estado</label>
+                <span>{{ userProfile.state }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Plans Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span class="title-icon">🏥</span>
+            Planos de Saúde
+          </h3>
+        </div>
+        <div class="card-content">
+          <div class="health-plans-list">
+            <div class="plan-badge" *ngFor="let plan of userProfile.healthPlans">
+              <span class="plan-icon">✓</span>
+              <span class="plan-name">{{ plan }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Summary Cards -->
+      <div class="summary-section">
+        <h3 class="section-title">
+          <span class="title-icon">📊</span>
+          Resumo de Atividades Médicas
+        </h3>
+        <div class="summary-stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper consultas">
+              <span class="stat-icon">🩺</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Consultas</span>
+              <span class="stat-value">{{ userProfile.consultas }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper exames">
+              <span class="stat-icon">🔬</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Exames</span>
+              <span class="stat-value">{{ userProfile.exames }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper cirurgias">
+              <span class="stat-icon">⚕️</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Cirurgias</span>
+              <span class="stat-value">{{ userProfile.cirurgias }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper procedimentos">
+              <span class="stat-icon">💉</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Procedimentos</span>
+              <span class="stat-value">{{ userProfile.procedimentos }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper cancelados">
+              <span class="stat-icon">❌</span>
+            </div>
+            <div class="stat-content">
+              <span class="stat-label">Cancelados/Faltados</span>
+              <span class="stat-value">{{ userProfile.agendamentosCanceladosOuFaltados }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultas Tab Content -->
+    <div *ngIf="selectedPerfilTab === 'consultas'" class="tab-wrapper">
+      <med-perfil-appointment></med-perfil-appointment>
+    </div>
+  </div>
+</div>

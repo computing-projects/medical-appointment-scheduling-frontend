@@ -1,0 +1,114 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.scheduling-container {
+  display: flex;
+  height: calc(100vh - 120px);
+  background-color: $ghost-white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba($nero-black, 0.08);
+}
+
+.doctor-list-section {
+  /* Middle bigger than right */
+  flex: 3 1 0;
+  border-right: 1px solid $grey-whisper;
+  background-color: $white;
+  overflow-y: auto;
+  padding: 20px;
+  min-width: 0;
+}
+
+.doctor-detail-section {
+  /* Right a bit larger than before */
+  flex: 2 1 0;
+  max-width: 680px;
+  background-color: $ghost-white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.detail-content-wrapper {
+  flex: 1;
+  background-color: $white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba($nero-black, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $grey-whisper;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+
+  h3 {
+    font-size: 1.5rem;
+    color: $cosmic-cobalt;
+    margin: 0;
+  }
+}
+
+.booking-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-detail-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: $grey-whisper;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $red-alizarin;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .scheduling-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .doctor-list-section {
+    flex: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid $grey-whisper;
+    min-height: 250px;
+    max-height: 400px;
+  }
+
+  .doctor-detail-section {
+    width: 100%;
+    max-width: none;
+    min-height: 400px;
+  }
+}

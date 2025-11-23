@@ -1,0 +1,51 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.med-email-sent-modal {
+  position: absolute;
+}
+
+/* Backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: $backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+/* Card */
+.modal-card-email-sent {
+  min-width: 640px;
+  max-height: 640px;
+  background: $ghost-white;
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  padding: 28px 22px 26px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content-email-sent {
+  overflow-y: auto;
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  min-height: 240px;
+  flex-direction: column;
+  min-height: 240px;
+  gap: 24px;
+}
+
+.title-email-sent {
+  font-size: 30px;
+  color: $cosmic-cobalt;
+}
+
+.text-email-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

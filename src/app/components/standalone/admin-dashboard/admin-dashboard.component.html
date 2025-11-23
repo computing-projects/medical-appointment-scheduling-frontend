@@ -1,0 +1,34 @@
+<div class="admin-dashboard-content">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1 class="hero-title">Olá, {{displayUserName()}}!</h1>
+    <p class="hero-subtitle">Bem-vindo ao painel administrativo. Gerencie usuários, médicos, clínicas e todo o sistema em um só lugar.</p>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions-section">
+    <h2 class="section-title">Ações Rápidas</h2>
+    <div class="action-cards">
+      <a class="action-card" [routerLink]="['/admin/gerenciar-medicos']" [queryParams]="{tab: 'editar'}" routerLinkActive="active">
+        <div class="action-icon-wrapper doctors">
+          <span class="action-icon">👨‍⚕️</span>
+        </div>
+        <h3>Gerenciar Médicos</h3>
+        <p>Visualize, edite e gerencie médicos cadastrados no sistema</p>
+        <span class="action-btn">Gerenciar →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Admin Tips -->
+  <div class="admin-tips-section">
+    <div class="tip-card">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <h3>Dica Administrativa do Dia</h3>
+        <p>Mantenha o sistema atualizado revisando regularmente os médicos cadastrados e garantindo que todas as informações estejam corretas e atualizadas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+

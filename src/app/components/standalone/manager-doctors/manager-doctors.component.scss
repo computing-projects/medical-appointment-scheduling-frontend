@@ -1,0 +1,76 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.manager-doctors-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab-bar {
+  display: flex;
+  background: $ghost-white;
+  border-bottom: 2px solid $grey-whisper;
+  padding: 8px 24px 0 24px;
+  gap: 8px;
+}
+
+.tab-button {
+  padding: 14px 28px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    background: rgba($cosmic-cobalt, 0.1);
+    color: $cosmic-cobalt;
+  }
+
+  &.active {
+    background: $white;
+    color: $cosmic-cobalt;
+    border-bottom: 3px solid $cosmic-cobalt;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: $cosmic-cobalt;
+    }
+  }
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $grey-whisper;
+    border-radius: 10px;
+    
+    &:hover {
+      background: $periwinkle-blue;
+    }
+  }
+}
+

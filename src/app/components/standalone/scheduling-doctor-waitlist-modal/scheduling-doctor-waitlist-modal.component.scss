@@ -1,0 +1,634 @@
+@import '../../../../assets/style/color-palette.scss';
+
+// Scope all styles to the component selector
+med-scheduling-doctor-waitlist-modal {
+  // Modal Overlay
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  // Modal Container
+  .modal-container {
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  // Modal Header
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-bottom: 1px solid $grey-whisper;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.03));
+    flex-shrink: 0;
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      
+      .header-icon {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        margin: 0 0 2px 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: $paua-blue;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #666;
+      }
+    }
+    
+    .close-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: #999;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: rgba($paua-blue, 0.1);
+        color: $paua-blue;
+      }
+    }
+  }
+
+  // Modal Body
+  .modal-body {
+    flex: 1;
+    overflow: visible;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 0;
+  }
+
+  // Content Grid
+  .content-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  // Left Column
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  // Doctor Card
+  .doctor-card {
+    padding: 16px;
+    background: $ghost-white;
+    border: 2px solid $grey-whisper;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+    position: relative;
+  
+    // Remove any hover effects
+    &:hover {
+      background: $ghost-white;
+      border-color: $grey-whisper;
+      
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+    
+    .doctor-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid $white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 12px;
+    }
+    
+    .doctor-info {
+      h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: $paua-blue;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 1rem;
+        color: $cosmic-cobalt;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Info Box
+  .info-box {
+    padding: 16px;
+    background: rgba($cosmic-cobalt, 0.05);
+    border: 2px solid rgba($cosmic-cobalt, 0.1);
+    border-radius: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  
+  .info-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    
+    .info-icon {
+      font-size: 1.3rem;
+    }
+    
+    h4 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: $paua-blue;
+    }
+  }
+  
+  .info-list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+    li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.5;
+      
+      &:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: $green-fruit-salad;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+  // Reminder Box - Full Width
+  .reminder-box {
+    padding: 16px 20px;
+    background: rgba($green-fruit-salad, 0.08);
+    border: 2px solid rgba($green-fruit-salad, 0.2);
+    border-radius: 12px;
+    flex-shrink: 0;
+    width: 100%;
+  
+  .reminder-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: $green-fruit-salad;
+      flex-shrink: 0;
+    }
+    
+    .checkbox-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      
+      .checkbox-icon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      
+      .checkbox-text {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+        font-weight: 500;
+      }
+    }
+    
+    &:hover .checkbox-text {
+      color: $green-fruit-salad;
+    }
+  }
+}
+
+  // Right Column
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 0;
+  }
+
+  // Form Section
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+  
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: $paua-blue;
+      
+      .label-icon {
+        font-size: 1.15rem;
+      }
+      
+      .required {
+        color: #e74c3c;
+        margin-left: 2px;
+      }
+    }
+  }
+
+  // Appointment Options
+  .appointment-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .appointment-option {
+    position: relative;
+    cursor: pointer;
+    
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .option-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 2px solid $grey-whisper;
+      border-radius: 10px;
+      background: $white;
+      transition: all 0.2s ease;
+      
+      .option-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      
+      .option-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        
+        strong {
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #333;
+        }
+        
+        span {
+          font-size: 0.9rem;
+          color: #999;
+        }
+      }
+    }
+    
+    &:hover .option-content {
+      border-color: $cosmic-cobalt;
+      background: rgba($cosmic-cobalt, 0.05);
+    }
+    
+    input[type="radio"]:checked + .option-content,
+    &.active .option-content {
+      border-color: $cosmic-cobalt;
+      background: rgba($cosmic-cobalt, 0.1);
+      
+      .option-text {
+        strong {
+          color: $cosmic-cobalt;
+        }
+        
+        span {
+          color: $cosmic-cobalt;
+        }
+      }
+    }
+  }
+
+  // Input Fields
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid $grey-whisper;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
+    }
+    
+    &::placeholder {
+      color: #bbb;
+    }
+  }
+
+  .textarea-field {
+    resize: none;
+    height: 90px;
+    line-height: 1.5;
+    font-size: 1.05rem;
+  }
+
+  .field-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: -4px;
+  }
+
+  .field-hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .char-counter {
+    font-size: 0.9rem;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  // Email Display
+  .email-display {
+    .email-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba($green-fruit-salad, 0.1);
+    border: 2px solid rgba($green-fruit-salad, 0.2);
+    border-radius: 10px;
+    
+    .email-icon {
+      font-size: 1.3rem;
+    }
+    
+    .email-info {
+      flex: 1;
+      
+      .email-label {
+        margin: 0 0 2px 0;
+        font-size: 0.8rem;
+        color: #666;
+        font-weight: 600;
+      }
+      
+      .email-value {
+        margin: 0;
+        font-size: 0.95rem;
+        color: $green-fruit-salad;
+        font-weight: 700;
+        word-break: break-all;
+      }
+    }
+  }
+  
+    .email-note {
+    margin: 8px 0 0 0;
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+  }
+}
+
+  .email-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  // Modal Footer
+  .modal-footer {
+    display: flex;
+    gap: 12px;
+    padding: 20px 28px;
+    border-top: 1px solid $grey-whisper;
+    background: $ghost-white;
+    flex-shrink: 0;
+    
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-cancel {
+      background: $white;
+      color: #666;
+      border: 2px solid $grey-whisper;
+      
+      &:hover {
+        background: $ghost-white;
+        border-color: #ccc;
+      }
+    }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+      color: $white;
+      box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
+      
+      span {
+        font-size: 1.2rem;
+      }
+      
+      &:hover:not(:disabled) {
+        box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
+        transform: translateY(-1px);
+      }
+      
+      &:disabled,
+      &.disabled {
+        background: #ccc;
+        color: #999;
+        box-shadow: none;
+        cursor: not-allowed;
+        opacity: 0.6;
+        
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+  }
+
+  // Responsive
+  @media (max-width: 900px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .left-column {
+      order: 2;
+    }
+    
+    .right-column {
+      order: 1;
+    }
+    
+    .doctor-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-align: left;
+      
+      .doctor-photo {
+        margin-bottom: 0;
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .modal-container {
+      max-width: 95%;
+      max-height: 95vh;
+    }
+    
+    .modal-header {
+      padding: 20px 24px;
+      
+      .header-left {
+        gap: 12px;
+        
+        .header-icon {
+          font-size: 2rem;
+        }
+        
+        h2 {
+          font-size: 1.25rem;
+        }
+        
+        p {
+          font-size: 0.85rem;
+        }
+      }
+    }
+    
+    .modal-body {
+      padding: 24px 20px;
+      gap: 20px;
+    }
+    
+    .appointment-options {
+      grid-template-columns: 1fr;
+    }
+    
+    .modal-footer {
+      flex-direction: column;
+      padding: 20px 24px;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

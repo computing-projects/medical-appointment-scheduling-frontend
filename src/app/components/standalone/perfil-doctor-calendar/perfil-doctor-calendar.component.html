@@ -1,0 +1,133 @@
+<div class="doctor-agenda-calendar-container">
+  <!-- Header Section with Stats -->
+  <div class="calendar-top-section">
+    <div class="stats-cards">
+      <div class="stat-card today-stat">
+        <div class="stat-icon">📅</div>
+        <div class="stat-content">
+          <span class="stat-label">Consultas Hoje</span>
+          <span class="stat-value">{{ getTodayStats().total }}</span>
+        </div>
+      </div>
+      <div class="stat-card confirmed-stat">
+        <div class="stat-icon">✓</div>
+        <div class="stat-content">
+          <span class="stat-label">Confirmadas</span>
+          <span class="stat-value">{{ getTodayStats().confirmed }}</span>
+        </div>
+      </div>
+      <div class="stat-card pending-stat">
+        <div class="stat-icon">⏱</div>
+        <div class="stat-content">
+          <span class="stat-label">Pendentes</span>
+          <span class="stat-value">{{ getTodayStats().pending }}</span>
+        </div>
+      </div>
+      <div class="stat-card month-stat">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <span class="stat-label">Total do Mês</span>
+          <span class="stat-value">{{ getMonthStats().total }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calendar Header -->
+  <div class="calendar-header">
+    <div class="month-navigation">
+      <button class="doctor-calendar-nav-button" (click)="changeMonth(-1)" title="Mês anterior">
+        <span>‹</span>
+      </button>
+      <h2 class="month-year-display">{{ currentMonthYear }}</h2>
+      <button class="doctor-calendar-nav-button" (click)="changeMonth(1)" title="Próximo mês">
+        <span>›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="calendar-grid-wrapper">
+    <div class="day-names-grid">
+      <span *ngFor="let dayName of shortDayNames" class="day-name">{{ dayName }}</span>
+    </div>
+    <div class="calendar-days-grid">
+      <div *ngFor="let day of daysInMonth"
+           class="calendar-day"
+           [ngClass]="{
+             'empty-day': !day.date,
+             'has-appointments': day.hasAppointments,
+             'selected-day': day.date && selectedDate && day.date.toDateString() === selectedDate.toDateString(),
+             'current-day': isToday(day.date)
+           }"
+           (click)="selectDay(day.date)">
+        <span *ngIf="day.date" class="day-number">{{ day.date.getDate() }}</span>
+        <div *ngIf="day.hasAppointments && day.date" class="appointment-indicator">
+          <span class="appointment-count">{{ getAppointmentCount(day.date) }}</span>
+        </div>
+        <span *ngIf="isToday(day.date)" class="today-badge">Hoje</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Day Appointments -->
+  <div *ngIf="selectedDate" class="selected-day-appointments">
+    <div class="appointments-header">
+      <h3>
+        <span class="calendar-icon">📋</span>
+        Agendamentos - {{ selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' }) }}
+      </h3>
+      <span class="appointment-total-badge">{{ selectedDayAppointments.length }} consulta<span *ngIf="selectedDayAppointments.length !== 1">s</span></span>
+    </div>
+
+    <div *ngIf="selectedDayAppointments.length > 0; else noAppointments" class="appointment-list">
+      <div *ngFor="let appt of selectedDayAppointments" class="appointment-item" (click)="openAppointmentDetails(appt.id)">
+        <div class="appointment-time-block">
+          <span class="appointment-time">{{ appt.time }}</span>
+          <span class="appointment-duration" *ngIf="appt.duration">{{ appt.duration }}</span>
+        </div>
+
+        <div class="appointment-details">
+          <div class="appointment-client-info">
+            <span class="appointment-client">{{ appt.client }}</span>
+            <span class="appointment-specialty" *ngIf="appt.specialty">{{ appt.specialty }}</span>
+          </div>
+          <div class="appointment-meta">
+            <span class="appointment-type" [ngClass]="{'type-online': appt.type === 'Online', 'type-presencial': appt.type === 'Presencial'}">
+              <span class="type-icon">{{ appt.type === 'Online' ? '💻' : '🏥' }}</span>
+              {{ appt.type }}
+            </span>
+          </div>
+        </div>
+
+        <div class="appointment-status-wrapper">
+          <span class="appointment-status" [ngClass]="{
+            'status-confirmada': appt.status === 'Confirmada',
+            'status-pendente': appt.status === 'Pendente',
+            'status-cancelada': appt.status === 'Cancelada',
+            'status-realizada': appt.status === 'Realizada'
+          }">
+            <span class="status-icon">{{ getStatusIcon(appt.status) }}</span>
+            {{ appt.status }}
+          </span>
+        </div>r
+      </div>
+    </div>
+
+    <ng-template #noAppointments>
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p class="empty-message">Nenhum agendamento para este dia</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- No Day Selected Message -->
+  <div *ngIf="!selectedDate" class="no-day-selected-message">
+    <div class="select-day-prompt">
+      <div class="prompt-icon">👆</div>
+      <p class="prompt-message">Selecione um dia no calendário para visualizar os agendamentos</p>
+      <p class="prompt-submessage">Dias com agendamentos são destacados com um contador</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="search-container">
+  <!-- Header Section -->
+  <div class="search-header">
+    <div class="header-content">
+      <h2 class="header-title">
+        <span class="title-icon">👨‍⚕️</span>
+        Encontre seu médico
+      </h2>
+      <p class="header-subtitle">
+        {{ filteredDoctors.length }} 
+        {{ filteredDoctors.length === 1 ? 'profissional disponível' : 'profissionais disponíveis' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Search & Filter Toolbar -->
+  <div class="toolbar">
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input 
+        class="search-input" 
+        [(ngModel)]="search" 
+        placeholder="Buscar por nome ou especialidade..." 
+        aria-label="Buscar médico" />
+      <button 
+        *ngIf="search" 
+        class="clear-search"
+        (click)="search = ''"
+        aria-label="Limpar busca">
+        ✕
+      </button>
+    </div>
+    
+    <div class="filter-row">
+      <div class="filter-wrapper">
+        <label class="filter-label">Especialidade</label>
+        <select class="filter-select" [(ngModel)]="specialty" aria-label="Filtrar por especialidade">
+          <option value="">Todas</option>
+          <option *ngFor="let s of specialties" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      
+      <button 
+        class="more-filters-btn" 
+        [class.active]="moreFiltersOpen"
+        (click)="moreFiltersOpen = !moreFiltersOpen" 
+        aria-label="Mais filtros">
+        <span class="btn-icon">⚙️</span>
+        <span class="btn-text">Filtros</span>
+        <span class="btn-arrow" [class.rotated]="moreFiltersOpen">▼</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Advanced Filters Panel -->
+  <div class="more-filters-panel" *ngIf="moreFiltersOpen">
+    <div class="filters-header">
+      <span class="filters-icon">🎯</span>
+      <strong>Filtros Avançados</strong>
+    </div>
+    <div class="filters-grid">
+      <div class="filter-group">
+        <label class="filter-group-label">Plano de Saúde</label>
+        <select class="filter-group-select" [(ngModel)]="selectedHealthPlan">
+          <option value="">Todos os planos</option>
+          <option value="unimed">Unimed</option>
+          <option value="bradesco">Bradesco Saúde</option>
+          <option value="sulamerica">SulAmérica</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label class="filter-group-label">Tipo de Consulta</label>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="allowPresencial" />
+            <span>Presencial</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="allowOnline" />
+            <span>Online</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results List -->
+  <div class="results-section">
+    <div class="list" *ngIf="filteredDoctors.length > 0">
+      <med-scheduling-doctor-card
+        *ngFor="let d of filteredDoctors; trackBy: trackByDoctorId"
+        [doctor]="d"
+        (info)="onInfo(d)"
+        (agenda)="onAgenda(d)">
+      </med-scheduling-doctor-card>
+    </div>
+    
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredDoctors.length === 0">
+      <div class="empty-icon">🔍</div>
+      <h3 class="empty-title">Nenhum médico encontrado</h3>
+      <p class="empty-text">
+        Tente ajustar seus filtros ou buscar por outros termos
+      </p>
+      <button class="empty-btn" (click)="clearFilters()">
+        Limpar filtros
+      </button>
+    </div>
+  </div>
+</div>

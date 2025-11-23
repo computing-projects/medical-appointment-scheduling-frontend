@@ -1,0 +1,6 @@
+<header class="header">
+  <img class="logo" src="../../../../assets/images/logo-projeto.png" alt="MedSim logo" />
+  <button class="btn-outline" mat-button (click)="toggleLogin()">Entrar</button>
+</header>
+<med-login-modal [modalOpen]="isLoggedIn" (close)="isLoggedIn = false" (signup)="openSignup()"></med-login-modal>
+<med-signup-modal [modalOpen]="signupOpen" (close)="signupOpen = false"></med-signup-modal>

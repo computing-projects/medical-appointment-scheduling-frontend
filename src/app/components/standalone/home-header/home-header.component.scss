@@ -1,0 +1,38 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: $white;
+  color: $black;
+
+  .logo {
+    align-items: center;
+    width: 240px;
+  }
+
+  .btn-outline {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 15px;
+    border: 2px solid $cosmic-cobalt;
+    border-radius: 20px;
+    transition: background-color 0.7s ease, color 0.7s ease;
+  
+    .mdc-button__label {
+      color: $cosmic-cobalt;
+      transition: color 0.7s ease;
+    }
+  
+    &:hover {
+      background-color: $cosmic-cobalt;
+  
+      .mdc-button__label {
+        color: $white;
+      }
+    }
+  }
+  
+}

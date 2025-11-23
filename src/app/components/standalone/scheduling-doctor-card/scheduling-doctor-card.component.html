@@ -1,0 +1,52 @@
+<div class="doctor-card">
+  <!-- Doctor Photo & Badge -->
+  <div class="card-left">
+    <div class="photo-container">
+      <img [src]="doctor.photo" [alt]="'Foto de ' + doctor.name" class="doctor-photo" />
+      <!-- <div class="rating-badge">
+        <span class="star">★</span>
+        <span class="rating-value">{{ doctor.review }}</span>
+      </div> -->
+    </div>
+  </div>
+  
+  <!-- Doctor Info -->
+  <div class="card-right">
+    <div class="doctor-header">
+      <h3 class="doctor-name">{{ doctor.name }}</h3>
+      <span class="doctor-specialty">{{ doctor.specialty }}</span>
+    </div>
+    
+    <p class="doctor-description">{{ doctor.shortDescription }}</p>
+    
+    <!-- Details Grid -->
+    <div class="details-grid">
+      <div class="detail-item">
+        <span class="detail-icon">📋</span>
+        <span class="detail-text">{{ doctor.crm }}</span>
+      </div>
+      
+      <div class="detail-item">
+        <span class="detail-icon">📞</span>
+        <span class="detail-text">{{ doctor.contact }}</span>
+      </div>
+      
+      <div class="detail-item" *ngIf="doctor.acceptedPlans.length > 0">
+        <span class="detail-icon">🏥</span>
+        <span class="detail-text">{{ doctor.acceptedPlans[0] }}{{ doctor.acceptedPlans.length > 1 ? ' +' + (doctor.acceptedPlans.length - 1) : '' }}</span>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="card-actions">
+      <button class="action-btn info-btn" (click)="info.emit()" aria-label="Ver mais informações">
+        <span class="btn-icon">ℹ️</span>
+        <span class="btn-text">Informações</span>
+      </button>
+      <button class="action-btn agenda-btn" (click)="agenda.emit()" aria-label="Ver agenda">
+        <span class="btn-icon">📅</span>
+        <span class="btn-text">Agendar</span>
+      </button>
+    </div>
+  </div>
+</div>

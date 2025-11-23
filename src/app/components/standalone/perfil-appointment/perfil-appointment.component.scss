@@ -1,0 +1,480 @@
+@import '../../../../assets/style/color-palette.scss';
+
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Toolbar
+.appointments-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-width: 300px;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 10px;
+}
+
+// Search Box
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+  
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 40px 12px 44px;
+    border: 2px solid $grey-whisper;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $cosmic-cobalt;
+      box-shadow: 0 0 0 3px rgba($cosmic-cobalt, 0.1);
+    }
+    
+    &::placeholder {
+      color: #999;
+    }
+  }
+  
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: $grey-whisper;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: #dc3545;
+      color: $white;
+    }
+  }
+}
+
+// Filter Group
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: $ghost-white;
+  border-radius: 8px;
+  border: 2px solid $grey-whisper;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $cosmic-cobalt;
+  }
+  
+  .filter-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .filter-select {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $paua-blue;
+    cursor: pointer;
+    outline: none;
+    min-width: 180px;
+    
+    option {
+      background: $white;
+    }
+  }
+}
+
+// View Toggle Buttons
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid $grey-whisper;
+  background: $white;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+  
+  &:hover {
+    background: rgba($cosmic-cobalt, 0.05);
+    border-color: $cosmic-cobalt;
+    color: $cosmic-cobalt;
+  }
+  
+  &.active {
+    background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+    border-color: $cosmic-cobalt;
+    color: $white;
+    box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
+  }
+}
+
+// Appointments Section
+.appointments-section {
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $periwinkle-blue;
+  
+  .section-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $paua-blue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    .title-icon {
+      font-size: 1.7rem;
+    }
+  }
+  
+  .results-count {
+    padding: 6px 14px;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.1), rgba($blue-gem, 0.1));
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $cosmic-cobalt;
+  }
+}
+
+// Appointments Grid
+.appointments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+// Appointment Card
+.appointment-card {
+  position: relative;
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: $cosmic-cobalt;
+  }
+  
+  &.completed {
+    .card-badge {
+      background: linear-gradient(135deg, #28a745, #218838);
+    }
+  }
+  
+  &.scheduled {
+    .card-badge {
+      background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+      
+      &.pending {
+        background: linear-gradient(135deg, #ffc107, #e0a800);
+      }
+    }
+  }
+  
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: $white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    
+    .badge-icon {
+      font-size: 1rem;
+    }
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba($cosmic-cobalt, 0.05), rgba($blue-gem, 0.05));
+    border-bottom: 2px solid $periwinkle-blue;
+    
+    .doctor-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid $white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      flex-shrink: 0;
+    }
+    
+    .doctor-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      
+      .doctor-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $paua-blue;
+      }
+      
+      .doctor-specialty {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $cosmic-cobalt;
+      }
+    }
+  }
+  
+  .card-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .info-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: $ghost-white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .info-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      
+      .info-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .info-value {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $paua-blue;
+      }
+    }
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 2px solid $grey-whisper;
+    background: $ghost-white;
+  }
+}
+
+// Buttons
+.btn-details,
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  .btn-icon {
+    font-size: 1rem;
+  }
+}
+
+.btn-details {
+  background: linear-gradient(135deg, $cosmic-cobalt, $blue-gem);
+  color: $white;
+  box-shadow: 0 4px 12px rgba($cosmic-cobalt, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba($cosmic-cobalt, 0.4);
+  }
+}
+
+.btn-cancel {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: $white;
+  box-shadow: 0 4px 12px rgba(#dc3545, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(#dc3545, 0.4);
+  }
+}
+
+// Empty State
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  
+  .empty-text {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: $paua-blue;
+  }
+  
+  .empty-subtext {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+}
+
+// Responsive
+@media (max-width: 1024px) {
+  .appointments-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .appointments-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .toolbar-left,
+  .toolbar-right {
+    width: 100%;
+  }
+  
+  .toolbar-right {
+    justify-content: stretch;
+    
+    .view-toggle-btn {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+  
+  .appointments-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .search-box {
+    min-width: 100%;
+  }
+}

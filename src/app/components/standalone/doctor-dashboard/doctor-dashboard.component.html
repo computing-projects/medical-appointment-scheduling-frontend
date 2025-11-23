@@ -1,0 +1,41 @@
+<div class="doctor-dashboard-content">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1 class="hero-title">Olá, {{ displayUserName() }}!</h1>
+    <p class="hero-subtitle">Bem-vindo ao seu painel médico. Gerencie seus pacientes, consultas e agenda em um só lugar.</p>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions-section">
+    <h2 class="section-title">Ações Rápidas</h2>
+    <div class="action-cards">
+      <div class="action-card" (click)="navigateToAgenda($event)">
+        <div class="action-icon-wrapper calendar">
+          <span class="action-icon">📆</span>
+        </div>
+        <h3>Minha Agenda</h3>
+        <p>Visualize e gerencie sua agenda de consultas</p>
+        <span class="action-btn">Ver Agenda →</span>
+      </div>
+      <a class="action-card" [routerLink]="'/doutor/perfil'" routerLinkActive="active">
+        <div class="action-icon-wrapper profile">
+          <span class="action-icon">👤</span>
+        </div>
+        <h3>Meu Perfil</h3>
+        <p>Atualize suas informações profissionais e disponibilidade</p>
+        <span class="action-btn">Ver Perfil →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Professional Tips -->
+  <div class="professional-tips-section">
+    <div class="tip-card">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <h3>Dica Profissional do Dia</h3>
+        <p>Lembre-se de revisar os prontuários dos pacientes antes das consultas para um atendimento mais eficiente e personalizado.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<div class="doctor-info-container">
+  <!-- Header Section with Photo -->
+  <div class="info-header">
+    <div class="header-banner">
+      <div class="banner-gradient">
+        <div class="doctor-profile">
+          <div class="profile-photo-container">
+            <img [src]="doctor.photo" [alt]="'Foto de ' + doctor.name" class="profile-photo" />
+          </div>
+          
+          <div class="profile-info">
+            <h2 class="doctor-name">{{ doctor.name }}</h2>
+            <p class="doctor-specialty">{{ doctor.specialty }}</p>
+            
+            <!-- <div class="rating-section">
+              <div class="stars">
+                <span class="star filled" *ngFor="let star of getStarArray()">★</span>
+                <span class="star" *ngFor="let star of getEmptyStarArray()">★</span>
+              </div>
+              <span class="rating-value">{{ doctor.review }}</span>
+              <span class="rating-count">({{ getReviewCount() }} avaliações)</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats Cards -->
+  <div class="quick-stats">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getPatientCount() }}+</div>
+        <div class="stat-label">Pacientes</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">⏱️</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getExperienceYears() }}</div>
+        <div class="stat-label">Anos</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">📍</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ getClinicCount() }}</div>
+        <div class="stat-label">Clínicas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <h3 class="section-title">Sobre o Profissional</h3>
+    </div>
+    <p class="about-text">{{ doctor.shortDescription }}</p>
+    <p class="about-extended">
+      Profissional dedicado com vasta experiência em {{ doctor.specialty.toLowerCase() }}. 
+      Atende com atenção personalizada e utiliza as melhores práticas médicas para 
+      proporcionar o melhor cuidado aos seus pacientes.
+    </p>
+  </div>
+
+  <!-- Professional Info Grid -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">💼</span>
+      <h3 class="section-title">Informações Profissionais</h3>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-item-icon">🏥</div>
+        <div class="info-item-content">
+          <div class="info-item-label">Registro Profissional</div>
+          <div class="info-item-value">{{ doctor.crm }}</div>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-item-icon">🎂</div>
+        <div class="info-item-content">
+          <div class="info-item-label">Idade</div>
+          <div class="info-item-value">{{ doctor.age }} anos</div>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-item-icon">📞</div>
+        <div class="info-item-content">
+          <div class="info-item-label">Contato</div>
+          <div class="info-item-value">{{ doctor.contact }}</div>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-item-icon">🎓</div>
+        <div class="info-item-content">
+          <div class="info-item-label">Formação</div>
+          <div class="info-item-value">{{ getEducation() }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Plans Section -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">🏥</span>
+      <h3 class="section-title">Planos de Saúde Aceitos</h3>
+    </div>
+    
+    <div class="plans-list">
+      <div class="plan-badge" *ngFor="let plan of doctor.acceptedPlans">
+        <span class="plan-icon">✓</span>
+        <span class="plan-name">{{ plan }}</span>
+      </div>
+      <div class="plan-badge add-more">
+        <span class="plan-icon">+</span>
+        <span class="plan-name">Outros planos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specializations Section -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">⭐</span>
+      <h3 class="section-title">Especializações</h3>
+    </div>
+    
+    <div class="specializations-list">
+      <div class="specialization-chip">{{ doctor.specialty }}</div>
+      <div class="specialization-chip">Atendimento Geral</div>
+      <div class="specialization-chip">Consultas Online</div>
+      <div class="specialization-chip">Emergências</div>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">🩺</span>
+      <h3 class="section-title">Serviços Oferecidos</h3>
+    </div>
+    
+    <div class="services-list">
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Consultas presenciais</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Telemedicina</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Exames e diagnósticos</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Acompanhamento contínuo</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Orientações preventivas</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✓</span>
+        <span class="service-text">Laudos médicos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinic Addresses -->
+  <div class="info-section">
+    <div class="section-header">
+      <span class="section-icon">📍</span>
+      <h3 class="section-title">Locais de Atendimento</h3>
+    </div>
+    
+    <div class="addresses-list">
+      <div class="address-card">
+        <div class="address-icon">🏢</div>
+        <div class="address-content">
+          <div class="address-name">Clínica Principal</div>
+          <div class="address-text">Av. Paulista, 1000 - Bela Vista, São Paulo - SP</div>
+          <div class="address-hours">Seg-Sex: 8h-18h | Sáb: 8h-12h</div>
+        </div>
+      </div>
+      
+      <div class="address-card">
+        <div class="address-icon">💻</div>
+        <div class="address-content">
+          <div class="address-name">Atendimento Online</div>
+          <div class="address-text">Consultas por videochamada</div>
+          <div class="address-hours">Seg-Dom: 7h-22h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

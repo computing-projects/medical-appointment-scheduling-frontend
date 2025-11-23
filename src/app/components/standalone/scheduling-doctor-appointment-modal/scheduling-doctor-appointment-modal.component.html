@@ -1,0 +1,164 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="header-left">
+        <div class="header-icon">✅</div>
+        <div>
+          <h2>Confirmar Agendamento</h2>
+          <p>Revise os dados e confirme sua consulta</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="closeModal()" [disabled]="isSubmitting" aria-label="Fechar">×</button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      
+      <!-- Content Grid -->
+      <div class="content-grid">
+        
+        <!-- Left Column -->
+        <div class="left-column">
+          
+          <!-- Doctor Card -->
+          <div class="doctor-card">
+            <img [src]="appointmentDetails.doctor.photo" [alt]="appointmentDetails.doctor.name" class="doctor-photo" />
+            <div class="doctor-info">
+              <h3>{{ appointmentDetails.doctor.name }}</h3>
+              <p>{{ appointmentDetails.doctor.specialty }}</p>
+            </div>
+          </div>
+
+          <!-- Patient Info -->
+          <div class="patient-box">
+            <div class="patient-header">
+              <span class="patient-icon">👤</span>
+              <h4>Seus Dados</h4>
+            </div>
+            <div class="patient-info">
+              <div class="patient-row">
+                <span class="patient-label">Nome:</span>
+                <span class="patient-value">{{ userData.name }}</span>
+              </div>
+              <div class="patient-row">
+                <span class="patient-label">CPF:</span>
+                <span class="patient-value">{{ userData.cpf }}</span>
+              </div>
+              <div class="patient-row">
+                <span class="patient-label">Telefone:</span>
+                <span class="patient-value">{{ userData.phone }}</span>
+              </div>
+              <div class="patient-row">
+                <span class="patient-label">Email:</span>
+                <span class="patient-value">{{ userData.email }}</span>
+              </div>
+              <!-- <div class="patient-row">
+                <span class="patient-label">Plano:</span>
+                <span class="patient-value">{{ userData.healthPlan }}</span>
+              </div> -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+          
+          <!-- Appointment Details -->
+          <div class="details-box">
+            <div class="details-header">
+              <span class="details-icon">📅</span>
+              <h4>Detalhes do Agendamento</h4>
+            </div>
+            <div class="details-list">
+              <div class="detail-item">
+                <span class="detail-label">Data e Horário</span>
+                <span class="detail-value">{{ appointmentDetails.date }} às {{ appointmentDetails.time }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Tipo</span>
+                <span class="detail-value type-badge" [class.local]="appointmentDetails.type === 'local'" [class.remote]="appointmentDetails.type === 'remote'">
+                  {{ appointmentTypeLabel }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reason Section -->
+          <div class="form-section">
+            <label class="section-label" for="appointmentReason">
+              <span class="label-icon">📝</span>
+              Motivo da Consulta <span class="required">*</span>
+            </label>
+            <textarea
+              id="appointmentReason"
+              [(ngModel)]="appointmentReason"
+              class="textarea-field"
+              placeholder="Descreva brevemente o motivo da consulta. Exemplo: Dores de cabeça frequentes, necessidade de acompanhamento médico..."
+              rows="4"
+              maxlength="500"
+              [disabled]="isSubmitting"
+              required></textarea>
+            <div class="field-footer">
+              <p class="field-hint">Esta informação ajuda o médico a se preparar para sua consulta</p>
+              <div class="char-counter">{{ appointmentReason.length }} / 500 caracteres</div>
+            </div>
+          </div>
+
+          <!-- Important Reminder -->
+          <div class="reminder-info-box">
+            <div class="reminder-header">
+              <span class="reminder-icon">⚠️</span>
+              <h4>Lembrete Importante</h4>
+            </div>
+            <p class="reminder-text">
+              Não se esqueça de levar um acompanhante (caso seja criança ou idoso), exames anteriores e documentos pessoais.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Reminder Checkbox - Full Width -->
+      <div class="reminder-box">
+        <label class="reminder-checkbox">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="confirmedReminder"
+            [disabled]="isSubmitting" />
+          <div class="checkbox-content">
+            <span class="checkbox-icon">📋</span>
+            <span class="checkbox-text">
+              Li e concordo em seguir as instruções acima
+            </span>
+          </div>
+        </label>
+      </div>
+
+    </div>
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button 
+        class="btn-cancel" 
+        (click)="closeModal()"
+        [disabled]="isSubmitting">
+        Cancelar
+      </button>
+      <button 
+        class="btn-submit" 
+        (click)="confirmAppointment()"
+        [disabled]="!isFormValid || isSubmitting">
+        {{ isSubmitting ? 'Confirmando...' : 'Confirmar consulta' }}
+      </button>
+    </div>
+
+  </div>
+</div>
